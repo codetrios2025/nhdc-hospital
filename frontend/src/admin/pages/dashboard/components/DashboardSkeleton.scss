@@ -1,0 +1,97 @@
+.dashboard-skeleton {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 25px;
+
+}
+
+.skeleton-banner {
+
+  height: 160px;
+
+  border-radius: 18px;
+
+  background: #E5E7EB;
+
+  animation: pulse 1.5s infinite;
+
+}
+
+.skeleton-cards {
+
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 20px;
+
+}
+
+.skeleton-card {
+
+  height: 150px;
+
+  border-radius: 18px;
+
+  background: #E5E7EB;
+
+  animation: pulse 1.5s infinite;
+
+}
+
+.skeleton-actions {
+
+  height: 220px;
+
+  border-radius: 18px;
+
+  background: #E5E7EB;
+
+  animation: pulse 1.5s infinite;
+
+}
+
+@keyframes pulse {
+
+  0% {
+
+    opacity: .5;
+
+  }
+
+  50% {
+
+    opacity: 1;
+
+  }
+
+  100% {
+
+    opacity: .5;
+
+  }
+
+}
+
+@media(max-width:992px) {
+
+  .skeleton-cards {
+
+    grid-template-columns: repeat(2, 1fr);
+
+  }
+
+}
+
+@media(max-width:576px) {
+
+  .skeleton-cards {
+
+    grid-template-columns: 1fr;
+
+  }
+
+}

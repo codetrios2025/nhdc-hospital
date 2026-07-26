@@ -1,0 +1,57 @@
+.app-btn {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 12px 22px;
+
+  border: none;
+
+  border-radius: $radius;
+
+  font-weight: 600;
+
+  transition: $transition;
+
+}
+
+.app-btn.primary {
+
+  background: $primary;
+
+  color: white;
+
+}
+
+.app-btn.primary:hover {
+
+  background: $primary-dark;
+
+}
+
+.app-btn.success {
+
+  background: $success;
+
+  color: white;
+
+}
+
+.app-btn.danger {
+
+  background: $danger;
+
+  color: white;
+
+}
+
+.app-btn.outline {
+
+  background: white;
+
+  border: 1px solid $border;
+
+}

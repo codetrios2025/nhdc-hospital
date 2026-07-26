@@ -1,0 +1,119 @@
+/*==================================
+=           Stat Card
+==================================*/
+
+.stat-card {
+
+  background: #fff;
+
+  border-radius: $radius;
+
+  box-shadow: $shadow-sm;
+
+  padding: 24px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  transition: $transition;
+
+  cursor: pointer;
+
+}
+
+.stat-card:hover {
+
+  transform: translateY(-4px);
+
+  box-shadow: $shadow;
+
+}
+
+.stat-icon {
+
+  width: 70px;
+
+  height: 70px;
+
+  border-radius: 18px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  font-size: 30px;
+
+}
+
+.stat-content h6 {
+
+  color: $text-light;
+
+  margin-bottom: 8px;
+
+}
+
+.stat-content h2 {
+
+  font-size: 34px;
+
+  margin: 0;
+
+}
+
+.stat-growth {
+
+  margin-top: 10px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+}
+
+/*==================================
+=        Status Badge
+==================================*/
+
+.status-badge {
+
+  display: inline-block;
+
+  padding: 6px 14px;
+
+  border-radius: 30px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+}
+
+.status-active {
+
+  background: #DCFCE7;
+
+  color: #16A34A;
+
+}
+
+.status-inactive {
+
+  background: #FEE2E2;
+
+  color: #DC2626;
+
+}
+
+.status-pending {
+
+  background: #FEF3C7;
+
+  color: #D97706;
+
+}

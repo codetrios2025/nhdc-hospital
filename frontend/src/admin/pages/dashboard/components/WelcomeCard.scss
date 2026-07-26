@@ -1,0 +1,93 @@
+.welcome-card {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 28px;
+
+  border-radius: 18px;
+
+  color: #fff;
+
+  background: linear-gradient(135deg,
+      #E91E63,
+      #9C27B0);
+
+  overflow: hidden;
+
+}
+
+.welcome-card h2 {
+
+  margin-bottom: 10px;
+
+  font-size: 30px;
+
+  font-weight: 700;
+
+}
+
+.welcome-card p {
+
+  margin: 0;
+
+  opacity: .9;
+
+}
+
+.welcome-info {
+
+  display: flex;
+
+  gap: 40px;
+
+}
+
+.welcome-info div {
+
+  display: flex;
+
+  flex-direction: column;
+
+}
+
+.welcome-info span {
+
+  font-size: 13px;
+
+  opacity: .8;
+
+}
+
+.welcome-info strong {
+
+  font-size: 17px;
+
+  margin-top: 5px;
+
+}
+
+@media(max-width:768px) {
+
+  .welcome-card {
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+  }
+
+  .welcome-info {
+
+    width: 100%;
+
+    justify-content: space-between;
+
+  }
+
+}

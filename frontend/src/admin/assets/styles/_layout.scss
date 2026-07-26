@@ -1,0 +1,43 @@
+.admin-wrapper {
+
+  display: flex;
+
+  min-height: 100vh;
+
+  background: #f5f7fb;
+
+}
+
+.main-wrapper {
+
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  margin-left: 280px;
+
+  transition: .3s;
+
+}
+
+.page-wrapper {
+
+  padding: 30px;
+
+  flex: 1;
+
+}
+
+.footer {
+
+  background: #fff;
+
+  padding: 18px 30px;
+
+  border-top: 1px solid #ececec;
+
+  font-size: 14px;
+
+}

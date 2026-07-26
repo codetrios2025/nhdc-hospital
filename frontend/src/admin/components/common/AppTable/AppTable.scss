@@ -1,0 +1,65 @@
+.app-table-wrapper {
+
+  background: white;
+
+  border-radius: $radius;
+
+  overflow: auto;
+
+  box-shadow: $shadow-sm;
+
+}
+
+.app-table {
+
+  width: 100%;
+
+  border-collapse: collapse;
+
+}
+
+.app-table thead {
+
+  background: #F8FAFC;
+
+}
+
+.app-table th {
+
+  padding: 18px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  text-align: left;
+
+  border-bottom: 1px solid $border;
+
+  white-space: nowrap;
+
+}
+
+.app-table td {
+
+  padding: 18px;
+
+  border-bottom: 1px solid #F1F5F9;
+
+  vertical-align: middle;
+
+}
+
+.app-table tbody tr {
+
+  transition: $transition;
+
+  cursor: pointer;
+
+}
+
+.app-table tbody tr:hover {
+
+  background: #FFF5F9;
+
+}

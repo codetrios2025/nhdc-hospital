@@ -1,0 +1,51 @@
+.app-card {
+
+  background: white;
+
+  border-radius: $radius;
+
+  box-shadow: $shadow-sm;
+
+  margin-bottom: 25px;
+
+  overflow: hidden;
+
+}
+
+.app-card-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 20px;
+
+  border-bottom: 1px solid $border;
+
+}
+
+.app-card-header h4 {
+
+  margin: 0;
+
+  font-weight: 600;
+
+}
+
+.app-card-header p {
+
+  margin: 5px 0 0;
+
+  color: $text-light;
+
+  font-size: 14px;
+
+}
+
+.app-card-body {
+
+  padding: 20px;
+
+}

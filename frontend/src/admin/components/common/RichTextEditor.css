@@ -1,0 +1,16 @@
+.ck-editor__editable_inline {
+  min-height: 300px !important;
+}
+
+.ck.ck-editor {
+  width: 100%;
+}
+
+.ck.ck-toolbar {
+  border-radius: 6px 6px 0 0;
+}
+
+.ck.ck-content {
+  font-size: 15px;
+  line-height: 1.8;
+}

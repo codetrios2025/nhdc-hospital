@@ -1,0 +1,55 @@
+.search-box-component {
+
+  position: relative;
+
+  width: 300px;
+
+}
+
+.search-box-component input {
+
+  width: 100%;
+
+  height: 45px;
+
+  padding: 0 42px;
+
+  border: 1px solid $border;
+
+  border-radius: $radius;
+
+}
+
+.search-box-component input:focus {
+
+  outline: none;
+
+  border-color: $primary;
+
+}
+
+.search-icon {
+
+  position: absolute;
+
+  left: 14px;
+
+  top: 14px;
+
+  color: $text-light;
+
+}
+
+.clear-search {
+
+  position: absolute;
+
+  right: 10px;
+
+  top: 8px;
+
+  border: none;
+
+  background: none;
+
+}

@@ -1,0 +1,71 @@
+.loading-screen {
+
+  position: fixed;
+
+  inset: 0;
+
+  background: #F8FAFC;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  z-index: 99999;
+
+}
+
+.loading-card {
+
+  text-align: center;
+
+}
+
+.loader-circle {
+
+  width: 70px;
+
+  height: 70px;
+
+  border: 6px solid #E5E7EB;
+
+  border-top: 6px solid #E91E63;
+
+  border-radius: 50%;
+
+  animation: spin .8s linear infinite;
+
+  margin: auto;
+
+}
+
+.loading-card h2 {
+
+  margin-top: 25px;
+
+  font-weight: 700;
+
+}
+
+.loading-card p {
+
+  color: #64748B;
+
+}
+
+@keyframes spin {
+
+  from {
+
+    transform: rotate(0);
+
+  }
+
+  to {
+
+    transform: rotate(360deg);
+
+  }
+
+}

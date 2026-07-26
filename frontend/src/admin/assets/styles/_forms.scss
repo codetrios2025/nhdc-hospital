@@ -1,0 +1,103 @@
+.app-form-group {
+
+  margin-bottom: 20px;
+
+}
+
+.app-label {
+
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-weight: 600;
+
+  color: $secondary;
+
+}
+
+.required {
+
+  color: $danger;
+
+  margin-left: 3px;
+
+}
+
+.app-control {
+
+  width: 100%;
+
+  height: 48px;
+
+  border: 1px solid $border;
+
+  border-radius: $radius;
+
+  padding: 0 16px;
+
+  transition: $transition;
+
+  background: #fff;
+
+}
+
+.app-control:focus {
+
+  outline: none;
+
+  border-color: $primary;
+
+  box-shadow: 0 0 0 4px rgba(233, 30, 99, .12);
+
+}
+
+.app-error {
+
+  color: $danger;
+
+  font-size: 13px;
+
+  margin-top: 6px;
+
+}
+
+textarea.app-control {
+
+  min-height: 120px;
+
+  padding: 15px;
+
+  resize: vertical;
+
+}
+
+.upload-box {
+
+  height: 180px;
+
+  border: 2px dashed $border;
+
+  border-radius: $radius;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  cursor: pointer;
+
+  transition: $transition;
+
+}
+
+.upload-box:hover {
+
+  border-color: $primary;
+
+  background: #FFF5F9;
+
+}

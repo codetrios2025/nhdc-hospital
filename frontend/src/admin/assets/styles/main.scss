@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@import "bootstrap/scss/bootstrap";
+
+@import "./variables";
+
+@import "./mixins";
+@import "./global";
+
+@import "./layout";
+
+@import "./sidebar";
+
+@import "./header";
+
+@import "./login";
+
+@import "./breadcrumb";
+@import "./loader"; 
+@import "./forms";
+@import "./widgets";
+
+@import "../../components/common/AppButton/AppButton";
+@import "../../components/common/AppCard/AppCard";
+@import "../../components/common/SectionTitle/SectionTitle";
+
+body {
+
+  background: $body;
+
+  font-family: 'Poppins', sans-serif;
+
+  overflow-x: hidden;
+
+}
+
+* {
+
+  margin: 0;
+
+  padding: 0;
+
+  box-sizing: border-box;
+
+}
+
+.table-skeleton {
+
+  padding: 20px;
+
+}
+
+.skeleton-row {
+
+  height: 50px;
+
+  margin-bottom: 10px;
+
+  background: #E2E8F0;
+
+  border-radius: 8px;
+
+  animation: pulse 1.5s infinite;
+
+}
+
+@keyframes pulse {
+
+  0% {
+
+    opacity: .5;
+
+  }
+
+  50% {
+
+    opacity: 1;
+
+  }
+
+  100% {
+
+    opacity: .5;
+
+  }
+
+}
+
