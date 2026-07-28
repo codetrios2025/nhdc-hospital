@@ -148,6 +148,28 @@ class DoctorService {
 
     return item;
   }
+
+  async getPublicDoctors() {
+    const doctors = await DoctorRepository.getPublicDoctors();
+
+    return doctors.map((doctor) => this.formatDoctor(doctor));
+  }
+
+  async getHomeDoctors() {
+    const doctors = await DoctorRepository.getHomeDoctors();
+
+    return doctors.map((doctor) => this.formatDoctor(doctor));
+  }
+
+  async getBySlug(slug) {
+    const doctor = await DoctorRepository.findPublicBySlug(slug);
+
+    if (!doctor) {
+      throw new ApiError(404, "Doctor not found.");
+    }
+
+    return this.formatDoctor(doctor);
+  }
 }
 
 module.exports = new DoctorService();

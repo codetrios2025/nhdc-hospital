@@ -37,12 +37,7 @@ router.post(
   ServiceController.create,
 );
 
-router.get(
-  "/",
-  verifyToken,
-  checkRole("SUPER_ADMIN"),
-  ServiceController.getAll,
-);
+router.get("/", ServiceController.getAll);
 
 router.get(
   "/:id",

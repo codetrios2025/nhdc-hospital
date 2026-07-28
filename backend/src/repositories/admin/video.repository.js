@@ -122,6 +122,35 @@ class VideoRepository {
       totalPages: Math.ceil(total / limit),
     };
   }
+
+  async getPublicVideos() {
+    return await Video.find({
+      isDeleted: false,
+      isActive: true,
+    }).sort({
+      displayOrder: 1,
+    });
+  }
+
+  async getHomeVideos(limit = 6) {
+    return await Video.find({
+      isDeleted: false,
+      isActive: true,
+      featured: true,
+    })
+      .sort({
+        displayOrder: 1,
+      })
+      .limit(limit);
+  }
+
+  async findPublicBySlug(slug) {
+    return await Video.findOne({
+      slug,
+      isDeleted: false,
+      isActive: true,
+    });
+  }
 }
 
 module.exports = new VideoRepository();

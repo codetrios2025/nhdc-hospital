@@ -127,6 +127,44 @@ class VideoController {
 
     return res.json(new ApiResponse(200, true, "Featured updated", video));
   });
+
+  /**
+   * Website Video Listing
+   */
+  getPublicVideos = asyncHandler(async (req, res) => {
+    const videos = await VideoService.getPublicVideos();
+
+    return res.json(
+      new ApiResponse(200, true, "Videos fetched successfully", videos),
+    );
+  });
+
+  /**
+   * Homepage Videos
+   */
+  getHomeVideos = asyncHandler(async (req, res) => {
+    const videos = await VideoService.getHomeVideos();
+
+    return res.json(
+      new ApiResponse(
+        200,
+        true,
+        "Homepage videos fetched successfully",
+        videos,
+      ),
+    );
+  });
+
+  /**
+   * Website Video Details
+   */
+  getBySlug = asyncHandler(async (req, res) => {
+    const video = await VideoService.getBySlug(req.params.slug);
+
+    return res.json(
+      new ApiResponse(200, true, "Video details fetched successfully", video),
+    );
+  });
 }
 
 module.exports = new VideoController();

@@ -102,6 +102,44 @@ class DoctorController {
       new ApiResponse(200, true, "Doctor featured updated", doctor),
     );
   });
+
+  /**
+   * Website Doctor Listing
+   */
+  getPublicDoctors = asyncHandler(async (req, res) => {
+    const doctors = await DoctorService.getPublicDoctors();
+
+    return res.json(
+      new ApiResponse(200, true, "Doctors fetched successfully", doctors),
+    );
+  });
+
+  /**
+   * Homepage Featured Doctors
+   */
+  getHomeDoctors = asyncHandler(async (req, res) => {
+    const doctors = await DoctorService.getHomeDoctors();
+
+    return res.json(
+      new ApiResponse(
+        200,
+        true,
+        "Homepage doctors fetched successfully",
+        doctors,
+      ),
+    );
+  });
+
+  /**
+   * Website Doctor Details
+   */
+  getBySlug = asyncHandler(async (req, res) => {
+    const doctor = await DoctorService.getBySlug(req.params.slug);
+
+    return res.json(
+      new ApiResponse(200, true, "Doctor details fetched successfully", doctor),
+    );
+  });
 }
 
 module.exports = new DoctorController();

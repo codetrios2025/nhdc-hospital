@@ -15,10 +15,10 @@ const rateLimit = require("express-rate-limit");
 
 const errorMiddleware = require("./middlewares/error.middleware");
 
-const routes = require("./routes");
+//const routes = require("./routes");
 
 const adminRoutes = require("./routes/admin/index");
-const webRoutes = require("./routes/web");
+const webRoutes = require("./routes/web/index");
 
 const loggerMiddleware = require("./middlewares/logger.middleware");
 const requestIdMiddleware = require("./middlewares/requestId.middleware");

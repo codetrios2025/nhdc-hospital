@@ -119,6 +119,40 @@ class VideoService {
 
     return item;
   }
+
+  formatVideo(video) {
+    const item = video.toObject();
+
+    item.thumbnailUrl = getFileUrl("videos/thumbnails", item.thumbnail);
+
+    if (item.videoFile) {
+      item.videoFileUrl = getFileUrl("videos/files", item.videoFile);
+    }
+
+    return item;
+  }
+
+  async getPublicVideos() {
+    const videos = await VideoRepository.getPublicVideos();
+
+    return videos.map((video) => this.formatVideo(video));
+  }
+
+  async getHomeVideos() {
+    const videos = await VideoRepository.getHomeVideos();
+
+    return videos.map((video) => this.formatVideo(video));
+  }
+
+  async getBySlug(slug) {
+    const video = await VideoRepository.findPublicBySlug(slug);
+
+    if (!video) {
+      throw new ApiError(404, "Video not found.");
+    }
+
+    return this.formatVideo(video);
+  }
 }
 
 module.exports = new VideoService();

@@ -169,6 +169,38 @@ class DoctorRepository {
       totalPages: Math.ceil(total / limit),
     };
   }
+
+  async getPublicDoctors() {
+    return await Doctor.find({
+      isDeleted: false,
+      isActive: true,
+    })
+      .populate("department", "name slug")
+      .sort({
+        displayOrder: 1,
+      });
+  }
+
+  async getHomeDoctors(limit = 6) {
+    return await Doctor.find({
+      isDeleted: false,
+      isActive: true,
+      featured: true,
+    })
+      .populate("department", "name slug")
+      .sort({
+        displayOrder: 1,
+      })
+      .limit(limit);
+  }
+
+  async findPublicBySlug(slug) {
+    return await Doctor.findOne({
+      slug,
+      isDeleted: false,
+      isActive: true,
+    }).populate("department", "name slug");
+  }
 }
 
 module.exports = new DoctorRepository();
