@@ -1,5 +1,5 @@
 import axiosService from "./AxiosConfig";
 
 export const getallserviceData = () => {
-  return axiosService.get("service");
+  return axiosService.get("services");
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Style from '../CSS/Global.module.css';
 import BannerImg from '../../assets/images/hospital-slide.webp';
@@ -22,9 +22,10 @@ import { FaSyringe, FaUserDoctor, FaMicroscope   } from "react-icons/fa6";
 import { PiFirstAidKitFill } from "react-icons/pi";
 import { RiParentFill, RiHospitalLine } from "react-icons/ri";
 import { BsClockHistory } from "react-icons/bs";
-
+import contants from "../../services/constants";
+import { getallserviceData } from "../../services/routes.services";
 const Services = () =>{
-
+console.log("contants", getallserviceData);
 const services = [
   {
     title: "Child Specialist Care",
@@ -120,6 +121,28 @@ const services = [
     ],
   },
 ];
+const [serviceData, setServiceData] = React.useState([]);
+
+useEffect(() => {
+  const fetchServices = async () => {
+    try {
+      const res = await getallserviceData();
+
+      console.log("API Response:", res);
+
+      // Convert object to array
+      const services = Object.values(res.data.data).filter(
+        (item) => item && item._id
+      );
+
+      setServiceData(services);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  fetchServices();
+}, []);
 
   return(
     <div className={Style.servicesPage}>
