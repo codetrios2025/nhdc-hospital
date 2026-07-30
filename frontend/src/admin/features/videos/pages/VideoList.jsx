@@ -124,7 +124,12 @@ const VideoList = () => {
 
       {error && <div className="alert alert-danger">{error}</div>}
 
-      <VideoTable loading={loading} videos={videos} />
+      <VideoTable
+        loading={loading}
+        videos={videos}
+        reloadVideos={reloadVideos}
+        deleteVideo={handleDeleteVideo}
+      />
     </div>
   );
 };
