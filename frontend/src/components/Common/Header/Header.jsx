@@ -46,9 +46,10 @@ const Header = () => {
             <Col>
               <address>
                 <ul>
+                  {console.log("HEADER RENDERED")}
                   <li>
                     <a data-tooltip-id="tooltip" data-tooltip-content="nhdcdeoli@gmail.com" href="mailto:nhdcdeoli@gmail.com"  aria-label="Email Namokar Hospital">
-                      <div className={Style.icon}><IoIosMail /></div><p className={Style.mobNone}>nhdcdeoli@gmail.com</p></a>     
+                      <div className={Style.icon}><IoIosMail /></div><p className={Style.mobNone}>55nhdcdeoli@gmail.com 52</p></a>     
                   </li>
                   <li data-tooltip-id="tooltip" data-tooltip-content="9057288286, 9829143239">
                     <div className={Style.icon}><FaHeadset /></div>
