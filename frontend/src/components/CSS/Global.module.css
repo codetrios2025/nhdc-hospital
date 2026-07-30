@@ -155,7 +155,11 @@ display: flex;flex-direction: column;align-items: flex-start;}
 .bookinfo .helpUs a .icon{width: 60px;height: 60px;border-radius: 50%;border: 1px solid #efefef;background: #fff;display: flex;justify-content: center;align-items: center;font-size: 30px;margin-right: 15px;}    
 .bookinfo .helpUs a p{display: flex;flex-direction: column;margin: 0;font-weight: 600;color: #ed0108;font-size: var(--fs-lg)}
 .bookinfo .helpUs a p span{    font-weight: 500;color: #16366a;font-size: var(--fs-sm);}
-.areTime{display: flex;align-items: center;justify-content: space-between;line-height: 30px;}    
+.areTime{    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    line-height: 30px;
+    flex-direction: column;}    
 .workingUs h5{font-size: var(--fs-sm);color: #ed0108;font-weight: 500;margin: 20px 0 0;}
 
 .formHead{position: relative;display: flex;align-items: center;margin-bottom: 20px;}

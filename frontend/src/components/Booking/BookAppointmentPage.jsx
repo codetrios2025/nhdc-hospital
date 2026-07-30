@@ -82,10 +82,13 @@ const BookAppointment = () => {
                       <div className={Style.workingUs}>
                         <h3><div className={Style.icon}><MdOutlineAccessTime /></div> Working Hours</h3>
                         <div className={Style.areTime}>
-                          <spam>Monday - Saturday:</spam> <span>9:00 AM – 8:00 PM</span>
+                          <strong>Monday - Saturday</strong> 
+                          <span>Morning: 9:00 AM – 2:00 PM</span>
+                          <span>Evening: 5:00 PM – 7:00 PM</span>
                         </div>
                         <div className={Style.areTime}>
-                          <spam>Sunday:</spam> <span>9:00 AM – 1:00 PM</span>
+                          <strong>Sunday</strong>
+                          <span>Morning: 9:00 AM – 2:00 PM</span>
                         </div>
                         {/* <h5>24×7 Emergency Services</h5> */}
                       </div>
