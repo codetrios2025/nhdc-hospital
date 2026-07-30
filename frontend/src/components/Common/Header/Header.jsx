@@ -46,26 +46,26 @@ const Header = () => {
             <Col>
               <address>
                 <ul>
-                  <li>
+                  {/* <li>
                     <a data-tooltip-id="tooltip" data-tooltip-content="nhdcdeoli@gmail.com" href="mailto:nhdcdeoli@gmail.com"  aria-label="Email Namokar Hospital">
                       <div className={Style.icon}><IoIosMail /></div><p className={Style.mobNone}>nhdcdeoli@gmail.com</p></a>     
-                  </li>
-                  <li data-tooltip-id="tooltip" data-tooltip-content="9057288286, 9829143239">
+                  </li> */}
+                  <li className={Style.callList}>
                     <div className={Style.icon}><FaHeadset /></div>
                     <div className={Style.numberFlex}>
                       <a  href="tel:9057288286"><p className={Style.mobNone}>+91 90572 88286</p></a>
                       <a href="tel:9829143239" ><p className={Style.mobNone}>+91 98291 43239</p></a>
                     </div>
                   </li>
-                   <li data-tooltip-id="tooltip" data-tooltip-content="Mon to Sat: 9:00 AM – 2:00 PM , 5:00 PM – 7:00 PM, Sun: 9 AM – 2 PM">
+                   <li className={Style.timeList}>
                     <div className={Style.icon}><FiClock /></div>
                     <div>
-                      <p className={Style.mobNone}>Monday - Saturday: 9:00 AM – 2:00 PM , 5:00 PM – 7:00 PM</p>
-                      <p className={Style.mobNone}>Sunday: 9:00 AM – 2:00 PM</p>
+                      <p>Monday - Saturday: 9:00 AM – 2:00 PM , 5:00 PM – 7:00 PM</p>
+                      <p>Sunday: 9:00 AM – 2:00 PM</p>
                     </div>
                   </li>
-                  <li>
-                    <button data-tooltip-id="tooltip" data-tooltip-content="Book Appointment" onClick={bookingHandler} type="button" className={Style.bookBtn} aria-label="Book Appointment">
+                  <li className={Style.bookList}>
+                    <button onClick={bookingHandler} type="button" className={Style.bookBtn} aria-label="Book Appointment">
                       <span className={Style.icon}><IoCalendarOutline /></span> <p className={Style.mobNone}>Book Appointment</p></button>
                   </li>
                  
@@ -81,27 +81,16 @@ const Header = () => {
             <Col>
               <address>
                 <ul>
-                  <li>
-                    <a data-tooltip-id="tooltip" data-tooltip-content="nhdcdeoli@gmail.com" href="mailto:nhdcdeoli@gmail.com"  aria-label="Email Namokar Hospital">
-                      <div className={Style.icon}><IoIosMail /></div><p className={Style.mobNone}>nhdcdeoli@gmail.com</p></a>     
-                  </li>
-                  <li data-tooltip-id="tooltip" data-tooltip-content="9057288286, 9829143239">
+                  <li className={Style.callList}>
                     <div className={Style.icon}><FaHeadset /></div>
                     <div className={Style.numberFlex}>
-                      <a  href="tel:9057288286"><p className={Style.mobNone}>+91 90572 88286</p></a>
-                      <a href="tel:9829143239" ><p className={Style.mobNone}>+91 98291 43239</p></a>
-                    </div>
-                  </li>
-                   <li data-tooltip-id="tooltip" data-tooltip-content="Mon to Sat: 9:00 AM – 2:00 PM , 5:00 PM – 7:00 PM, Sun: 9 AM – 2 PM">
-                    <div className={Style.icon}><FiClock /></div>
-                    <div>
-                      <p className={Style.mobNone}>Monday - Saturday: 9:00 AM – 2:00 PM , 5:00 PM – 7:00 PM</p>
-                      <p className={Style.mobNone}>Sunday: 9:00 AM – 2:00 PM</p>
+                      <a  href="tel:9057288286"><p>+91 90572 88286</p></a>
+                      {/* <a href="tel:9829143239" ><p>+91 98291 43239</p></a> */}
                     </div>
                   </li>
                   <li>
-                    <button data-tooltip-id="tooltip" data-tooltip-content="Book Appointment" onClick={bookingHandler} type="button" className={Style.bookBtn} aria-label="Book Appointment">
-                      <span className={Style.icon}><IoCalendarOutline /></span> <p className={Style.mobNone}>Book Appointment</p></button>
+                    <button onClick={bookingHandler} type="button" className={Style.bookBtn} aria-label="Book Appointment">
+                      <span className={Style.icon}><IoCalendarOutline /></span> <p>Book Appointment</p></button>
                   </li>
                  
                 </ul>
@@ -140,7 +129,7 @@ const Header = () => {
       </div>
     </header>
     {booking &&
-      <div className={Style.bookingOverLay}>
+      <div className={'overlayform ' + Style.bookingOverLay}>
         <div className={Style.bookingPop}>
           <BookingForm close={closeBooking} />
         </div>

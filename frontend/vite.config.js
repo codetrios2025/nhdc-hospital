@@ -10,6 +10,9 @@ export default defineConfig({
     },
   },
   css: {
+    modules: {
+      generateScopedName: "[local]",
+    },
     preprocessorOptions: {
       scss: {
         silenceDeprecations: [

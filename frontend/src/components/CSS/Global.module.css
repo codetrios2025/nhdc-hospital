@@ -35,8 +35,9 @@
 .specialItem{flex: 1;border-radius: 20px;overflow: hidden;position: relative;height: 500px;}
 .specialItem figure{width: 100%;height: 100%;}
 .specialItem figure img{width: 100%;height: 100%;object-fit: cover;display: block;}
-.specialItem .content{position: absolute;top: 0;left: 0;padding: 30px;width: 100%;height: 100%;background: #fff;background: linear-gradient(272deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 100%) 69%, rgba(255, 255, 255, 1) 100%);padding-right: 300px;}   
-.specialItem h2 span{display: block;margin-bottom: 20px;color: #e30f11;}
+.specialItem .content{position: absolute;top: 0;left: 0;padding: 30px;width: 100%;height: 100%;background: #fff;background: linear-gradient(272deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 100%) 69%, rgba(255, 255, 255, 1) 100%);padding-right: 300px;
+display: flex;flex-direction: column;align-items: flex-start;}   
+.specialItem h2 span{display: block;margin-bottom: 10px;color: #e30f11;}
 .specialItem:last-child h2 span{color:#06704c}
 .specialItem p{font-size: var(--fs-sm);line-height: 26px;margin: 0;}
 .specialItem ul{margin: 20px 0;}
@@ -331,7 +332,7 @@
 .bannerItem img{height: 540px;}
 .servicesList{padding: 20px;margin-top: -60px;}
 .servicesList .listBox .icon{font-size: 40px;}
-.specialItem{height: 430px;}
+.specialItem{height: 450px;}
 .videoItem h3{line-height: 20px;}
 .drContent p{margin: 0 0 5px;}
 .supportContainer .time{width: 60px;height: 60px;border: 7px solid #fff;font-size:14px}
@@ -353,6 +354,11 @@
 .whoWe .content p{margin-bottom: 10px;}
 .mainContainer .serviceBox img{height: 200px;}
 .NHDCVideoSec .videoElem{    grid-template-columns: repeat(3, 1fr);}
+.specialItem p, .specialItem ul li{font-size: 14px;}
+.specialItem ul{margin: 10px 0;}
+    .specialItem .content {
+        padding-right: 90px;
+    }
 }
 
 @media only screen and (max-width: 991px) {
@@ -412,7 +418,7 @@
 
 
 @media only screen and (max-width: 767px) {
-    
+.bannerContent ul li .icon{margin-right: 5px;top: 0;}    
 .mainContainer{grid-template-columns: repeat(1, 1fr);}    
 .whyChooseElem{grid-template-columns: repeat(2, 1fr);}    
 .whyChooseElem .box{border: none;}
@@ -471,6 +477,9 @@
 }
 
 @media only screen and (max-width: 580px) {
+    .specialItem figure {
+        height: 430px;
+    }    
 .NHDCVideoSec .videoElem{    grid-template-columns: repeat(1, 1fr);}    
     .specialItem .content{background: linear-gradient(272deg, rgb(255 255 255 / 0%) -60%, rgb(255 255 255 / 100%) 50%, rgba(255, 255, 255, 1) 100%);}
 .diagnoServices.whyChoose .whyChooseElem , .videoElem{grid-template-columns:repeat(1,1fr);}    

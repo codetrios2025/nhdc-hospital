@@ -23,7 +23,7 @@ const BookingForm = ({close})=>{
           <h2>Book an Appointment</h2>
           <p>Fill in your details to book an appointment</p>
         </div>
-        <button type="" className={Style.closeBtn} onClick={close}><IoCloseOutline /></button>
+        <button type="" className={'closeForm ' + Style.closeBtn} onClick={close}><IoCloseOutline /></button>
       </div>
       <form>
         <div className={Style.formGroup}>

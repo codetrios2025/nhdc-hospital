@@ -7,9 +7,9 @@ export default function LayoutScreen() {
 
   return (
     <>
-      <div style={{ background: "red", color: "white", padding: 10 }}>
+      {/* <div style={{ background: "red", color: "white", padding: 10 }}>
         LAYOUT TEST
-      </div>
+      </div> */}
 
       <Header />
       <Outlet />

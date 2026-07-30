@@ -13,9 +13,9 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "./admin/assets/styles/main.scss";
 
 import store from "./admin/redux/store";
-
-import App from "./App";
 import "./index.css";
+import App from "./App";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
