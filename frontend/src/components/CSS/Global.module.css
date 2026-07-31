@@ -15,7 +15,7 @@
 .bannerContent p{line-height: 26px;padding-right: 350px;}
 .bannerContent ul{margin-top: 10px;}
 .bannerContent ul li{font-weight: 600;line-height: 40px;}
-.bannerContent ul li .icon{margin-right: 10px;position: relative;top: -2px;color: #16366a;}
+.bannerContent ul li .icon{margin-right: 5px;position: relative;top: -1px;color: #16366a;}
 .bannerBtn{display: flex;gap: 15px;margin-top: 15px;}
 .instagramContainer{
     display: "flex";
@@ -63,7 +63,7 @@ display: flex;flex-direction: column;align-items: flex-start;}
 .doctorSec{position: relative;}
 .drConainer{background: #ebf0f8 url(../../assets/images/cabin-img.webp) no-repeat center right;padding: 20px 20px 0;display: flex;border-radius: 10px;overflow: hidden;position: relative;}
 .drConainer::before{position: absolute;top: 0;left: 0;width: 100%;height: 100%;content: "";background: #ebf0f8;background: linear-gradient(272deg, rgb(235 240 248 / 0%) 0%, rgb(235 240 248) 35%, rgb(235 240 248) 100%);}
-
+.doctorSec .description{-webkit-line-clamp: 4;    display: -webkit-box;overflow: hidden;}
 .drConainer .drImg{width: 330px;position: relative;z-index: 2;}
 .drConainer .drImg figure{position: relative;height: 100%;}
 .drConainer .drImg figure img{width: 100%;height: 100%;object-fit: cover;}
@@ -74,8 +74,8 @@ display: flex;flex-direction: column;align-items: flex-start;}
 .drContent{position: relative;z-index: 2;width: 800px;display: flex;flex-direction: column;align-items: flex-start;padding-left: 20px;margin-right: 5px;}
 .drContent p{margin: 0 0 10px;font-size: var(--fs-sm);line-height: 26px;padding-right: 100px;font-weight: 400;}
 .drContent p span{display: block;line-height: 24px;font-weight: 400;}
-.drContent ul{display: flex;flex-wrap: wrap;margin-bottom: 5px;}
-.drContent ul li{display: flex;font-size: var(--fs-sm);margin-right: 20px;align-items: center;margin-bottom: 8px;font-weight: 600;}
+.drContent ul, .drContent ol{display: flex;flex-wrap: wrap;margin-bottom: 5px;}
+.drContent ul li, .drContent ol li{display: flex;font-size: var(--fs-sm);margin-right: 20px;align-items: center;margin-bottom: 8px;font-weight: 600;}
 .drContent ul li .icon{margin-right: 8px;font-size: 20px;position: relative;top:-2px}
 .drContent a .icon{margin-left: 15px;font-size: 18px;}
 

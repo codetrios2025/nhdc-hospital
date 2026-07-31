@@ -4,10 +4,12 @@ import Style from "../CSS/Global.module.css";
 import InstaVideo from "./InstaVideo";
 import { FaPlay } from "react-icons/fa";
 
-const OurVideos = () => {
+const OurVideos = ({data}) => {
   const [activeVideo, setActiveVideo] = useState(null);
   const videoRefs = useRef({});
-
+  const aaa = data?.data?.videos;
+  console.log(aaa)
+  //const videos = data;
   const videos = [
     {
       title: "Child Vaccination Guide",

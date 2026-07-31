@@ -1,9 +1,9 @@
 header{position: fixed;top:0;left: 0;width: 100%;z-index: 999;background: #fff;}
 header.headerFix{box-shadow: -4px 1px 19px 1px rgba(0, 0, 0, .1);}
 /* header.headerFix .topHead{margin-top: -66px;} */
-header *{ transition: all 0.4s ease;}
+header *{ transition: all 0.4s ease!important;}
 .topHead{position: relative;padding: 10px 0;background: #eef3fa;margin: 0;}
-.logo{position: relative;}
+.logo{position: relative;width: auto;height: auto;}
 .logo img{width: 60px;}
 address ul{
   display: flex;
