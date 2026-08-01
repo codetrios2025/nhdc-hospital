@@ -11,7 +11,10 @@ import {FaHeartbeat, FaCheckCircle} from "react-icons/fa";
 import { FaShieldVirus } from "react-icons/fa6";
 import { MdOutlineEmergency, MdMedicalServices, MdOutlineChildCare} from "react-icons/md";
 import { TbBulbFilled } from "react-icons/tb";
-
+import { BiBulb } from "react-icons/bi";
+const iconMap = {
+  BiBulb,
+};
 const Services = ({ data }) =>{
   console.log(data)
   return(
@@ -21,10 +24,11 @@ const Services = ({ data }) =>{
           <Col>
             <div className={Style.servicesList}>
               {data && data.map((item, index) => {
-                const icon = item?.icon || '';
+                const Icon = iconMap[item.icon];
+                console.log(Icon, item.icon)
                 return (
                   <div className={Style.listBox} key={index}>
-                    <span className={Style.icon}><icon /></span>
+                    <span className={Style.icon}> {Icon && <Icon />}</span>
                     <h6>{item?.title}</h6>
                     <p>{item?.subtitle}</p>
                   </div>
