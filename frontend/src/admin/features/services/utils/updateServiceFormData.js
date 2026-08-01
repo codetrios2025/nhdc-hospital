@@ -14,6 +14,9 @@ const updateServiceFormData = (data, gallery = []) => {
   formData.append("icon", data.icon || "");
   formData.append("shortDescription", data.shortDescription || "");
   formData.append("description", data.description || "");
+  formData.append("buttonText", data.buttonText || "");
+  formData.append("buttonLink", data.buttonLink || "");
+  formData.append("openInNewTab", String(data.openInNewTab ?? false));
   formData.append("seoTitle", data.seoTitle || "");
   formData.append("seoDescription", data.seoDescription || "");
 

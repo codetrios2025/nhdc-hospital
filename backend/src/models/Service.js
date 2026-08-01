@@ -93,7 +93,22 @@ const serviceSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    buttonText: {
+      type: String,
+      trim: true,
+      default: "Know More",
+    },
 
+    buttonLink: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
+    openInNewTab: {
+      type: Boolean,
+      default: false,
+    },
     seoTitle: {
       type: String,
       default: "",
