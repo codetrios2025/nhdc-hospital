@@ -12,14 +12,24 @@ import { FaShieldVirus } from "react-icons/fa6";
 import { MdOutlineEmergency, MdMedicalServices, MdOutlineChildCare} from "react-icons/md";
 import { TbBulbFilled } from "react-icons/tb";
 
-const Services = () =>{
+const Services = ({data}) =>{
   return(
     <section className={`${Style.serviceSec} ${Style.commonSpace}`} aria-labelledby="services-heading">
       <Container>
         <Row>
           <Col>
             <div className={Style.servicesList}>
-              <div className={Style.listBox}>
+              {data && data.map((item, index) => {
+                console.log(item)
+                return (
+                  <div className={Style.listBox} key={index}>
+                    <span className={Style.icon}><i className={item.icon}></i></span>
+                    <h6>{item.title}</h6>
+                    <p>{item.subtitle}</p>
+                  </div>
+                );
+              })}
+              {/* <div className={Style.listBox}>
                 <span className={Style.icon}><TbBulbFilled /></span>
                 <h6>Emergency</h6>
                 <p>24×7 Support</p>
@@ -48,7 +58,7 @@ const Services = () =>{
                 <span className={Style.icon}><MdMedicalServices /></span>
                 <h6>Diagnostics</h6>
                 <p>Accurate Testing</p>
-              </div>
+              </div> */}
             </div>
           </Col>
         </Row>
