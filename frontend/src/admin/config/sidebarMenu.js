@@ -15,6 +15,8 @@ import {
   FaPhotoVideo,
   FaSearch,
   FaChartBar,
+  FaThLarge,
+  FaUsersCog,
   FaCog,
 } from "react-icons/fa";
 
@@ -61,7 +63,11 @@ const sidebarMenu = [
     icon: FaUserMd,
     path: "/admin/doctors",
   },
-
+  {
+    title: "Home Features",
+    icon: FaThLarge,
+    path: "/admin/home-features",
+  },
   {
     title: "Services",
     icon: FaStethoscope,

@@ -85,7 +85,7 @@ const VideoForm = ({ videoId = null }) => {
 
       console.log(response);
 
-      navigate("/videos");
+      navigate("/admin/videos");
     } catch (error) {
       Swal.fire({
         icon: "error",

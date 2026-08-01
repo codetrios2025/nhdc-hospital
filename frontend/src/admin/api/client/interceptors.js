@@ -22,7 +22,7 @@ export const responseErrorInterceptor = (error) => {
   if (error.response?.status === 401) {
     storage.removeToken();
 
-    window.location.href = "/login";
+    window.location.href = "/admin/login";
   }
 
   return Promise.reject(error);

@@ -125,7 +125,7 @@ const ServiceForm = ({ serviceId = null }) => {
 
       console.log(response);
 
-      navigate("/services");
+      navigate("/admin/services");
     } catch (error) {
       console.error(error);
 

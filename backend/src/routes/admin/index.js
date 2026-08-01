@@ -9,6 +9,15 @@ const videoRoutes = require("./video.routes");
 const serviceRoutes = require("./service.routes");
 const appointmentRoutes = require("./appointment.routes");
 const departmentRoutes = require("./department.routes");
+const homeFeatureRoutes = require("./homeFeature.routes");
+
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+*/
+
+router.use("/home-features", homeFeatureRoutes);
 
 router.use("/auth", authRoutes);
 

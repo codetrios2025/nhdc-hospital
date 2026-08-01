@@ -114,7 +114,7 @@ const DoctorForm = ({ doctorId = null }) => {
 
       console.log(response);
 
-      navigate("/doctors");
+      navigate("/admin/doctors");
     } catch (error) {
       console.error(error);
 

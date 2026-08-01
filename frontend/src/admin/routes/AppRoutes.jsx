@@ -29,6 +29,11 @@ import DepartmentListPage from "../features/departments/pages/DepartmentListPage
 import DepartmentFormPage from "../features/departments/pages/DepartmentFormPage";
 import DepartmentViewPage from "../features/departments/pages/DepartmentViewPage";
 
+import HomeFeatureList from "../features/homeFeature/pages/HomeFeatureList";
+import HomeFeatureForm from "../features/homeFeature/pages/HomeFeatureForm";
+import EditHomeFeature from "../features/homeFeature/pages/EditHomeFeature";
+import ViewHomeFeature from "../features/homeFeature/pages/ViewHomeFeature";
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -74,6 +79,12 @@ const AppRoutes = () => {
         <Route path="departments/add" element={<DepartmentFormPage />} />
         <Route path="departments/edit/:id" element={<DepartmentFormPage />} />
         <Route path="departments/view/:id" element={<DepartmentViewPage />} />
+
+        {/* Home Features */}
+        <Route path="home-features" element={<HomeFeatureList />} />
+        <Route path="home-features/create" element={<HomeFeatureForm />} />
+        <Route path="home-features/:id/edit" element={<EditHomeFeature />} />
+        <Route path="home-features/:id" element={<ViewHomeFeature />} />
       </Route>
     </Routes>
   );

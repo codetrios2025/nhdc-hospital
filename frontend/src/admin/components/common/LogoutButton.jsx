@@ -53,7 +53,7 @@ const LogoutButton = ({ onSuccess }) => {
       showConfirmButton: false,
     });
 
-    navigate("/login", {
+    navigate("/admin/login", {
       replace: true,
     });
   };
