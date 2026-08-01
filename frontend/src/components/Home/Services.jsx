@@ -11,30 +11,15 @@ import {FaHeartbeat, FaCheckCircle} from "react-icons/fa";
 import { FaShieldVirus } from "react-icons/fa6";
 import { MdOutlineEmergency, MdMedicalServices, MdOutlineChildCare} from "react-icons/md";
 import { TbBulbFilled } from "react-icons/tb";
-import { BiBulb } from "react-icons/bi";
-const iconMap = {
-  BiBulb,
-};
-const Services = ({ data }) =>{
-  console.log(data)
+
+const Services = () =>{
   return(
     <section className={`${Style.serviceSec} ${Style.commonSpace}`} aria-labelledby="services-heading">
       <Container>
         <Row>
           <Col>
             <div className={Style.servicesList}>
-              {data && data.map((item, index) => {
-                const Icon = iconMap[item.icon];
-                console.log(Icon, item.icon)
-                return (
-                  <div className={Style.listBox} key={index}>
-                    <span className={Style.icon}> {Icon && <Icon />}</span>
-                    <h6>{item?.title}</h6>
-                    <p>{item?.subtitle}</p>
-                  </div>
-                )
-              })}
-              {/* <div className={Style.listBox}>
+              <div className={Style.listBox}>
                 <span className={Style.icon}><TbBulbFilled /></span>
                 <h6>Emergency</h6>
                 <p>24×7 Support</p>
@@ -63,7 +48,7 @@ const Services = ({ data }) =>{
                 <span className={Style.icon}><MdMedicalServices /></span>
                 <h6>Diagnostics</h6>
                 <p>Accurate Testing</p>
-              </div> */}
+              </div>
             </div>
           </Col>
         </Row>
