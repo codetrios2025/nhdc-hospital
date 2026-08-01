@@ -6,7 +6,7 @@ import OurVideos from "./OurVideos";
 import OurDoctor from "./OurDoctor";
 import Support from "./Support";
 
-//API
+//APIs
 import { getDoctorsData, getVideos, getFeaturesData } from "../../services/routes.services";
 const HomeRoute = ()=>{
   const [doctorData, setDoctorData] = useState(null);
@@ -21,19 +21,19 @@ const HomeRoute = ()=>{
           getFeaturesData()
         ])
         setDoctorData(doctorRes?.data);
-        setVideoData(videoRes?.data);
-        setFeaturesData(featuresRes?.data);
+        setVideoData(videoRes?.data?.data || null);
+        setFeaturesData(featuresRes?.data || null);
       } catch(error){
         console.error("Error fetching doctor",  error);
       }
     }
     fetchData();
   }, []);
-  console.log(featuresData)
+  console.log(videoData)
   return(
     <>
       <HeroBanner />
-      <Services />
+      <Services data={featuresData} />
       <Diagnostics />
       <OurVideos data={videoData} />
       <OurDoctor data={doctorData} />
