@@ -7,26 +7,29 @@ import OurDoctor from "./OurDoctor";
 import Support from "./Support";
 
 //API
-import { getDoctorsData, getVideos } from "../../services/routes.services";
+import { getDoctorsData, getVideos, getFeaturesData } from "../../services/routes.services";
 const HomeRoute = ()=>{
   const [doctorData, setDoctorData] = useState(null);
   const [videoData, setVideoData] = useState(null);
+  const [featuresData, setFeaturesData] = useState(null);
   useEffect(() =>{
     const fetchData = async () =>{
       try{  
-        const [doctorRes, videoRes] = await Promise.all([
+        const [doctorRes, videoRes, featuresRes] = await Promise.all([
           getDoctorsData(),
           getVideos(),
+          getFeaturesData()
         ])
         setDoctorData(doctorRes?.data);
         setVideoData(videoRes?.data);
+        setFeaturesData(featuresRes?.data);
       } catch(error){
         console.error("Error fetching doctor",  error);
       }
     }
     fetchData();
   }, []);
-  //console.log(videoData)
+  console.log(featuresData)
   return(
     <>
       <HeroBanner />

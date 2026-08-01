@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 const VideoActionButtons = ({ video, onDelete }) => {
   return (
     <div className="btn-group">
-      <Link to={`/videos/${video._id}`} className="btn btn-info btn-sm">
+      <Link to={`/admin/videos/${video._id}`} className="btn btn-info btn-sm">
         <i className="bi bi-eye"></i>
       </Link>
 
-      <Link to={`/videos/${video._id}/edit`} className="btn btn-warning btn-sm">
+      <Link
+        to={`/admin/videos/${video._id}/edit`}
+        className="btn btn-warning btn-sm"
+      >
         <i className="bi bi-pencil"></i>
       </Link>
 

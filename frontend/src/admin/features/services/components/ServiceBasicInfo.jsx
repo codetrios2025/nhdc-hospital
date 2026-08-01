@@ -94,6 +94,53 @@ const ServiceBasicInfo = ({ register, errors }) => {
               {...register("icon")}
             />
           </div>
+
+          {/* Button Settings */}
+
+          <div className="col-md-4 mb-3">
+            <label className="form-label">Button Text</label>
+
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Know More"
+              {...register("buttonText")}
+            />
+
+            <small className="text-muted">
+              Text displayed on the service button.
+            </small>
+          </div>
+
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Button Link</label>
+
+            <input
+              type="text"
+              className="form-control"
+              placeholder="/appointments or https://example.com"
+              {...register("buttonLink")}
+            />
+
+            <small className="text-muted">
+              Internal page or external website URL.
+            </small>
+          </div>
+
+          <div className="col-md-2 mb-3 d-flex align-items-end">
+            <div className="form-check">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id="openInNewTab"
+                {...register("openInNewTab")}
+              />
+
+              <label className="form-check-label" htmlFor="openInNewTab">
+                Open in New Tab
+              </label>
+            </div>
+          </div>
         </div>
       </div>
     </div>

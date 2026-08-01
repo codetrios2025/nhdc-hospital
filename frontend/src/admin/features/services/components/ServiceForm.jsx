@@ -69,6 +69,12 @@ const ServiceForm = ({ serviceId = null }) => {
 
       description: service.description || "",
 
+      buttonText: service.buttonText || "",
+
+      buttonLink: service.buttonLink || "",
+
+      openInNewTab: service.openInNewTab ?? false,
+
       seoTitle: service.seoTitle || "",
 
       seoDescription: service.seoDescription || "",
