@@ -8,7 +8,7 @@ const OurVideos = ({data}) => {
   const [activeVideo, setActiveVideo] = useState(null);
   const videoRefs = useRef({});
   const aaa = data?.data?.videos;
-  console.log(aaa)
+  //console.log(aaa)
   //const videos = data;
   const videos = [
     {
