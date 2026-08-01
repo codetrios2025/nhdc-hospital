@@ -1,6 +1,6 @@
 import { Controller } from "react-hook-form";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { Editor } from 'primereact/editor';
+
 
 import useDepartmentForm from "../hooks/useDepartmentForm";
 
@@ -83,12 +83,10 @@ const DepartmentForm = ({ department = null, onSuccess }) => {
           control={control}
           name="description"
           render={({ field }) => (
-            <CKEditor
-              editor={ClassicEditor}
-              data={field.value || ""}
-              onChange={(event, editor) => {
-                field.onChange(editor.getData());
-              }}
+            <Editor
+              value={field.value || ""}
+              onTextChange={(e) => field.onChange(e.htmlValue)}
+              style={{ height: "300px" }}
             />
           )}
         />
