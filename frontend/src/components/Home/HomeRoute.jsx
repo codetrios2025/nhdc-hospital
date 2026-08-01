@@ -22,18 +22,18 @@ const HomeRoute = ()=>{
         ])
         setDoctorData(doctorRes?.data);
         setVideoData(videoRes?.data);
-        setFeaturesData(featuresRes?.data);
+        setFeaturesData(featuresRes?.data?.data || null);
       } catch(error){
         console.error("Error fetching doctor",  error);
       }
     }
     fetchData();
   }, []);
-  console.log(featuresData)
+  //console.log(featuresData)
   return(
     <>
       <HeroBanner />
-      <Services />
+      <Services data={featuresData} />
       <Diagnostics />
       <OurVideos data={videoData} />
       <OurDoctor data={doctorData} />

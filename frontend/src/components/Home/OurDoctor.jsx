@@ -12,11 +12,10 @@ import { GiLungs } from "react-icons/gi";
 import { LuBaby } from "react-icons/lu";
 
 const OurDoctor = ({ data }) =>{
-  
-  const doctorData = data?.data?.doctors?.[2]
-  //console.log(doctorData)
+  const doctorData = data?.data?.[0];
+    // console.log(doctorData)
     if (!doctorData) return <p>Loading...</p>;
-  console.log(doctorData)
+    
   return(
     <div className={`${Style.doctorSec} ${Style.commonSpace}`}>
       <Container>
@@ -37,7 +36,8 @@ const OurDoctor = ({ data }) =>{
                 <p><span>{doctorData?.qualification}</span>
                   <span>{doctorData?.designation}</span></p>
                 <div className={Style.description}>
-                  {parse(doctorData?.description)}
+                  {doctorData?.description ? parse(String(doctorData.description)): null}
+                 
                 </div>
                 {/* <ul>
                   <li><div className={Style.icon}><FaUserMd /></div> Child Specialist</li>
