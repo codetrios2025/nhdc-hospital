@@ -107,7 +107,7 @@ const VideoList = () => {
           <p className="text-muted">Manage website videos.</p>
         </div>
 
-        <Link className="btn btn-primary" to="/videos/create">
+        <Link className="btn btn-primary" to="/admin/videos/create">
           <i className="bi bi-plus-circle me-2"></i>
           Add Video
         </Link>
