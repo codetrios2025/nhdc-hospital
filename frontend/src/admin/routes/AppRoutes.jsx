@@ -34,6 +34,10 @@ import HomeFeatureForm from "../features/homeFeature/pages/HomeFeatureForm";
 import EditHomeFeature from "../features/homeFeature/pages/EditHomeFeature";
 import ViewHomeFeature from "../features/homeFeature/pages/ViewHomeFeature";
 
+import DiagnosticList from "../features/diagnostic/pages/DiagnosticList";
+import DiagnosticForm from "../features/diagnostic/pages/DiagnosticForm";
+import ViewDiagnostic from "../features/diagnostic/pages/ViewDiagnostic";
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -85,6 +89,16 @@ const AppRoutes = () => {
         <Route path="home-features/create" element={<HomeFeatureForm />} />
         <Route path="home-features/:id/edit" element={<EditHomeFeature />} />
         <Route path="home-features/:id" element={<ViewHomeFeature />} />
+
+        <Route path="diagnostic-services" element={<DiagnosticList />} />
+        <Route path="diagnostic-services/create" element={<DiagnosticForm />} />
+
+        <Route
+          path="diagnostic-services/:id/edit"
+          element={<DiagnosticForm />}
+        />
+
+        <Route path="diagnostic-services/:id" element={<ViewDiagnostic />} />
       </Route>
     </Routes>
   );
