@@ -6,7 +6,7 @@ import OurVideos from "./OurVideos";
 import OurDoctor from "./OurDoctor";
 import Support from "./Support";
 
-//API
+//APIs
 import { getDoctorsData, getVideos, getFeaturesData } from "../../services/routes.services";
 const HomeRoute = ()=>{
   const [doctorData, setDoctorData] = useState(null);
@@ -36,7 +36,7 @@ const HomeRoute = ()=>{
       <Services data={featuresData} />
       <Diagnostics />
       <OurVideos data={videoData} />
-      {/* <OurDoctor data={doctorData} /> */}
+      <OurDoctor data={doctorData} />
       <Support />
     </>
   )
