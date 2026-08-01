@@ -19,13 +19,12 @@ const Services = ({data}) =>{
         <Row>
           <Col>
             <div className={Style.servicesList}>
-              {data && data.map((item, index) => {
-                console.log(item)
+              {data && data?.data?.map((item, index) => {
                 return (
                   <div className={Style.listBox} key={index}>
-                    <span className={Style.icon}><i className={item.icon}></i></span>
-                    <h6>{item.title}</h6>
-                    <p>{item.subtitle}</p>
+                    <span className={Style.icon}><i className={item?.icon}></i></span>
+                    <h6>{item?.title}</h6>
+                    <p>{item?.subtitle}</p>
                   </div>
                 );
               })}

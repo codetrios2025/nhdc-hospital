@@ -7,54 +7,32 @@ import { FaPlay } from "react-icons/fa";
 const OurVideos = ({data}) => {
   const [activeVideo, setActiveVideo] = useState(null);
   const videoRefs = useRef({});
-  const aaa = data?.data?.videos;
-  //console.log(aaa)
-  //const videos = data;
-  const videos = [
-    {
-      title: "Child Vaccination Guide",
-      url: "https://www.instagram.com/p/DaC-GBQJBuU/",
-    },
-    {
-      title: "Asthma Symptoms & Prevention",
-      url: "https://www.youtube.com/shorts/Jpm8iQ6M3jA",
-    },
-    {
-      title: "Seasonal Allergy Care",
-      url: "https://www.youtube.com/shorts/xbccCsr_Z-A",
-    },
-    {
-      title: "Child Vaccination Guide",
-      url: "https://www.instagram.com/p/DZ1whPDJgD_/",
-    },
-    {
-      title: "Hospital Tour",
-      url: "https://piccadily.com/themes/piccadily/images/home-banner-02-mobile.mp4",
-    },
-    {
-      title: "Health Tips",
-      url: "https://www.youtube.com/watch?v=CdyvYAXFzsM",
-    },
-  ];
+  const allVideo = data;
 
-  const getVideoType = (url) => {
-    if (!url) return "unknown";
-
+  const getVideoType = (item) => {
+    if (!item) return "unknown";
+    // Standardize URL check from multiple potential properties
+    const videoUrl = item.youtubeUrl || item.externalUrl || item.url || "";
+    const sourceType = item.sourceType?.toLowerCase();
     if (
-      url.includes("instagram.com") ||
-      url.includes("instagr.am")
-    ) {
-      return "instagram";
-    }
-
-    if (
-      url.includes("youtube.com") ||
-      url.includes("youtu.be")
+      sourceType === "youtube" ||
+      videoUrl.includes("youtube.com") ||
+      videoUrl.includes("youtu.be")
     ) {
       return "youtube";
     }
-
-    if (/\.(mp4|webm|ogg)(\?.*)?$/i.test(url)) {
+    if (
+      sourceType === "instagram" ||
+      videoUrl.includes("instagram.com") ||
+      videoUrl.includes("instagr.am")
+    ) {
+      return "instagram";
+    }
+    if (
+      sourceType === "mp4" ||
+      /\.(mp4|webm|ogg)(\?.*)?$/i.test(videoUrl) ||
+      item.videoPath
+    ) {
       return "mp4";
     }
 
@@ -114,37 +92,25 @@ const OurVideos = ({data}) => {
               <div className={Style.videoHead}>
                 <div>
                   <h2>Watch Our Videos</h2>
-                  <p>
-                    Stay informed with expert medical guidance, child
-                    healthcare advice, and asthma awareness programs.
-                  </p>
+                  <p>Stay informed with expert medical guidance, child healthcare advice, and asthma awareness programs.</p>
                 </div>
-
-                <a
-                  href="/videos"
-                  className={Style.secondryBtn}
-                >
-                  View All Videos
-                </a>
+                <a href="/videos" className={Style.secondryBtn}>View All Videos</a>
               </div>
 
               <div className={"watchVideo " + Style.videoElem}>
-                {videos.slice(0, 4).map((item, index) => {
-                  const type = getVideoType(item.url);
-                  const videoId = getYoutubeId(item.url);
-
+                {allVideo?.slice(0, 4).map((item, index) => {
+                  const type = getVideoType(item);
+                  const youtubeLink = item.youtubeUrl || item.externalUrl || item.url;
+                  const videoId = getYoutubeId(youtubeLink);
                   return (
-                    <div
-                      className={Style.videoItem}
-                      key={index}
-                    >
+                    <div className={Style.videoItem} key={index}>
                       {/* Instagram */}
                       {type === "instagram" && (
-                        <InstaVideo data={item.url} />
+                        <InstaVideo data={item.externalUrl} />
                       )}
 
                       {/* YouTube */}
-                      {type === "youtube" && (
+                      {type === "youtube" && videoId && (
                         <div className={Style.videoFrame}>
                           {activeVideo === videoId ? (
                             <iframe
