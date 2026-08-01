@@ -16,7 +16,7 @@ const OurDoctor = ({ data }) =>{
   const doctorData = data?.data?.doctors?.[2]
   //console.log(doctorData)
     if (!doctorData) return <p>Loading...</p>;
-
+  console.log(doctorData)
   return(
     <div className={`${Style.doctorSec} ${Style.commonSpace}`}>
       <Container>
