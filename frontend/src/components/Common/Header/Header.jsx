@@ -104,7 +104,7 @@ const Header = () => {
                         <span className={Style.icon}>
                           <IoCalendarOutline />
                         </span>{" "}
-                        <p className={Style.mobNone}>Book Appointment test</p>
+                        <p className={Style.mobNone}>Book Appointment</p>
                       </button>
                     </li>
                   </ul>
