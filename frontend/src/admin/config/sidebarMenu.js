@@ -55,6 +55,11 @@ const sidebarMenu = [
     ],
   },
   {
+    title: "Banner",
+    icon: FaImages,
+    path: "/admin/banner",
+  },
+  {
     title: "Departments",
     icon: FaHospital,
     path: "/admin/departments",

@@ -36,4 +36,6 @@ router.use("/departments", departmentRoutes);
 
 router.use("/diagnostic-services", diagnosticRoutes);
 
+router.use("/banner", require("./banner.routes"));
+
 module.exports = router;

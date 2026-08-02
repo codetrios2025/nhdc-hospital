@@ -21,5 +21,6 @@ router.use("/doctors", require("./doctor.routes"));
 router.use("/videos", require("./video.routes"));
 router.use("/home-features", homeFeatureRoutes);
 router.use("/diagnostic-services", diagnosticRoutes);
+router.use("/banner", require("./banner.routes"));
 
 module.exports = router;
