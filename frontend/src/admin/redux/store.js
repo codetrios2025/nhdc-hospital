@@ -8,6 +8,7 @@ import serviceReducer from "./slices/serviceSlice";
 import appointmentReducer from "./slices/appointmentSlice";
 import departmentReducer from "./slices/departmentSlice";
 import homeFeatureReducer from "./slices/homeFeatureSlice";
+import diagnosticReducer from "./slices/diagnosticSlice";
 
 const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ const store = configureStore({
     appointments: appointmentReducer,
     departments: departmentReducer,
     homeFeatures: homeFeatureReducer,
+    diagnostic: diagnosticReducer,
   },
 });
 
