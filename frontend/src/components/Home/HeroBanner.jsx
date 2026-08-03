@@ -10,6 +10,7 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { IoCall } from "react-icons/io5";
 import { FaCheckCircle } from "react-icons/fa";
 import BookingForm from "../Booking/BookingForm";
+import constants from "../../services/constants";
 
 const Carousel =
   CarouselImport.default ??
@@ -17,6 +18,10 @@ const Carousel =
 
 const HeroBanner = ({ data }) =>{
   const [booking, setBooking] = useState(false);
+  const slides = data?.[0]?.slides || [];
+  if (!slides.length) {
+    return null;
+  }
     const bookingHandler = ()=>{
       setBooking(true)
     }
@@ -48,26 +53,18 @@ const HeroBanner = ({ data }) =>{
           infinite={true}
           arrows={false}
       >
-        <figure className={Style.bannerItem}>
-          <img
-            src={BannerImg}
-            alt="Expert pediatric healthcare services at Namokar Hospital"
-            width="1920"
-            height="850"
-          />
-        </figure>
-        <figure className={Style.bannerItem}>
-          <img
-            src={BannerImg01}
-            alt="Expert pediatric healthcare services at Namokar Hospital"
-            width="1920"
-            height="850"
-          />
-        </figure>
+        {slides.map((item, index) => (
+          <figure className={Style.bannerItem} key={index}>
+            <img
+              src={constants.Image_BASE_URL + "/" + item.desktopImage}
+              alt={data?.[0]?.title}
+            />
+          </figure>
+        ))}
       </Carousel>
       <div className={Style.bannerContent + ' ' + Style.checkStyle}>
         <div className={Style.box}>
-          <h1>{data?.[0]?.title} <span>{data?.[0]?.subtitle}</span></h1>
+          <h1>{data?.[0]?.title} <span>{data?.[0]?.subtitle}</span> </h1>
           {data?.[0]?.description ? parse(String(data?.[0]?.description)): null }
           {/* <ul className={Style.featureList}>
             <li><span className={Style.icon}><FaCheckCircle /></span> Child Specialist Care</li>
