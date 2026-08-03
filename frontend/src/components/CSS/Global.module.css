@@ -13,9 +13,28 @@
 .bannerContent h1{font-size: var(--fs-3xl);color: #16366a;margin-bottom: 20px;}
 .bannerContent h1 span{display: block;color:#df1123;}
 .bannerContent p{line-height: 26px;padding-right: 350px;}
-.bannerContent ul{margin-top: 10px;}
-.bannerContent ul li{font-weight: 600;line-height: 40px;}
-.bannerContent ul li .icon{margin-right: 5px;position: relative;top: -1px;color: #16366a;}
+.bannerContent p br{display: none;}
+.bannerContent ul, .bannerContent ol{margin-top: 10px;}
+.bannerContent ul li, .bannerContent ol li{font-weight: 600;line-height: 40px;position: relative;    padding-left: 25px;}
+.checkStyle li{padding-left: 25px;position: relative;}
+.checkStyle li:after{
+    content: "\F26E";
+    font-family: "bootstrap-icons";
+    position: absolute;
+    left: 0;
+    color: #fff;
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    background: #16366a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    top: 13px;
+    font-weight: normal;
+}
+.bannerContent ul li .icon, .bannerContent ol li .icon{margin-right: 5px;position: relative;top: -1px;color: #16366a;}
 .bannerBtn{display: flex;gap: 15px;margin-top: 15px;}
 .instagramContainer{
     display: "flex";
@@ -66,6 +85,7 @@ display: flex;flex-direction: column;align-items: flex-start;}
 .doctorSec .description{-webkit-line-clamp: 4;    display: -webkit-box;overflow: hidden;    word-break: break-all;}
 .drConainer .drImg{width: 330px;position: relative;z-index: 2;}
 .drConainer .drImg figure{position: relative;height: 100%;}
+.aboutPage .drConainer .drImg figure img{object-fit: contain;}
 .drConainer .drImg figure img{width: 100%;height: 100%;object-fit: cover;}
 .drConainer .drImg .drExp{position: absolute;left: 50%;bottom: 30px;background: #16366ada;border-radius: 10px;display: flex;align-items: center;justify-content: center;transform: translate(-50%);padding: 10px 15px 10px 30px;width: 180px;}
 .drConainer .drImg .drExp .icon{font-size: 30px;color: #fff;margin-right: 15px;}
@@ -276,7 +296,7 @@ display: flex;flex-direction: column;align-items: flex-start;}
 .diagnoServices.whyChoose .whyChooseContainer .box:nth-child(5) .icon{color:#6f4eb4}
 .diagnoServices.whyChoose .whyChooseContainer .box:nth-child(6) .icon{color: #fe9f07}
 
-.aboutPage .drConainer{background: #ebf0f8;padding: 20px;}
+.aboutPage .drConainer{background: #ebf0f8;padding: 20px 20px 0;}
 .aboutPage .drContent p{padding: 0;}
 .aboutPage .drConainer .drImg {
     width: 40%;}

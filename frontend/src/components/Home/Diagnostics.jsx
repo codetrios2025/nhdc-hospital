@@ -18,7 +18,7 @@ const Diagnostics = ({ data }) =>{
   const closeBooking = ()=>{
     setBooking(false)
   }
-  console.log(data)
+  //console.log(data)
   return(
     <>
    

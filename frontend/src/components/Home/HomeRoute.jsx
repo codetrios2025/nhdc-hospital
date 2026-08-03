@@ -7,8 +7,9 @@ import OurDoctor from "./OurDoctor";
 import Support from "./Support";
 
 //APIs
-import { getDoctorsData, getVideos, getFeaturesData, getDiagnosticServicesData } from "../../services/routes.services";
+import { getBannerData, getDoctorsData, getVideos, getFeaturesData, getDiagnosticServicesData } from "../../services/routes.services";
 const HomeRoute = ()=>{
+  const [bannerData, setBannerData] = useState(null);
   const [doctorData, setDoctorData] = useState(null);
   const [videoData, setVideoData] = useState(null);
   const [featuresData, setFeaturesData] = useState(null);
@@ -16,12 +17,14 @@ const HomeRoute = ()=>{
   useEffect(() =>{
     const fetchData = async () =>{
       try{  
-        const [doctorRes, videoRes, featuresRes, diagnosticServicesRes] = await Promise.all([
+        const [bannerRes, doctorRes, videoRes, featuresRes, diagnosticServicesRes] = await Promise.all([
+          getBannerData(),
           getDoctorsData(),
           getVideos(),
           getFeaturesData(),
           getDiagnosticServicesData()
         ])
+        setBannerData(bannerRes?.data?.data || null);
         setDoctorData(doctorRes?.data);
         setVideoData(videoRes?.data?.data || null);
         setFeaturesData(featuresRes?.data || null);
@@ -32,10 +35,10 @@ const HomeRoute = ()=>{
     }
     fetchData();
   }, []);
-  //console.log(diagnosticServicesData)
+  //console.log(bannerData)
   return(
     <>
-      <HeroBanner />
+      <HeroBanner data={bannerData} />
       <Services data={featuresData} />
       <Diagnostics data={diagnosticServicesData} />
       <OurVideos data={videoData} />

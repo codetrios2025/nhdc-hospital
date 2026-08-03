@@ -1,6 +1,10 @@
 import axiosService from "./AxiosConfig";
 
 //Home API
+//Home Banner APO
+export const getBannerData = () => {
+  return axiosService.get("banner");
+};
 // Home features API
 export const getFeaturesData = () => {
   return axiosService.get("home-features");
