@@ -23,23 +23,50 @@ const bannerSlice = createSlice({
   initialState,
 
   reducers: {
+    /*
+    |--------------------------------------------------------------------------
+    | Request Start
+    |--------------------------------------------------------------------------
+    */
+
     requestStart(state) {
       state.loading = true;
       state.error = null;
     },
+
+    /*
+    |--------------------------------------------------------------------------
+    | Request Failure
+    |--------------------------------------------------------------------------
+    */
 
     requestFailure(state, action) {
       state.loading = false;
       state.error = action.payload;
     },
 
+    /*
+    |--------------------------------------------------------------------------
+    | Banner Listing
+    |--------------------------------------------------------------------------
+    */
+
     setBanners(state, action) {
       state.loading = false;
 
-      state.banners = action.payload.banners;
+      state.banners = action.payload.banners || [];
 
-      state.pagination = action.payload.pagination;
+      state.pagination = {
+        ...state.pagination,
+        ...action.payload.pagination,
+      };
     },
+
+    /*
+    |--------------------------------------------------------------------------
+    | Banner Details
+    |--------------------------------------------------------------------------
+    */
 
     setBanner(state, action) {
       state.loading = false;
@@ -47,11 +74,25 @@ const bannerSlice = createSlice({
       state.banner = action.payload;
     },
 
+    /*
+    |--------------------------------------------------------------------------
+    | Create Banner
+    |--------------------------------------------------------------------------
+    */
+
     addBanner(state, action) {
       state.loading = false;
 
       state.banners.unshift(action.payload);
+
+      state.pagination.total += 1;
     },
+
+    /*
+    |--------------------------------------------------------------------------
+    | Update Banner
+    |--------------------------------------------------------------------------
+    */
 
     updateBanner(state, action) {
       state.loading = false;
@@ -65,16 +106,69 @@ const bannerSlice = createSlice({
       }
     },
 
+    /*
+    |--------------------------------------------------------------------------
+    | Delete Banner
+    |--------------------------------------------------------------------------
+    */
+
     removeBanner(state, action) {
       state.loading = false;
 
       state.banners = state.banners.filter(
         (banner) => banner._id !== action.payload,
       );
+
+      if (state.pagination.total > 0) {
+        state.pagination.total -= 1;
+      }
+
+      if (state.banner && state.banner._id === action.payload) {
+        state.banner = null;
+      }
     },
+
+    /*
+    |--------------------------------------------------------------------------
+    | Clear Banner
+    |--------------------------------------------------------------------------
+    */
 
     clearBanner(state) {
       state.banner = null;
+    },
+
+    /*
+    |--------------------------------------------------------------------------
+    | Clear Error
+    |--------------------------------------------------------------------------
+    */
+
+    clearError(state) {
+      state.error = null;
+    },
+
+    /*
+    |--------------------------------------------------------------------------
+    | Reset Banner State
+    |--------------------------------------------------------------------------
+    */
+
+    resetBannerState(state) {
+      state.loading = false;
+
+      state.banners = [];
+
+      state.banner = null;
+
+      state.pagination = {
+        total: 0,
+        page: 1,
+        limit: 10,
+        totalPages: 1,
+      };
+
+      state.error = null;
     },
   },
 });
@@ -88,6 +182,8 @@ export const {
   updateBanner,
   removeBanner,
   clearBanner,
+  clearError,
+  resetBannerState,
 } = bannerSlice.actions;
 
 export default bannerSlice.reducer;

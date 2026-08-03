@@ -7,9 +7,12 @@ const ApiError = require("../../utils/ApiError");
 const asyncHandler = require("../../utils/asyncHandler");
 
 class BannerController {
-  /**
-   * Create Banner
-   */
+  /*
+  |--------------------------------------------------------------------------
+  | Create Banner
+  |--------------------------------------------------------------------------
+  */
+
   create = asyncHandler(async (req, res) => {
     const errors = validationResult(req);
 
@@ -19,28 +22,22 @@ class BannerController {
 
     const body = {
       ...req.body,
+      createdBy: req.user._id,
     };
 
-    body.createdBy = req.user._id;
-
-    if (req.files?.desktopImage?.length) {
-      body.desktopImageFile = req.files.desktopImage[0];
-    }
-
-    if (req.files?.mobileImage?.length) {
-      body.mobileImageFile = req.files.mobileImage[0];
-    }
-
-    const banner = await BannerService.create(body);
+    const banner = await BannerService.create(body, req.files || []);
 
     return res
       .status(201)
       .json(new ApiResponse(201, true, "Banner created successfully", banner));
   });
 
-  /**
-   * Banner Listing
-   */
+  /*
+  |--------------------------------------------------------------------------
+  | Banner Listing
+  |--------------------------------------------------------------------------
+  */
+
   list = asyncHandler(async (req, res) => {
     const banners = await BannerService.getAll(req.query);
 
@@ -49,9 +46,12 @@ class BannerController {
     );
   });
 
-  /**
-   * Banner Details
-   */
+  /*
+  |--------------------------------------------------------------------------
+  | Banner Details
+  |--------------------------------------------------------------------------
+  */
+
   details = asyncHandler(async (req, res) => {
     const banner = await BannerService.getById(req.params.id);
 
@@ -60,43 +60,53 @@ class BannerController {
     );
   });
 
-  /**
-   * Update Banner
-   */
+  /*
+  |--------------------------------------------------------------------------
+  | Update Banner
+  |--------------------------------------------------------------------------
+  */
+
   update = asyncHandler(async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      throw new ApiError(422, errors.array()[0].msg);
+    }
+
     const body = {
       ...req.body,
+      updatedBy: req.user._id,
     };
 
-    body.updatedBy = req.user._id;
-
-    if (req.files?.desktopImage?.length) {
-      body.desktopImageFile = req.files.desktopImage[0];
-    }
-
-    if (req.files?.mobileImage?.length) {
-      body.mobileImageFile = req.files.mobileImage[0];
-    }
-
-    const banner = await BannerService.update(req.params.id, body);
+    const banner = await BannerService.update(
+      req.params.id,
+      body,
+      req.files || [],
+    );
 
     return res.json(
       new ApiResponse(200, true, "Banner updated successfully", banner),
     );
   });
 
-  /**
-   * Delete Banner
-   */
+  /*
+  |--------------------------------------------------------------------------
+  | Delete Banner
+  |--------------------------------------------------------------------------
+  */
+
   delete = asyncHandler(async (req, res) => {
     await BannerService.delete(req.params.id);
 
     return res.json(new ApiResponse(200, true, "Banner deleted successfully"));
   });
 
-  /**
-   * Update Status
-   */
+  /*
+  |--------------------------------------------------------------------------
+  | Update Banner Status
+  |--------------------------------------------------------------------------
+  */
+
   status = asyncHandler(async (req, res) => {
     const banner = await BannerService.updateStatus(
       req.params.id,
@@ -108,9 +118,12 @@ class BannerController {
     );
   });
 
-  /**
-   * Website Banner Listing
-   */
+  /*
+  |--------------------------------------------------------------------------
+  | Website Banner Listing
+  |--------------------------------------------------------------------------
+  */
+
   getWebsiteBanners = asyncHandler(async (req, res) => {
     const banners = await BannerService.getWebsiteBanners();
 

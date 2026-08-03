@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const repository = require("../../repositories/admin/banner.repository");
+
 const optimizeImage = require("../../utils/imageOptimizer");
 
 class BannerService {
@@ -22,69 +23,369 @@ class BannerService {
       imageName,
     );
 
-    try {
-      await fs.unlink(imagePath);
-    } catch (err) {
-      // Ignore if file doesn't exist
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath);
     }
   }
 
+  /*
+  |--------------------------------------------------------------------------
+  | Normalize Features
+  |--------------------------------------------------------------------------
+  */
+
+  normalizeFeatures(features) {
+    if (!features) return [];
+
+    if (typeof features === "string") {
+      try {
+        features = JSON.parse(features);
+      } catch (err) {
+        return [];
+      }
+    }
+
+    if (!Array.isArray(features)) {
+      return [];
+    }
+
+    return features
+      .filter((item) => item.title && item.title.trim())
+      .map((item, index) => ({
+        title: item.title.trim(),
+
+        icon: item.icon || "bi bi-check-circle-fill",
+
+        sortOrder: Number(item.sortOrder) || index + 1,
+      }));
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | Normalize Slides
+  |--------------------------------------------------------------------------
+  */
+
+  normalizeSlides(slides) {
+    if (!slides) return [];
+
+    if (typeof slides === "string") {
+      try {
+        slides = JSON.parse(slides);
+      } catch (err) {
+        return [];
+      }
+    }
+
+    if (!Array.isArray(slides)) {
+      return [];
+    }
+
+    return slides.map((slide, index) => ({
+      _id: slide._id || null,
+
+      desktopImage: slide.desktopImage || "",
+
+      mobileImage: slide.mobileImage || "",
+
+      displayOrder: Number(slide.displayOrder) || index + 1,
+
+      status: slide.status === false || slide.status === "false" ? false : true,
+    }));
+  }
+  /*
+  |--------------------------------------------------------------------------
+  | Optimize Slides
+  |--------------------------------------------------------------------------
+  */
+
+  async optimizeSlides(slides = [], files = []) {
+    if (!Array.isArray(slides) || !slides.length) {
+      return [];
+    }
+
+    const optimizedSlides = [];
+
+    for (let index = 0; index < slides.length; index++) {
+      const slide = { ...slides[index] };
+
+      /*
+      |--------------------------------------------------------------------------
+      | Desktop Image
+      |--------------------------------------------------------------------------
+      */
+
+      const desktopFile = files.find(
+        (file) => file.fieldname === `slides[${index}][desktopImage]`,
+      );
+
+      if (desktopFile) {
+        slide.desktopImage = await optimizeImage({
+          inputPath: desktopFile.path,
+
+          outputDir: path.join(process.cwd(), "src", "uploads", "banners"),
+
+          width: 1920,
+
+          quality: 80,
+        });
+      }
+
+      /*
+      |--------------------------------------------------------------------------
+      | Mobile Image
+      |--------------------------------------------------------------------------
+      */
+
+      const mobileFile = files.find(
+        (file) => file.fieldname === `slides[${index}][mobileImage]`,
+      );
+
+      if (mobileFile) {
+        slide.mobileImage = await optimizeImage({
+          inputPath: mobileFile.path,
+
+          outputDir: path.join(process.cwd(), "src", "uploads", "banners"),
+
+          width: 768,
+
+          quality: 80,
+        });
+      }
+
+      optimizedSlides.push({
+        desktopImage: slide.desktopImage || "",
+
+        mobileImage: slide.mobileImage || "",
+
+        displayOrder: Number(slide.displayOrder) || index + 1,
+
+        status:
+          slide.status === false || slide.status === "false" ? false : true,
+      });
+    }
+
+    return optimizedSlides;
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | Build Banner Data
+  |--------------------------------------------------------------------------
+  */
+
+  async buildBannerData(data, files = []) {
+    const banner = {
+      ...data,
+    };
+
+    banner.features = this.normalizeFeatures(data.features);
+
+    banner.slides = await this.optimizeSlides(
+      this.normalizeSlides(data.slides),
+      files,
+    );
+
+    return banner;
+  }
+  /*
+  |--------------------------------------------------------------------------
+  | Build Create Data
+  |--------------------------------------------------------------------------
+  */
+
+  async buildCreateData(data, files = []) {
+    const banner = await this.buildBannerData(data, files);
+
+    return banner;
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | Build Update Data
+  |--------------------------------------------------------------------------
+  */
+
+  async buildUpdateData(existingBanner, data, files = []) {
+    const banner = {
+      ...existingBanner.toObject(),
+      ...data,
+    };
+
+    /*
+    |--------------------------------------------------------------------------
+    | Features
+    |--------------------------------------------------------------------------
+    */
+
+    banner.features = this.normalizeFeatures(data.features);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Slides
+    |--------------------------------------------------------------------------
+    */
+
+    const slides = this.normalizeSlides(data.slides);
+
+    const optimizedSlides = [];
+
+    for (let index = 0; index < slides.length; index++) {
+      const slide = slides[index];
+
+      const oldSlide = slide._id
+        ? existingBanner.slides.find(
+            (item) => item._id.toString() === slide._id.toString(),
+          )
+        : null;
+
+      /*
+      |--------------------------------------------------------------------------
+      | Desktop Image
+      |--------------------------------------------------------------------------
+      */
+
+      if (!slide.desktopImage && oldSlide?.desktopImage) {
+        slide.desktopImage = oldSlide.desktopImage;
+      }
+
+      /*
+      |--------------------------------------------------------------------------
+      | Mobile Image
+      |--------------------------------------------------------------------------
+      */
+
+      if (!slide.mobileImage && oldSlide?.mobileImage) {
+        slide.mobileImage = oldSlide.mobileImage;
+      }
+
+      optimizedSlides.push(slide);
+    }
+
+    banner.slides = await this.optimizeSlides(optimizedSlides, files);
+
+    return banner;
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | Remove Deleted Images
+  |--------------------------------------------------------------------------
+  */
+
+  async removeUnusedImagesold(oldSlides = [], newSlides = []) {
+    for (let i = 0; i < oldSlides.length; i++) {
+      const oldSlide = oldSlides[i];
+
+      const newSlide = newSlides[i];
+
+      /*
+      |--------------------------------------------------------------------------
+      | Desktop Image
+      |--------------------------------------------------------------------------
+      */
+
+      if (
+        oldSlide?.desktopImage &&
+        oldSlide.desktopImage !== newSlide?.desktopImage
+      ) {
+        await this.deleteImage(oldSlide.desktopImage);
+      }
+
+      /*
+      |--------------------------------------------------------------------------
+      | Mobile Image
+      |--------------------------------------------------------------------------
+      */
+
+      if (
+        oldSlide?.mobileImage &&
+        oldSlide.mobileImage !== newSlide?.mobileImage
+      ) {
+        await this.deleteImage(oldSlide.mobileImage);
+      }
+    }
+  }
+
+  async removeUnusedImages(oldSlides = [], newSlides = []) {
+    for (const oldSlide of oldSlides) {
+      const newSlide = newSlides.find(
+        (item) =>
+          item._id &&
+          oldSlide._id &&
+          item._id.toString() === oldSlide._id.toString(),
+      );
+
+      /*
+    |--------------------------------------------------------------------------
+    | Slide Deleted
+    |--------------------------------------------------------------------------
+    */
+
+      if (!newSlide) {
+        if (oldSlide.desktopImage) {
+          await this.deleteImage(oldSlide.desktopImage);
+        }
+
+        if (oldSlide.mobileImage) {
+          await this.deleteImage(oldSlide.mobileImage);
+        }
+
+        continue;
+      }
+
+      /*
+    |--------------------------------------------------------------------------
+    | Desktop Image Replaced
+    |--------------------------------------------------------------------------
+    */
+
+      if (
+        oldSlide.desktopImage &&
+        oldSlide.desktopImage !== newSlide.desktopImage
+      ) {
+        await this.deleteImage(oldSlide.desktopImage);
+      }
+
+      /*
+    |--------------------------------------------------------------------------
+    | Mobile Image Replaced
+    |--------------------------------------------------------------------------
+    */
+
+      if (
+        oldSlide.mobileImage &&
+        oldSlide.mobileImage !== newSlide.mobileImage
+      ) {
+        await this.deleteImage(oldSlide.mobileImage);
+      }
+    }
+  }
   /*
   |--------------------------------------------------------------------------
   | Create Banner
   |--------------------------------------------------------------------------
   */
 
-  async create(data) {
-    // Check duplicate display order
-    const existingBanner = await repository.findByDisplayOrder(
-      data.displayOrder,
-    );
+  async create(data, files = []) {
+    const exists = await repository.findByDisplayOrder(data.displayOrder);
 
-    if (existingBanner) {
+    if (exists) {
       throw new Error("Display order already exists.");
     }
 
-    // Desktop Banner
-    if (data.desktopImageFile?.path) {
-      data.desktopImage = await optimizeImage({
-        inputPath: data.desktopImageFile.path,
+    const banner = await this.buildCreateData(data, files);
 
-        outputDir: path.join(process.cwd(), "src", "uploads", "banners"),
-
-        width: 1920,
-
-        quality: 80,
-      });
-
-      delete data.desktopImageFile;
-    }
-
-    // Mobile Banner
-    if (data.mobileImageFile?.path) {
-      data.mobileImage = await optimizeImage({
-        inputPath: data.mobileImageFile.path,
-
-        outputDir: path.join(process.cwd(), "src", "uploads", "banners"),
-
-        width: 768,
-
-        quality: 80,
-      });
-
-      delete data.mobileImageFile;
-    }
-
-    return await repository.create(data);
+    return await repository.create(banner);
   }
 
   /*
   |--------------------------------------------------------------------------
-  | Admin Listing
+  | Banner Listing
   |--------------------------------------------------------------------------
   */
 
-  async getAll(query) {
+  async getAll(query = {}) {
     const page = Number(query.page) || 1;
 
     const limit = Number(query.limit) || 10;
@@ -100,13 +401,9 @@ class BannerService {
 
     return {
       rows: result.rows,
-
       total: result.total,
-
       page,
-
       limit,
-
       totalPages: Math.ceil(result.total / limit),
     };
   }
@@ -124,6 +421,10 @@ class BannerService {
       throw new Error("Banner not found.");
     }
 
+    banner.features.sort((a, b) => a.sortOrder - b.sortOrder);
+
+    banner.slides.sort((a, b) => a.displayOrder - b.displayOrder);
+
     return banner;
   }
   /*
@@ -132,74 +433,44 @@ class BannerService {
   |--------------------------------------------------------------------------
   */
 
-  async update(id, data) {
-    const banner = await repository.findById(id);
+  async update(id, data, files = []) {
+    const existingBanner = await repository.findById(id);
 
-    if (!banner) {
+    if (!existingBanner) {
       throw new Error("Banner not found.");
     }
 
-    // Check duplicate display order
-    if (data.displayOrder) {
-      const existingBanner = await repository.findByDisplayOrder(
-        data.displayOrder,
-        id,
-      );
+    /*
+    |--------------------------------------------------------------------------
+    | Duplicate Display Order
+    |--------------------------------------------------------------------------
+    */
 
-      if (existingBanner) {
+    if (data.displayOrder) {
+      const exists = await repository.findByDisplayOrder(data.displayOrder, id);
+
+      if (exists) {
         throw new Error("Display order already exists.");
       }
     }
 
     /*
     |--------------------------------------------------------------------------
-    | Desktop Banner
+    | Build Updated Banner
     |--------------------------------------------------------------------------
     */
 
-    if (data.desktopImageFile?.path) {
-      if (banner.desktopImage) {
-        await this.deleteImage(banner.desktopImage);
-      }
-
-      data.desktopImage = await optimizeImage({
-        inputPath: data.desktopImageFile.path,
-
-        outputDir: path.join(process.cwd(), "src", "uploads", "banners"),
-
-        width: 1920,
-
-        quality: 80,
-      });
-
-      delete data.desktopImageFile;
-    }
+    const banner = await this.buildUpdateData(existingBanner, data, files);
 
     /*
     |--------------------------------------------------------------------------
-    | Mobile Banner
+    | Remove Old Images
     |--------------------------------------------------------------------------
     */
 
-    if (data.mobileImageFile?.path) {
-      if (banner.mobileImage) {
-        await this.deleteImage(banner.mobileImage);
-      }
+    await this.removeUnusedImages(existingBanner.slides, banner.slides);
 
-      data.mobileImage = await optimizeImage({
-        inputPath: data.mobileImageFile.path,
-
-        outputDir: path.join(process.cwd(), "src", "uploads", "banners"),
-
-        width: 768,
-
-        quality: 80,
-      });
-
-      delete data.mobileImageFile;
-    }
-
-    return await repository.update(id, data);
+    return await repository.update(id, banner);
   }
 
   /*
@@ -215,12 +486,22 @@ class BannerService {
       throw new Error("Banner not found.");
     }
 
-    if (banner.desktopImage) {
-      await this.deleteImage(banner.desktopImage);
-    }
+    /*
+    |--------------------------------------------------------------------------
+    | Delete Slide Images
+    |--------------------------------------------------------------------------
+    */
 
-    if (banner.mobileImage) {
-      await this.deleteImage(banner.mobileImage);
+    if (Array.isArray(banner.slides)) {
+      for (const slide of banner.slides) {
+        if (slide.desktopImage) {
+          await this.deleteImage(slide.desktopImage);
+        }
+
+        if (slide.mobileImage) {
+          await this.deleteImage(slide.mobileImage);
+        }
+      }
     }
 
     return await repository.delete(id);
