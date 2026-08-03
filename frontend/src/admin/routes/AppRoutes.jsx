@@ -38,6 +38,9 @@ import DiagnosticList from "../features/diagnostic/pages/DiagnosticList";
 import DiagnosticForm from "../features/diagnostic/pages/DiagnosticForm";
 import ViewDiagnostic from "../features/diagnostic/pages/ViewDiagnostic";
 
+import BannerList from "../features/banner/pages/BannerList";
+import BannerForm from "../features/banner/components/BannerForm";
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -99,6 +102,12 @@ const AppRoutes = () => {
         />
 
         <Route path="diagnostic-services/:id" element={<ViewDiagnostic />} />
+
+        <Route path="banner" element={<BannerList />} />
+
+        <Route path="banner/create" element={<BannerForm />} />
+
+        <Route path="banner/:id/edit" element={<BannerForm />} />
       </Route>
     </Routes>
   );
