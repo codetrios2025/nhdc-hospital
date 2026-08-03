@@ -10,7 +10,7 @@ import { FaVial , FaBrain, FaXRay } from "react-icons/fa6";
 import { MdMonitorHeart } from "react-icons/md";
 import BookingForm from "../Booking/BookingForm";
 
-const Diagnostics = () =>{
+const Diagnostics = ({ data }) =>{
   const [booking, setBooking] = useState(false);
   const bookingHandler = ()=>{
     setBooking(true)
@@ -18,6 +18,7 @@ const Diagnostics = () =>{
   const closeBooking = ()=>{
     setBooking(false)
   }
+  console.log(data)
   return(
     <>
    
@@ -29,7 +30,14 @@ const Diagnostics = () =>{
               <h2>Advanced Diagnostic Services</h2>
               <p>State-of-the-art technology for precise diagnosis and effective treatment.</p>
               <div className={Style.whyChooseElem}>
-                <div className={Style.box}>
+                {data?.map((item, index) => (
+                  <div className={Style.box} key={index}>
+                    <div className={Style.icon}><i className={item?.icon}></i></div>
+                    <h4>{item?.title}</h4>
+                    <p>{item?.shortDescription}</p>
+                  </div>
+                ))}
+                {/* <div className={Style.box}>
                   <div className={Style.icon}><GiLungs /></div>
                   <h4>Spirometry</h4>
                   <p>Measures lung function and helps diagnose asthma and COPD.</p>
@@ -64,7 +72,7 @@ const Diagnostics = () =>{
                   <div className={Style.icon}><FaXRay   /></div>
                   <h4>X-Ray</h4>
                   <p>Imaging test to view bones and internal organs.</p>
-                </div>
+                </div> */}
               </div>
               {/* <div className={'flexCenter ' + Style.bookText}>
                 <button onClick={bookingHandler} type="button" className={'flexCenter ' + Style.primeryBtn} aria-label="Book an Appointment">
