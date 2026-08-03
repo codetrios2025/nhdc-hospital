@@ -20,38 +20,26 @@ const checkRole = require("../../middlewares/checkRole");
 |--------------------------------------------------------------------------
 */
 
+/**
+ * Create Banner
+ */
 router.post(
   "/",
   verifyToken,
   checkRole("SUPER_ADMIN"),
-  upload.fields([
-    {
-      name: "desktopImage",
-      maxCount: 1,
-    },
-    {
-      name: "mobileImage",
-      maxCount: 1,
-    },
-  ]),
+  upload.any(),
   createBannerValidation,
   BannerController.create,
 );
 
-/*
-|--------------------------------------------------------------------------
-| Admin Listing
-|--------------------------------------------------------------------------
-*/
-
+/**
+ * Banner Listing
+ */
 router.get("/", verifyToken, checkRole("SUPER_ADMIN"), BannerController.list);
 
-/*
-|--------------------------------------------------------------------------
-| Banner Details
-|--------------------------------------------------------------------------
-*/
-
+/**
+ * Banner Details
+ */
 router.get(
   "/:id",
   verifyToken,
@@ -59,36 +47,21 @@ router.get(
   BannerController.details,
 );
 
-/*
-|--------------------------------------------------------------------------
-| Update Banner
-|--------------------------------------------------------------------------
-*/
-
+/**
+ * Update Banner
+ */
 router.put(
   "/:id",
   verifyToken,
   checkRole("SUPER_ADMIN"),
-  upload.fields([
-    {
-      name: "desktopImage",
-      maxCount: 1,
-    },
-    {
-      name: "mobileImage",
-      maxCount: 1,
-    },
-  ]),
+  upload.any(),
   updateBannerValidation,
   BannerController.update,
 );
 
-/*
-|--------------------------------------------------------------------------
-| Delete Banner
-|--------------------------------------------------------------------------
-*/
-
+/**
+ * Delete Banner
+ */
 router.delete(
   "/:id",
   verifyToken,
@@ -96,12 +69,9 @@ router.delete(
   BannerController.delete,
 );
 
-/*
-|--------------------------------------------------------------------------
-| Update Status
-|--------------------------------------------------------------------------
-*/
-
+/**
+ * Change Banner Status
+ */
 router.patch(
   "/status/:id",
   verifyToken,

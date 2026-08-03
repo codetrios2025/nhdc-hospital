@@ -1,21 +1,21 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+
+import Loader from "../../../components/common/Loader/Loader";
+import NoDataFound from "../../../components/common/NoData/NoData";
 
 import { changeBannerStatus } from "../../../redux/thunks/bannerThunk";
 
-import Loader from "../../../components/common/Loader/Loader";
-
-import { useLoaderData } from "react-router-dom";
-import NoDataFound from "../../../components/common/NoData/NoData";
-
-import BannerPreviewModal from "./BannerPreviewModal";
-
-const BannerTable = ({ banners, loading, deleteBanner, reloadBanners }) => {
+const BannerTable = ({
+  banners,
+  loading,
+  deleteBanner,
+  reloadBanners,
+  editBanner,
+  previewBanner,
+}) => {
   const dispatch = useDispatch();
-
-  const [previewBanner, setPreviewBanner] = useState(null);
 
   /*
   |--------------------------------------------------------------------------
@@ -55,133 +55,152 @@ const BannerTable = ({ banners, loading, deleteBanner, reloadBanners }) => {
   }
 
   return (
-    <>
-      <div className="card shadow-sm border-0">
-        <div className="table-responsive">
-          <table className="table table-hover align-middle mb-0">
-            <thead className="table-light">
-              <tr>
-                <th width="90">Image</th>
+    <div className="table-responsive">
+      <table className="table table-hover align-middle">
+        <thead className="table-light">
+          <tr>
+            <th width="110">Preview</th>
 
-                <th>Title</th>
+            <th>Banner</th>
 
-                <th width="120">Display Order</th>
+            <th width="100">Slides</th>
 
-                <th width="130">Status</th>
+            <th width="100">Features</th>
 
-                <th width="170" className="text-center">
-                  Actions
-                </th>
-              </tr>
-            </thead>
+            <th width="90">Order</th>
 
-            <tbody>
-              {banners.map((banner) => (
-                <tr key={banner._id}>
-                  {/* Image */}
+            <th width="90">Status</th>
 
-                  <td>
+            <th width="180" className="text-center">
+              Action
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {banners.map((banner) => {
+            const firstSlide = banner.slides?.[0];
+
+            return (
+              <tr key={banner._id}>
+                {/* Preview */}
+
+                <td>
+                  {firstSlide?.desktopImageUrl ? (
                     <img
-                      src={banner.desktopImageUrl || "/images/no-image.webp"}
+                      src={firstSlide.desktopImageUrl}
                       alt={banner.title}
                       className="rounded border"
                       style={{
-                        width: "80px",
-                        height: "55px",
+                        width: 90,
+                        height: 55,
                         objectFit: "cover",
                       }}
-                      onError={(e) => {
-                        e.target.src = "/images/no-image.webp";
-                      }}
                     />
-                  </td>
-
-                  {/* Title */}
-
-                  <td>
-                    <div className="fw-semibold">{banner.title}</div>
-
-                    {banner.subtitle && (
-                      <small className="text-muted">{banner.subtitle}</small>
-                    )}
-                  </td>
-
-                  {/* Display Order */}
-
-                  <td>
-                    <span className="badge bg-secondary">
-                      {banner.displayOrder}
-                    </span>
-                  </td>
-
-                  {/* Status */}
-
-                  <td>
-                    <div className="form-check form-switch">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        checked={banner.status}
-                        onChange={() => handleStatusChange(banner)}
-                      />
-
-                      <label className="form-check-label ms-2">
-                        {banner.status ? "Active" : "Inactive"}
-                      </label>
+                  ) : (
+                    <div
+                      className="bg-light border rounded d-flex align-items-center justify-content-center"
+                      style={{
+                        width: 90,
+                        height: 55,
+                      }}
+                    >
+                      <i className="bi bi-image text-muted"></i>
                     </div>
-                  </td>
+                  )}
+                </td>
 
-                  {/* Actions */}
+                {/* Title */}
 
-                  <td className="text-center">
-                    <div className="btn-group" role="group">
-                      {/* Preview */}
+                <td>
+                  <div className="fw-semibold">{banner.title}</div>
 
-                      <button
-                        type="button"
-                        className="btn btn-info btn-sm"
-                        title="Preview"
-                        onClick={() => setPreviewBanner(banner)}
-                      >
-                        <i className="bi bi-eye"></i>
-                      </button>
+                  {banner.subtitle && (
+                    <small className="text-muted">{banner.subtitle}</small>
+                  )}
+                </td>
 
-                      {/* Edit */}
+                {/* Slides */}
 
-                      <Link
-                        to={`/admin/banner/${banner._id}/edit`}
-                        className="btn btn-warning btn-sm"
-                        title="Edit"
-                      >
-                        <i className="bi bi-pencil"></i>
-                      </Link>
+                <td>
+                  <span className="badge bg-primary">
+                    {banner.slides?.length || 0}
+                  </span>
+                </td>
 
-                      {/* Delete */}
+                {/* Features */}
 
-                      <button
-                        type="button"
-                        className="btn btn-danger btn-sm"
-                        title="Delete"
-                        onClick={() => deleteBanner(banner._id)}
-                      >
-                        <i className="bi bi-trash"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+                <td>
+                  <span className="badge bg-info">
+                    {banner.features?.length || 0}
+                  </span>
+                </td>
 
-      {/* Preview Modal */}
+                {/* Order */}
 
-      <BannerPreviewModal
-        banner={previewBanner}
-        onClose={() => setPreviewBanner(null)}
-      />
-    </>
+                <td>
+                  <span className="badge bg-secondary">
+                    {banner.displayOrder}
+                  </span>
+                </td>
+
+                {/* Status */}
+
+                <td>
+                  <div className="form-check form-switch">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      checked={banner.status}
+                      onChange={() => handleStatusChange(banner)}
+                    />
+                  </div>
+                </td>
+
+                {/* Action */}
+
+                <td>
+                  <div className="btn-group">
+                    {/* Preview */}
+
+                    <button
+                      type="button"
+                      className="btn btn-info btn-sm"
+                      title="Preview"
+                      onClick={() => previewBanner(banner._id)}
+                    >
+                      <i className="bi bi-eye"></i>
+                    </button>
+
+                    {/* Edit */}
+
+                    <button
+                      type="button"
+                      className="btn btn-warning btn-sm"
+                      title="Edit"
+                      onClick={() => editBanner(banner._id)}
+                    >
+                      <i className="bi bi-pencil"></i>
+                    </button>
+
+                    {/* Delete */}
+
+                    <button
+                      type="button"
+                      className="btn btn-danger btn-sm"
+                      title="Delete"
+                      onClick={() => deleteBanner(banner._id)}
+                    >
+                      <i className="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

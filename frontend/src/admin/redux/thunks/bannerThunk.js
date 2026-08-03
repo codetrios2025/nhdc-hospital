@@ -22,16 +22,28 @@ export const fetchBanners =
     try {
       dispatch(requestStart());
 
-      const result = await bannerApi.getBanners(params);
+      const response = await bannerApi.getBanners(params);
+
+      /*
+      |--------------------------------------------------------------------------
+      | apiClient already returns response.data
+      |--------------------------------------------------------------------------
+      */
+
+      const result = response?.data || {};
 
       dispatch(
         setBanners({
-          banners: Array.isArray(result.data?.rows) ? result.data.rows : [],
+          banners: Array.isArray(result.rows) ? result.rows : [],
+
           pagination: {
-            total: result.data?.total || 0,
-            page: result.data?.page || 1,
-            limit: result.data?.limit || 10,
-            totalPages: result.data?.totalPages || 1,
+            total: result.total || 0,
+
+            page: result.page || 1,
+
+            limit: result.limit || 10,
+
+            totalPages: result.totalPages || 1,
           },
         }),
       );
@@ -60,11 +72,11 @@ export const fetchBanner = (id) => async (dispatch) => {
   try {
     dispatch(requestStart());
 
-    const result = await bannerApi.getBanner(id);
+    const response = await bannerApi.getBanner(id);
 
-    dispatch(setBanner(result.data));
+    dispatch(setBanner(response.data));
 
-    return result;
+    return response;
   } catch (error) {
     dispatch(
       requestFailure(
@@ -77,7 +89,6 @@ export const fetchBanner = (id) => async (dispatch) => {
     throw error;
   }
 };
-
 /*
 |--------------------------------------------------------------------------
 | Create Banner
@@ -88,11 +99,11 @@ export const createBanner = (formData) => async (dispatch) => {
   try {
     dispatch(requestStart());
 
-    const result = await bannerApi.createBanner(formData);
+    const response = await bannerApi.createBanner(formData);
 
-    dispatch(addBanner(result.data));
+    dispatch(addBanner(response.data));
 
-    return result;
+    return response;
   } catch (error) {
     dispatch(
       requestFailure(
@@ -116,11 +127,11 @@ export const updateBanner = (id, formData) => async (dispatch) => {
   try {
     dispatch(requestStart());
 
-    const result = await bannerApi.updateBanner(id, formData);
+    const response = await bannerApi.updateBanner(id, formData);
 
-    dispatch(updateBannerState(result.data));
+    dispatch(updateBannerState(response.data));
 
-    return result;
+    return response;
   } catch (error) {
     dispatch(
       requestFailure(
@@ -164,17 +175,17 @@ export const deleteBanner = (id) => async (dispatch) => {
 
 /*
 |--------------------------------------------------------------------------
-| Update Banner Status
+| Change Banner Status
 |--------------------------------------------------------------------------
 */
 
 export const changeBannerStatus = (id, status) => async (dispatch) => {
   try {
-    const result = await bannerApi.changeStatus(id, status);
+    const response = await bannerApi.changeStatus(id, status);
 
-    dispatch(updateBannerState(result.data));
+    dispatch(updateBannerState(response.data));
 
-    return result;
+    return response;
   } catch (error) {
     dispatch(
       requestFailure(

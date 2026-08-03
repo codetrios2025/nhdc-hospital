@@ -1,29 +1,35 @@
 const mongoose = require("mongoose");
 
-const bannerSchema = new mongoose.Schema(
+const featureSchema = new mongoose.Schema(
   {
     title: {
       type: String,
       required: true,
       trim: true,
-      maxlength: 150,
     },
 
-    subtitle: {
+    icon: {
       type: String,
+      default: "bi bi-check-circle-fill",
       trim: true,
-      maxlength: 250,
-      default: "",
     },
 
-    description: {
-      type: String,
-      default: "",
+    sortOrder: {
+      type: Number,
+      default: 1,
     },
+  },
+  {
+    _id: true,
+    id: false,
+  },
+);
 
+const slideSchema = new mongoose.Schema(
+  {
     desktopImage: {
       type: String,
-      required: true,
+      default: "",
     },
 
     mobileImage: {
@@ -31,12 +37,82 @@ const bannerSchema = new mongoose.Schema(
       default: "",
     },
 
-    altText: {
+    displayOrder: {
+      type: Number,
+      default: 1,
+    },
+
+    status: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  {
+    _id: true,
+    id: false,
+    toJSON: {
+      virtuals: true,
+    },
+    toObject: {
+      virtuals: true,
+    },
+  },
+);
+
+/*
+|--------------------------------------------------------------------------
+| Slide Virtuals
+|--------------------------------------------------------------------------
+*/
+
+slideSchema.virtual("desktopImageUrl").get(function () {
+  if (!this.desktopImage) return "";
+
+  return `${process.env.APP_URL}/uploads/banners/${this.desktopImage}`;
+});
+
+slideSchema.virtual("mobileImageUrl").get(function () {
+  if (!this.mobileImage) return "";
+
+  return `${process.env.APP_URL}/uploads/banners/${this.mobileImage}`;
+});
+
+const bannerSchema = new mongoose.Schema(
+  {
+    /*
+    |--------------------------------------------------------------------------
+    | Banner Information
+    |--------------------------------------------------------------------------
+    */
+
+    title: {
       type: String,
       required: true,
       trim: true,
-      maxlength: 150,
     },
+
+    subtitle: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
+    description: {
+      type: String,
+      default: "",
+    },
+
+    altText: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
+    /*
+    |--------------------------------------------------------------------------
+    | Buttons
+    |--------------------------------------------------------------------------
+    */
 
     primaryButtonText: {
       type: String,
@@ -62,43 +138,74 @@ const bannerSchema = new mongoose.Schema(
       trim: true,
     },
 
+    /*
+    |--------------------------------------------------------------------------
+    | Features
+    |--------------------------------------------------------------------------
+    */
+
+    features: {
+      type: [featureSchema],
+      default: [],
+    },
+
+    /*
+    |--------------------------------------------------------------------------
+    | Banner Slides
+    |--------------------------------------------------------------------------
+    */
+
+    slides: {
+      type: [slideSchema],
+      default: [],
+    },
+
+    /*
+    |--------------------------------------------------------------------------
+    | Settings
+    |--------------------------------------------------------------------------
+    */
+
     displayOrder: {
       type: Number,
       default: 1,
+      index: true,
     },
 
     status: {
       type: Boolean,
       default: true,
+      index: true,
     },
+
+    /*
+    |--------------------------------------------------------------------------
+    | Audit
+    |--------------------------------------------------------------------------
+    */
 
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Admin",
+      required: true,
     },
 
     updatedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Admin",
+      default: null,
     },
   },
   {
     timestamps: true,
     versionKey: false,
+    toJSON: {
+      virtuals: true,
+    },
+    toObject: {
+      virtuals: true,
+    },
   },
 );
-
-bannerSchema.virtual("desktopImageUrl").get(function () {
-  if (!this.desktopImage) return "";
-  return `${process.env.APP_URL}/uploads/banners/${this.desktopImage}`;
-});
-
-bannerSchema.virtual("mobileImageUrl").get(function () {
-  if (!this.mobileImage) return "";
-  return `${process.env.APP_URL}/uploads/banners/${this.mobileImage}`;
-});
-
-bannerSchema.set("toJSON", { virtuals: true });
-bannerSchema.set("toObject", { virtuals: true });
 
 module.exports = mongoose.model("Banner", bannerSchema);

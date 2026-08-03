@@ -1,201 +1,188 @@
-import { Link } from "react-router-dom";
-import { Modal, Button, Badge, Table, Row, Col } from "react-bootstrap";
+import { Modal, Carousel, Badge } from "react-bootstrap";
 
-const BannerPreviewModal = ({ banner, onClose }) => {
+const BannerPreviewModal = ({ show, onHide, banner }) => {
   if (!banner) return null;
 
+  const slides = banner.slides || [];
+
+  const features = banner.features || [];
+
   return (
-    <Modal
-      show={!!banner}
-      onHide={onClose}
-      size="xl"
-      centered
-      scrollable
-      backdrop="static"
-    >
+    <Modal show={show} onHide={onHide} size="xl" centered scrollable>
       <Modal.Header closeButton>
-        <Modal.Title>
-          <i className="bi bi-image me-2"></i>
-          Banner Preview
-        </Modal.Title>
+        <Modal.Title>Banner Preview</Modal.Title>
       </Modal.Header>
 
-      <Modal.Body>
-        <Row>
-          {/* Desktop Banner */}
+      <Modal.Body className="p-0">
+        {/* ========================================= */}
+        {/* Banner Slider */}
+        {/* ========================================= */}
 
-          <Col md={12} className="mb-4">
-            <h5 className="fw-bold mb-3">Desktop Banner</h5>
+        {slides.length > 0 ? (
+          <Carousel
+            indicators={slides.length > 1}
+            controls={slides.length > 1}
+            interval={3000}
+          >
+            {slides.map((slide, index) => (
+              <Carousel.Item key={slide._id || index}>
+                <div
+                  style={{
+                    position: "relative",
 
-            <img
-              src={banner.desktopImageUrl || "/images/no-image.webp"}
-              alt={banner.title}
-              className="img-fluid rounded border shadow-sm"
-              style={{
-                width: "100%",
-                maxHeight: "350px",
-                objectFit: "cover",
-              }}
-              onError={(e) => {
-                e.target.src = "/images/no-image.webp";
-              }}
-            />
-          </Col>
+                    height: "500px",
 
-          {/* Mobile Banner */}
+                    overflow: "hidden",
+                  }}
+                >
+                  <img
+                    src={slide.desktopImageUrl}
+                    alt={banner.altText || banner.title}
+                    className="w-100 h-100"
+                    style={{
+                      objectFit: "cover",
+                    }}
+                  />
 
-          <Col md={4}>
-            <h5 className="fw-bold mb-3">Mobile Banner</h5>
+                  {/* Overlay */}
 
-            {banner.mobileImageUrl ? (
-              <img
-                src={banner.mobileImageUrl}
-                alt={banner.title}
-                className="img-fluid rounded border shadow-sm"
-                style={{
-                  maxHeight: "450px",
-                  objectFit: "cover",
-                }}
-                onError={(e) => {
-                  e.target.src = "/images/no-image.webp";
-                }}
-              />
-            ) : (
-              <div className="alert alert-light border text-center">
-                No Mobile Banner Available
+                  <div
+                    style={{
+                      position: "absolute",
+
+                      top: 0,
+
+                      left: 0,
+
+                      width: "100%",
+
+                      height: "100%",
+
+                      background: "rgba(0,0,0,.45)",
+
+                      display: "flex",
+
+                      alignItems: "center",
+                    }}
+                  >
+                    <div className="container text-white">
+                      {/* Title */}
+
+                      <h1 className="display-5 fw-bold">{banner.title}</h1>
+
+                      {/* Subtitle */}
+
+                      {banner.subtitle && (
+                        <h4 className="mb-4 text-light">{banner.subtitle}</h4>
+                      )}
+
+                      {/* Description */}
+
+                      {banner.description && (
+                        <div
+                          className="mb-4"
+                          dangerouslySetInnerHTML={{
+                            __html: banner.description,
+                          }}
+                        />
+                      )}
+                      {/* ========================================= */}
+                      {/* Buttons */}
+                      {/* ========================================= */}
+
+                      <div className="d-flex flex-wrap gap-3 mb-4">
+                        {banner.primaryButtonText && (
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-lg"
+                          >
+                            {banner.primaryButtonText}
+                          </button>
+                        )}
+
+                        {banner.secondaryButtonText && (
+                          <button
+                            type="button"
+                            className="btn btn-outline-light btn-lg"
+                          >
+                            {banner.secondaryButtonText}
+                          </button>
+                        )}
+                      </div>
+
+                      {/* ========================================= */}
+                      {/* Features */}
+                      {/* ========================================= */}
+
+                      {features.length > 0 && (
+                        <div className="d-flex flex-wrap gap-2">
+                          {features.map((feature, featureIndex) => (
+                            <Badge
+                              key={feature._id || featureIndex}
+                              bg="light"
+                              text="dark"
+                              className="px-3 py-2 fs-6"
+                            >
+                              {feature.icon && (
+                                <i className={`${feature.icon} me-2`}></i>
+                              )}
+
+                              {feature.title}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </Carousel.Item>
+            ))}
+          </Carousel>
+        ) : (
+          <div className="text-center py-5">
+            <h5>No Slides Available</h5>
+
+            <p className="text-muted mb-0">No banner slides have been added.</p>
+          </div>
+        )}
+
+        {/* ========================================= */}
+        {/* Banner Information */}
+        {/* ========================================= */}
+
+        <div className="p-4 border-top bg-light">
+          <div className="row">
+            <div className="col-md-4">
+              <strong>Display Order</strong>
+
+              <div>{banner.displayOrder}</div>
+            </div>
+
+            <div className="col-md-4">
+              <strong>Status</strong>
+
+              <div>
+                {banner.status ? (
+                  <Badge bg="success">Active</Badge>
+                ) : (
+                  <Badge bg="secondary">Inactive</Badge>
+                )}
               </div>
-            )}
-          </Col>
+            </div>
 
-          {/* Details */}
+            <div className="col-md-4">
+              <strong>Total Slides</strong>
 
-          <Col md={8}>
-            <Table bordered hover responsive>
-              <tbody>
-                <tr>
-                  <th width="220">Title</th>
-                  <td>{banner.title}</td>
-                </tr>
-
-                <tr>
-                  <th>Subtitle</th>
-                  <td>{banner.subtitle || "-"}</td>
-                </tr>
-
-                <tr>
-                  <th>Alt Text</th>
-                  <td>{banner.altText || "-"}</td>
-                </tr>
-
-                <tr>
-                  <th>Primary Button</th>
-                  <td>
-                    <strong>{banner.primaryButtonText || "-"}</strong>
-
-                    {banner.primaryButtonLink && (
-                      <>
-                        <br />
-
-                        <a
-                          href={banner.primaryButtonLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {banner.primaryButtonLink}
-                        </a>
-                      </>
-                    )}
-                  </td>
-                </tr>
-
-                <tr>
-                  <th>Secondary Button</th>
-                  <td>
-                    <strong>{banner.secondaryButtonText || "-"}</strong>
-
-                    {banner.secondaryButtonLink && (
-                      <>
-                        <br />
-
-                        <a
-                          href={banner.secondaryButtonLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {banner.secondaryButtonLink}
-                        </a>
-                      </>
-                    )}
-                  </td>
-                </tr>
-
-                <tr>
-                  <th>Display Order</th>
-                  <td>
-                    <Badge bg="secondary">{banner.displayOrder}</Badge>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th>Status</th>
-                  <td>
-                    <Badge bg={banner.status ? "success" : "danger"}>
-                      {banner.status ? "Active" : "Inactive"}
-                    </Badge>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th>Created At</th>
-                  <td>
-                    {banner.createdAt
-                      ? new Date(banner.createdAt).toLocaleString()
-                      : "-"}
-                  </td>
-                </tr>
-
-                <tr>
-                  <th>Updated At</th>
-                  <td>
-                    {banner.updatedAt
-                      ? new Date(banner.updatedAt).toLocaleString()
-                      : "-"}
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
-          </Col>
-
-          {/* Description */}
-
-          <Col md={12} className="mt-4">
-            <h5 className="fw-bold mb-3">Description</h5>
-
-            <div
-              className="border rounded p-3 bg-light"
-              dangerouslySetInnerHTML={{
-                __html:
-                  banner.description || "<p>No description available.</p>",
-              }}
-            />
-          </Col>
-        </Row>
+              <div>{slides.length}</div>
+            </div>
+          </div>
+        </div>
       </Modal.Body>
 
       <Modal.Footer>
-        <Button variant="secondary" onClick={onClose}>
-          <i className="bi bi-x-circle me-2"></i>
+        <button type="button" className="btn btn-secondary" onClick={onHide}>
           Close
-        </Button>
-
-        <Link
-          to={`/admin/banner/${banner._id}/edit`}
-          className="btn btn-primary"
-          onClick={onClose}
-        >
-          <i className="bi bi-pencil-square me-2"></i>
-          Edit Banner
-        </Link>
+        </button>
       </Modal.Footer>
     </Modal>
   );

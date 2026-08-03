@@ -1,9 +1,12 @@
 const Banner = require("../../models/Banner");
 
 class BannerRepository {
-  /**
-   * Build Filters
-   */
+  /*
+  |--------------------------------------------------------------------------
+  | Build Filters
+  |--------------------------------------------------------------------------
+  */
+
   buildFilters(query = {}) {
     const filter = {};
 
@@ -21,25 +24,44 @@ class BannerRepository {
     return filter;
   }
 
-  /**
-   * Create Banner
-   */
+  /*
+  |--------------------------------------------------------------------------
+  | Create Banner
+  |--------------------------------------------------------------------------
+  */
+
   async create(data) {
     return await Banner.create(data);
   }
 
-  /**
-   * Find By ID
-   */
+  /*
+  |--------------------------------------------------------------------------
+  | Find Banner By ID
+  |--------------------------------------------------------------------------
+  */
+
   async findById(id) {
     return await Banner.findById(id)
       .populate("createdBy", "name email")
       .populate("updatedBy", "name email");
   }
 
-  /**
-   * Find All
-   */
+  /*
+  |--------------------------------------------------------------------------
+  | Find One
+  |--------------------------------------------------------------------------
+  */
+
+  async findOne(filter = {}) {
+    return await Banner.findOne(filter);
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | Banner Listing
+  |--------------------------------------------------------------------------
+  */
+
   async findAll(filter = {}, options = {}) {
     const {
       skip = 0,
@@ -67,33 +89,50 @@ class BannerRepository {
     };
   }
 
-  /**
-   * Update Banner
-   */
+  /*
+  |--------------------------------------------------------------------------
+  | Update Banner
+  |--------------------------------------------------------------------------
+  */
+
   async update(id, data) {
-    return await Banner.findByIdAndUpdate(id, data, {
-      new: true,
-      runValidators: true,
-    })
+    return await Banner.findByIdAndUpdate(
+      id,
+      {
+        $set: data,
+      },
+      {
+        new: true,
+        runValidators: true,
+      },
+    )
       .populate("createdBy", "name email")
       .populate("updatedBy", "name email");
   }
 
-  /**
-   * Delete Banner
-   */
+  /*
+  |--------------------------------------------------------------------------
+  | Delete Banner
+  |--------------------------------------------------------------------------
+  */
+
   async delete(id) {
     return await Banner.findByIdAndDelete(id);
   }
 
-  /**
-   * Update Status
-   */
+  /*
+  |--------------------------------------------------------------------------
+  | Update Status
+  |--------------------------------------------------------------------------
+  */
+
   async updateStatus(id, status) {
     return await Banner.findByIdAndUpdate(
       id,
       {
-        status,
+        $set: {
+          status,
+        },
       },
       {
         new: true,
@@ -101,9 +140,12 @@ class BannerRepository {
     );
   }
 
-  /**
-   * Find Display Order
-   */
+  /*
+  |--------------------------------------------------------------------------
+  | Find By Display Order
+  |--------------------------------------------------------------------------
+  */
+
   async findByDisplayOrder(displayOrder, excludeId = null) {
     const filter = {
       displayOrder,
@@ -118,21 +160,29 @@ class BannerRepository {
     return await Banner.findOne(filter);
   }
 
-  /**
-   * Website Listing
-   */
+  /*
+  |--------------------------------------------------------------------------
+  | Website Banner Listing
+  |--------------------------------------------------------------------------
+  */
+
   async websiteListing() {
     return await Banner.find({
       status: true,
-    }).sort({
-      displayOrder: 1,
-      updatedAt: -1,
-    });
+    })
+      .sort({
+        displayOrder: 1,
+        updatedAt: -1,
+      })
+      .lean();
   }
 
-  /**
-   * Count
-   */
+  /*
+  |--------------------------------------------------------------------------
+  | Count
+  |--------------------------------------------------------------------------
+  */
+
   async count(filter = {}) {
     return await Banner.countDocuments(filter);
   }
