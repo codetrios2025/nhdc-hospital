@@ -5,6 +5,11 @@ import axiosService from "./AxiosConfig";
 export const getFeaturesData = () => {
   return axiosService.get("home-features");
 };
+//Home Advanced API
+export const getDiagnosticServicesData = () => {
+  return axiosService.get("diagnostic-services");
+};
+
 // Home Doctors API
 export const getDoctorsData = () => {
   return axiosService.get("doctors");
