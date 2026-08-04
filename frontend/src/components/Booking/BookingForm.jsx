@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { IoCalendarOutline } from "react-icons/io5";
 import { FiUser } from "react-icons/fi";
 import { MdCalendarMonth, MdAlternateEmail, MdOutlineSpeakerNotes } from "react-icons/md";
@@ -11,10 +11,135 @@ import { HiCalendarDateRange } from "react-icons/hi2";
 import { IoMdTime, IoMdInformationCircleOutline } from "react-icons/io";
 import { GrPowerReset } from "react-icons/gr";
 import Style from '../CSS/Global.module.css';
-import { IoCloseOutline } from "react-icons/io5";
+import { IoCloseOutline,IoCheckmarkCircle } from "react-icons/io5";
 
+//API
+import { postBooking } from "../../services/routes.services";
 
 const BookingForm = ({close})=>{
+  const [formData, setFormData] = useState({
+    patientName: "",
+    age: "",
+    gender: "",
+    mobile: "",
+    email: "",
+    address: "",
+    department: "",
+    doctor: "",
+    appointmentDate: "",
+    reason: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [successMsg, setSuccessMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
+  };
+  const validate = () => {
+    let error = {};
+    if (!formData.patientName.trim())
+      error.patientName = "Patient name is required.";
+
+    if (!formData.age)
+      error.age = "Age is required.";
+    else if (formData.age < 1 || formData.age > 120)
+      error.age = "Enter valid age.";
+
+    if (!formData.gender)
+      error.gender = "Gender is required.";
+
+    if (!formData.mobile)
+      error.mobile = "Mobile number is required.";
+    else if (!/^[6-9]\d{9}$/.test(formData.mobile))
+      error.mobile = "Enter valid mobile number.";
+
+    if (
+      formData.email &&
+      !/^\S+@\S+\.\S+$/.test(formData.email)
+    )
+      error.email = "Enter valid email.";
+
+    if (!formData.appointmentDate)
+      error.appointmentDate = "Appointment date is required.";
+
+    return error;
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length) {
+      setErrors(validationErrors);
+      return;
+    }
+    try {
+      setLoading(true);
+      const payload = {
+        patientName: formData.patientName,
+        age: Number(formData.age),
+        gender: formData.gender,
+        mobile: formData.mobile,
+        email: formData.email,
+        address: formData.address,
+        department: formData.department,
+        doctor: formData.doctor,
+        appointmentDate: formData.appointmentDate,
+        reason: formData.reason,
+      };
+
+      const res = await postBooking(payload);
+
+      setFormData({
+        patientName: "",
+        age: "",
+        gender: "",
+        mobile: "",
+        email: "",
+        address: "",
+        department: "",
+        doctor: "",
+        appointmentDate: "",
+        reason: "",
+      });
+      //console.log(res.data.message)
+      setSuccessMsg(res.data.message)
+    } catch (err) {
+      console.log(err);
+      alert("Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleReset = () => {
+    setFormData({
+      patientName: "",
+      age: "",
+      gender: "",
+      mobile: "",
+      email: "",
+      address: "",
+      department: "",
+      doctor: "",
+      appointmentDate: "",
+      reason: "",
+    });
+    setErrors({});
+  };
+  // useEffect(() => {
+  //   if (successMsg) {
+  //     const timer = setTimeout(() => {
+  //       setSuccessMsg("");
+  //     }, 3000);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [successMsg]);
   return(
     <div className={Style.bookingForm}>
       <div className={Style.formHead}>
@@ -23,74 +148,75 @@ const BookingForm = ({close})=>{
           <h2>Book an Appointment</h2>
           <p>Fill in your details to book an appointment</p>
         </div>
-        <button type="" className={'closeForm ' + Style.closeBtn} onClick={close}><IoCloseOutline /></button>
+        <button type="button" className={'closeForm ' + Style.closeBtn} onClick={close}><IoCloseOutline /></button>
       </div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className={Style.formGroup}>
           <div className={Style.groupElem}>
             <label>Patient Name <sub>*</sub></label>
             <span className={Style.icon}><FiUser /></span>
-            <input type="text" placeholder="Enter patient full name"  />
+            <input type="text" name="patientName" value={formData.patientName} onChange={handleChange} placeholder="Enter patient full name"  />
+            {errors.patientName && (<small className={Style.error}>{errors.patientName}</small>)}
           </div>
           <div className={Style.groupElem}>
             <label>Age <sub>*</sub></label>
             <span className={Style.icon}><MdCalendarMonth /></span>
-            <input type="text" placeholder="Enter age"  />
+            <input type="number" name="age" value={formData.age} onChange={handleChange} placeholder="Enter age"  />
+            {errors.age && (<small className={Style.error}>{errors.age}</small>)}
           </div>
         </div>
         <div className={Style.formGroup}>
           <div className={Style.groupElem}>
             <label>Gender <sub>*</sub></label>
             <span className={Style.icon}><IoMaleFemaleSharp /></span>
-            <select>
-              <option>Select gender</option>
+            <select
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+            >
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
             </select>
+            {errors.gender && (<small className={Style.error}>{errors.gender}</small>)}
           </div>
           <div className={Style.groupElem}>
             <label>Contact Number <sub>*</sub></label>
             <span className={Style.icon}><LiaPhoneSolid /></span>
-            <input type="number" placeholder="Enter 10-digit mobile number"  />
+            <input type="tel" name="mobile" value={formData.mobile} onChange={handleChange} maxLength={10} placeholder="Enter 10-digit mobile number"  />
+            {errors.mobile && (<small className={Style.error}>{errors.mobile}</small>)}
           </div>
         </div>
         <div className={Style.formGroup}>
           <div className={Style.groupElem}>
             <label>Email Address</label>
             <span className={Style.icon}><MdAlternateEmail /></span>
-            <input type="email" placeholder="Enter email address"  />
+            <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Enter email address"  />
+            {errors.email && (<small className={Style.error}>{errors.email}</small>)}
           </div>
-          {/* <div className={Style.groupElem}>
-            <label>Appointment For <sub>*</sub></label>
-            <span className={Style.icon}><PiCalendarCheckLight /></span>
-            <select>
-              <option>Select appointment type</option>
-            </select>
-          </div> */}
         </div>
         
         <div className={Style.formGroup}>
           <div className={Style.groupElem}>
             <label>Preferred Date <sub>*</sub></label>
             <span className={Style.icon}><HiCalendarDateRange /></span>
-            <input type="date" placeholder="Select preferred date"  />
+            <input type="date" name="appointmentDate" value={formData.appointmentDate} onChange={handleChange} placeholder="Select preferred date"  />
+            {errors.date && (<small className={Style.error}>{errors.date}</small>)}
           </div>
-          {/* <div className={Style.groupElem}>
-            <label>Preferred Time <sub>*</sub></label>
-            <span className={Style.icon}><IoMdTime /></span>
-            <input type="time" placeholder="Enter age"  />
-          </div> */}
         </div>
         <div className={Style.formGroup}>
           <div className={Style.groupElem}>
             <label>Address</label>
             <span className={Style.icon}><SlLocationPin /></span>
-            <input type="text" placeholder="Enter your complete address"  />
+            <input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="Enter your complete address"  />
           </div>
         </div>
         <div className={Style.formGroup}>
           <div className={Style.groupElem}>
             <label>Reason for Visit</label>
             <span className={Style.icon}><MdOutlineSpeakerNotes /></span>
-            <textarea placeholder="Enter your reason for visit"></textarea>
+            <textarea name="reason" value={formData.reason} onChange={handleChange} placeholder="Enter your reason for visit"></textarea>
           </div>
         </div>
         <div className={Style.nots}>
@@ -101,14 +227,15 @@ const BookingForm = ({close})=>{
           </div>
         </div>
         <div className={Style.formBtn}>
-          <button type="button" className={'flexCenter  ' + Style.resetBtn}>
+          <button type="button" className={'flexCenter  ' + Style.resetBtn} onClick={handleReset}>
             <div className={Style.icon}><GrPowerReset /></div>Reset
           </button>
-          <button type="button" className={'flexCenter  ' + Style.primeryBtn}>
-            <div className={Style.icon}><IoCalendarOutline /></div>Submit Booking
+          <button type="submit" className={'flexCenter  ' + Style.primeryBtn} disabled={loading}>
+            <div className={Style.icon}><IoCalendarOutline /></div>{loading ? "Submitting..." : "Submit Booking"}
           </button>
         </div>
       </form>
+      {successMsg && <p className={Style.successMsg}><IoCheckmarkCircle />{successMsg}</p>}
     </div>
   )
 }

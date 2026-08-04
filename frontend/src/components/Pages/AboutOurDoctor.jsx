@@ -18,7 +18,7 @@ const OurDoctor = () =>{
       const fetchData = async () =>{
         try{  
           const res = await getDoctorsData();
-          setDoctorData(res?.data?.data?.doctors?.[2])
+          setDoctorData(res?.data?.data?.[0] || null);
         } catch(error){
           console.error("Error fetching doctor",  error);
         }

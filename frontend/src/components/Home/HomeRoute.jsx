@@ -5,38 +5,51 @@ import Diagnostics from "./Diagnostics";
 import OurVideos from "./OurVideos";
 import OurDoctor from "./OurDoctor";
 import Support from "./Support";
+import Loader from "../Common/Loader";
 
 //APIs
-import { getDoctorsData, getVideos, getFeaturesData, getDiagnosticServicesData } from "../../services/routes.services";
+import { getBannerData, getDoctorsData, getVideos, getFeaturesData, getDiagnosticServicesData, getallserviceData } from "../../services/routes.services";
 const HomeRoute = ()=>{
-  const [doctorData, setDoctorData] = useState(null);
-  const [videoData, setVideoData] = useState(null);
-  const [featuresData, setFeaturesData] = useState(null);
-  const [diagnosticServicesData, setDiagnosticServicesData] = useState(null);
+  const [bannerData, setBannerData] = useState([]);
+  const [serviceData, setServiceData] = useState([]);
+  const [doctorData, setDoctorData] = useState([]);
+  const [videoData, setVideoData] = useState([]);
+  const [featuresData, setFeaturesData] = useState([]);
+  const [diagnosticServicesData, setDiagnosticServicesData] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() =>{
     const fetchData = async () =>{
       try{  
-        const [doctorRes, videoRes, featuresRes, diagnosticServicesRes] = await Promise.all([
+        const [bannerRes, serviceRes, doctorRes, videoRes, featuresRes, diagnosticServicesRes] = await Promise.all([
+          getBannerData(),
+          getallserviceData(),
           getDoctorsData(),
           getVideos(),
           getFeaturesData(),
           getDiagnosticServicesData()
         ])
-        setDoctorData(doctorRes?.data);
-        setVideoData(videoRes?.data?.data || null);
-        setFeaturesData(featuresRes?.data || null);
-        setDiagnosticServicesData(diagnosticServicesRes?.data?.data || null);
+        setBannerData(bannerRes?.data?.data || []);
+        setServiceData(serviceRes?.data?.data || []);
+        setDoctorData(doctorRes?.data || []);
+        setVideoData(videoRes?.data?.data || []);
+        setFeaturesData(featuresRes?.data || []);
+        setDiagnosticServicesData(diagnosticServicesRes?.data?.data || []);
       } catch(error){
         console.error("Error fetching doctor",  error);
+      } finally{
+        setLoading(false);
       }
     }
     fetchData();
   }, []);
-  //console.log(diagnosticServicesData)
+ if (loading) {
+    return <Loader />;
+  }
+  
   return(
     <>
-      <HeroBanner />
-      <Services data={featuresData} />
+      <HeroBanner data={bannerData} />
+      <Services data={featuresData} serviceData={serviceData} />
       <Diagnostics data={diagnosticServicesData} />
       <OurVideos data={videoData} />
       <OurDoctor data={doctorData} />
