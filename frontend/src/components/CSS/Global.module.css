@@ -15,7 +15,7 @@
 .bannerContent p{line-height: 26px;padding-right: 350px;}
 .bannerContent p br{display: none;}
 .bannerContent ul, .bannerContent ol{margin-top: 10px;}
-.bannerContent ul li, .bannerContent ol li{font-weight: 600;line-height: 40px;position: relative;    padding-left: 25px;}
+.bannerContent ul li{font-weight: 600;line-height: 40px;position: relative;}
 .checkStyle li{padding-left: 25px;position: relative;}
 .checkStyle li:after{
     content: "\F26E";
@@ -309,22 +309,27 @@ display: flex;flex-direction: column;align-items: flex-start;}
 .servicesBanner{position: relative;}
 .servicesBanner img{width: 100%;}
 
-.servicesContent{position: relative;padding: 60px 0;}
+.servicesContent{position: relative;padding: 60px 0;background: #fff;}
 .servicesContent h4{font-size: var(--fs-lg);}
 .servicesContent p{line-height: 26px;}
 .overViewCOntainer{background: #f2f6fc;padding: 30px;border-radius: 10px;}
 /* .overView{display: grid;grid-template-columns: repeat(3,1fr);} */
 
-.overView h3{font-size: var(--fs-lg);}
+.overViewCOntainer h3, .overViewCOntainer h3 strong{font-size: var(--fs-lg);    color: #16366a!important;font-weight: 600;}
 .overView .box{ margin-bottom: 20px;
     background: #fff;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0px 1px 11px 0px #00000024;}
-.overView ul{margin-left: 15px;display: flex;flex-wrap: wrap;}
-.overView li{list-style-type: disc;
-    line-height: 30px;
-    margin-right: 40px;}
+.overViewCOntainer .content ul, .overViewCOntainer .content ol{margin-left: 0;display: flex;flex-wrap: wrap;
+background: #fff;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 10px 10px 10px 30px;
+    box-shadow: 0 1px 11px #00000024;
+}
+.overViewCOntainer .content li{list-style-type: disc;line-height: 30px;margin-right: 40px;color: #16366a!important}
+.overViewCOntainer .content li span{background: transparent;color: #16366a!important}
 .servicesOwl .slideItem{height: 500px;border-radius: 5px;overflow: hidden;}
 .servicesOwl .slideItem img{width: 100%;height: 100%;object-fit: cover;}
 .NHDCVideoSec{position: relative;padding: 40px 0 0;}

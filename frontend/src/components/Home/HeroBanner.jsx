@@ -19,7 +19,8 @@ const Carousel =
 const HeroBanner = ({ data }) =>{
   const [booking, setBooking] = useState(false);
   const slides = data?.[0]?.slides || [];
-  if (!slides.length) {
+  const features = data?.[0]?.features || [];
+  if (!slides.length || !features.length) {
     return null;
   }
     const bookingHandler = ()=>{
@@ -42,7 +43,7 @@ const HeroBanner = ({ data }) =>{
       breakpoint: { max: 767, min: 0 },items: 1
     }
   };
-  console.log(data)
+  //console.log(data)
   return(
     <div className={Style.heroBanner} aria-label="Hospital Hero Banner">
       <Carousel
@@ -56,23 +57,21 @@ const HeroBanner = ({ data }) =>{
         {slides.map((item, index) => (
           <figure className={Style.bannerItem} key={index}>
             <img
-              src={constants.Image_BASE_URL + "/" + item.desktopImage}
+              src={constants.Image_BASE_URL + "/banners/" + item?.desktopImage}
               alt={data?.[0]?.title}
             />
           </figure>
         ))}
       </Carousel>
-      <div className={Style.bannerContent + ' ' + Style.checkStyle}>
+      <div className={Style.bannerContent}>
         <div className={Style.box}>
           <h1>{data?.[0]?.title} <span>{data?.[0]?.subtitle}</span> </h1>
           {data?.[0]?.description ? parse(String(data?.[0]?.description)): null }
-          {/* <ul className={Style.featureList}>
-            <li><span className={Style.icon}><FaCheckCircle /></span> Child Specialist Care</li>
-            <li><span className={Style.icon}><FaCheckCircle /></span> Asthma & Allergy Treatment</li>
-            <li><span className={Style.icon}><FaCheckCircle /></span> 24×7 Emergency Service</li>
-            <li><span className={Style.icon}><FaCheckCircle /></span> Advanced Diagnostics</li>
-            <li><span className={Style.icon}><FaCheckCircle /></span> Personalized Patient Care</li>
-          </ul> */}
+          <ul className={Style.featureList}>
+            {features.map((item, index) => (
+              <li key={index}><span className={Style.icon}><FaCheckCircle /></span> {item?.title}</li>
+            ))}
+          </ul>
           <div className={Style.bannerBtn}>
             <button onClick={bookingHandler} type="button" className={'flexCenter ' + Style.primeryBtn} aria-label="Book an Appointment">
               <div className={Style.icon}><IoCalendarOutline /></div> {data?.[0]?.primaryButtonText}

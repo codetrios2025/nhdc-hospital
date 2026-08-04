@@ -1,5 +1,6 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Style from '../CSS/Global.module.css';
 import BannerImg from '../../assets/images/hospital-slide.webp';
 import Support from '../Home/Support';
@@ -22,10 +23,32 @@ import { FaSyringe, FaUserDoctor, FaMicroscope   } from "react-icons/fa6";
 import { PiFirstAidKitFill } from "react-icons/pi";
 import { RiParentFill, RiHospitalLine } from "react-icons/ri";
 import { BsClockHistory } from "react-icons/bs";
-import contants from "../../services/constants";
+import constants from "../../services/constants";
 import { getallserviceData } from "../../services/routes.services";
 const Services = () =>{
-console.log("contants", getallserviceData);
+  const [serviceData, setServiceData] = useState([]);
+
+useEffect(() => {
+  const fetchServices = async () => {
+    try {
+      const res = await getallserviceData();
+
+      console.log("API Response:", res);
+
+      // Convert object to array
+      const services = Object.values(res.data.data).filter(
+        (item) => item && item._id
+      );
+
+      setServiceData(services);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  fetchServices();
+}, []);
+//console.log("Service Data:", serviceData);
 const services = [
   {
     title: "Child Specialist Care",
@@ -121,28 +144,7 @@ const services = [
     ],
   },
 ];
-const [serviceData, setServiceData] = React.useState([]);
 
-useEffect(() => {
-  const fetchServices = async () => {
-    try {
-      const res = await getallserviceData();
-
-      console.log("API Response:", res);
-
-      // Convert object to array
-      const services = Object.values(res.data.data).filter(
-        (item) => item && item._id
-      );
-
-      setServiceData(services);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  fetchServices();
-}, []);
 
   return(
     <div className={Style.servicesPage}>
@@ -170,29 +172,27 @@ useEffect(() => {
                 <p>Comprehensive pediatric healthcare, asthma & allergy care, preventive medicine and advanced diagnostic services for children and families.</p>
               </div>
               <div className={Style.mainContainer}>
-                {services.map((item, index) =>{
-                  const IconComponent = item.icon;
-
+                {serviceData?.map((item, index) =>{
                   return(
                     <div className={Style.serviceBox} key={index}>
-                        <div className={Style.mainIcon}>
-                          <span><IconComponent /></span>
-                        </div>
-                        <img src={item.image} alt="Namokar Hospital & Diagnostic Centre" />
+                        <div className={Style.mainIcon}><span><i className={item?.icon}></i></span></div>
+                        <img src={constants.Image_BASE_URL + "/services/" + item?.image} alt={item?.title} />
                         <div className={Style.content}>
-                          <h3>{item.title}</h3>
-                          <p>{item.text}</p>
+                          <h3>{item?.title}</h3>
+                          <p>{item?.shortDescription}</p>
                           <ul className={Style.featureList}>
-                            {item.items.map((list, index) => (
+                            {item?.features?.map((feature, index) => (
                               <li key={index}>
-                                <span className={Style.icon}>
-                                  <FaCheckCircle />
-                                </span>
-                                {list}
+                                <span className={Style.icon}><FaCheckCircle /></span>{feature}
                               </li>
                             ))}
                           </ul>
-                          <a href="/service-detail" title="">Learn More</a>
+                          <Link 
+                            to={`/service-detail/${item?.slug}`} 
+                            state={{ serviceData: item }}
+                            title="">
+                            {item?.buttonText}
+                          </Link>
                         </div>
                       </div>
                   )

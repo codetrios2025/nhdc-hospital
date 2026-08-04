@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Style from '../CSS/Global.module.css';
+import { Link } from "react-router-dom";
 import serviceImg01 from '../../assets/images/child-care-img.webp';
 import serviceImg03 from '../../assets/images/services_img03.webp';
 import serviceImg02 from '../../assets/images/asthma.webp';
@@ -11,8 +12,12 @@ import {FaHeartbeat, FaCheckCircle} from "react-icons/fa";
 import { FaShieldVirus } from "react-icons/fa6";
 import { MdOutlineEmergency, MdMedicalServices, MdOutlineChildCare} from "react-icons/md";
 import { TbBulbFilled } from "react-icons/tb";
-
-const Services = ({data}) =>{
+import constants from "../../services/constants";
+const Services = ({data, serviceData}) =>{
+  const services = Object.keys(serviceData || {})
+  .filter(key => !isNaN(key))
+  .map(key => serviceData[key]);
+  console.log(serviceData)
   return(
     <section className={`${Style.serviceSec} ${Style.commonSpace}`} aria-labelledby="services-heading">
       <Container>
@@ -67,7 +72,41 @@ const Services = ({data}) =>{
           <Row>
             <Col>
               <div className={Style.specialContainer}>
-                <article  className={Style.specialItem}>
+                {services &&
+                    services?.slice(0, 4).map((item, index) => (
+                      <article  className={Style.specialItem} key={index}>
+                        <figure>
+                          <img 
+                            src={constants.Image_BASE_URL + "/services/" + item?.image}   
+                            alt="Pediatric specialist examining a child at Namokar Hospital"
+                            width="650"
+                            height="700"
+                            loading="lazy"
+                            decoding="async" 
+                          />
+                        </figure>
+                        <div className={Style.content}>
+                          <h2>{item?.title}</h2>
+                          <p>{item?.shortDescription}</p>
+                          <ul>
+                            {item?.features?.map((feature, index) => (
+                              <li key={index}>
+                                <span className={Style.icon}><FaCheckCircle /></span>{feature}
+                              </li>
+                            ))}
+                          </ul>
+                          <Link 
+                            to={`/service-detail/${item?.slug}`} 
+                            state={{ serviceData: item }}
+                            className={Style.primeryBtn}
+                            title={item?.title}>
+                            {item?.buttonText}
+                          </Link>
+                        </div>
+                      </article >
+                    ))
+                  }
+                {/* <article  className={Style.specialItem}>
                   <figure>
                     <img 
                       src={serviceImg01}   
@@ -192,7 +231,7 @@ const Services = ({data}) =>{
                     </ul>
                     <a href="/service-detail" title="" className={Style.primeryBtn}>Learn More</a>
                   </div>
-                </article >
+                </article > */}
               </div>
             </Col>
           </Row>
