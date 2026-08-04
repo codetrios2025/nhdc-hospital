@@ -34,7 +34,7 @@ const ServiceView = () => {
 
             <div className="col-md-8">
               <h2>{service.title}</h2>
-
+              {service.subtitle && <h5>{service.subtitle}</h5>}
               <p>{service.shortDescription}</p>
 
               <div

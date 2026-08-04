@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const repository = require("../../repositories/admin/service.repository");
+const serviceTestRepository = require("../../repositories/admin/serviceTest.repository");
 const slugify = require("../../utils/slugify");
 
 class ServiceService {
@@ -217,15 +218,49 @@ class ServiceService {
   /**
    * Website Listing
    */
-  async getPublicServices() {
+  async getPublicServicesold() {
     return await repository.getPublicServices();
+  }
+
+  async getPublicServices() {
+    const services = await repository.getPublicServices();
+
+    const serviceIds = services.map((item) => item._id);
+
+    const tests = await serviceTestRepository.getByServices(serviceIds);
+
+    const servicesWithTests = services.map((service) => ({
+      ...service.toObject(),
+      tests: tests.filter(
+        (test) => test.service.toString() === service._id.toString(),
+      ),
+    }));
+
+    return servicesWithTests;
   }
 
   /**
    * Homepage Services
    */
-  async getHomeServices() {
+  async getHomeServicesold() {
     return await repository.getHomeServices();
+  }
+
+  async getHomeServices() {
+    const services = await repository.getHomeServices();
+
+    const serviceIds = services.map((item) => item._id);
+
+    const tests = await serviceTestRepository.getByServices(serviceIds);
+
+    const servicesWithTests = services.map((service) => ({
+      ...service.toObject(),
+      tests: tests.filter(
+        (test) => test.service.toString() === service._id.toString(),
+      ),
+    }));
+
+    return servicesWithTests;
   }
 
   /**
@@ -238,7 +273,14 @@ class ServiceService {
       throw new Error("Service not found.");
     }
 
-    return service;
+    // return service;
+    const tests = await serviceTestRepository.getByService(service._id);
+
+    const result = service.toObject();
+
+    result.tests = tests;
+
+    return result;
   }
 }
 

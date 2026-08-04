@@ -11,6 +11,7 @@ const appointmentRoutes = require("./appointment.routes");
 const departmentRoutes = require("./department.routes");
 const homeFeatureRoutes = require("./homeFeature.routes");
 const diagnosticRoutes = require("./diagnostic.routes");
+const serviceTestRoutes = require("./serviceTest.routes");
 
 /*
 |--------------------------------------------------------------------------
@@ -37,5 +38,7 @@ router.use("/departments", departmentRoutes);
 router.use("/diagnostic-services", diagnosticRoutes);
 
 router.use("/banner", require("./banner.routes"));
+
+router.use("/service-tests", serviceTestRoutes);
 
 module.exports = router;

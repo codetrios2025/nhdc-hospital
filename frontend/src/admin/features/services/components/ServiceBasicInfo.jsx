@@ -38,6 +38,20 @@ const ServiceBasicInfo = ({ register, errors }) => {
             <div className="invalid-feedback">{errors.title?.message}</div>
           </div>
 
+          {/* Subtitle */}
+
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Subtitle</label>
+
+            <input
+              className={`form-control ${errors.subtitle ? "is-invalid" : ""}`}
+              placeholder="Advanced Bone & Joint Care"
+              {...register("subtitle")}
+            />
+
+            <div className="invalid-feedback">{errors.subtitle?.message}</div>
+          </div>
+
           {/* Department */}
 
           <div className="col-md-6 mb-3">

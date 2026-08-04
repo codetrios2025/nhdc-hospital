@@ -2,7 +2,11 @@ const { body } = require("express-validator");
 
 exports.createServiceValidation = [
   body("title").trim().notEmpty().withMessage("Service title is required"),
-
+  body("subtitle")
+    .optional()
+    .trim()
+    .isLength({ max: 150 })
+    .withMessage("Subtitle cannot exceed 150 characters"),
   body("department").notEmpty().withMessage("Department is required"),
 
   body("shortDescription")
