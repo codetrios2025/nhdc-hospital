@@ -70,7 +70,8 @@ const Services = ({data, serviceData}) =>{
             <Col>
               <div className={Style.specialContainer}>
                 {services &&
-                    services?.slice(0, 4).map((item, index) => (
+                    services?.filter((item) => item.showOnHome === true)
+                      .map((item, index) => (
                       <article  className={Style.specialItem} key={index}>
                         <figure>
                           <img 
