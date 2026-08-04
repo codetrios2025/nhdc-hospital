@@ -27,6 +27,10 @@ export const getallserviceData = () => {
   return axiosService.get("services");
 };
 
+export const postBooking = (data) => {
+  return axiosService.post("appointments", data);
+};
+
 
 
 

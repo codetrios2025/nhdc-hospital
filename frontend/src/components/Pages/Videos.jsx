@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import Style from '../CSS/Global.module.css';
 import BannerImg from '../../assets/images/hospital-slide.webp';
 import InstaVideo from "../Home/InstaVideo";
+import Loader from "../Common/Loader";
 //icon
 import { GoArrowRight } from "react-icons/go";
 import { FaPlay } from "react-icons/fa";
@@ -14,6 +15,7 @@ const NHDCVideos = () =>{
   const [activeVideo, setActiveVideo] = useState(null);
   const [videoData, setVideoData] = useState(null);
   const videoRefs = useRef({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -22,10 +24,13 @@ const NHDCVideos = () =>{
         setVideoData(response?.data?.data || []);
       } catch (error) {
         console.error("Error fetching videos:", error);
+      } finally{
+        setLoading(false);
       }
     };
     fetchVideos();
   }, []);
+  if (loading) {return <Loader />;  }
   const getVideoType = (item) => {
     if (!item) return "unknown";
     // Standardize URL check from multiple potential properties

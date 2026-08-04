@@ -2,10 +2,7 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Style from '../CSS/Global.module.css';
 import { Link } from "react-router-dom";
-import serviceImg01 from '../../assets/images/child-care-img.webp';
-import serviceImg03 from '../../assets/images/services_img03.webp';
-import serviceImg02 from '../../assets/images/asthma.webp';
-import serviceImg04 from '../../assets/images/services_img04.webp';
+
 // icon
 import { GiLungs } from "react-icons/gi";
 import {FaHeartbeat, FaCheckCircle} from "react-icons/fa";
@@ -97,7 +94,6 @@ const Services = ({data, serviceData}) =>{
                           </ul>
                           <Link 
                             to={`/service-detail/${item?.slug}`} 
-                            state={{ serviceData: item }}
                             className={Style.primeryBtn}
                             title={item?.title}>
                             {item?.buttonText}

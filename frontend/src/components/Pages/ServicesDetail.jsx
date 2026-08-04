@@ -1,26 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Style from '../CSS/Global.module.css';
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import innerBanner from '../../assets/images/asthma.webp';
 import CarouselImport from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import parse from 'html-react-parser';
 import constants from "../../services/constants";
-import slideImg01 from "../../assets/images/namokar_img01.webp";
-import slideImg02 from "../../assets/images/namokar_img02.webp";
-import slideImg03 from "../../assets/images/namokar_img03.webp";
-import slideImg04 from "../../assets/images/namokar_img04.webp";
+import Loader from "../Common/Loader";
+
+//API
+import { getallserviceData } from "../../services/routes.services";
 
 const Carousel =
   CarouselImport.default ??
   CarouselImport;
 
 const ServiceDetail = () =>{
-  const location = useLocation();
   const { slug } = useParams();
-  const serviceData = location.state?.serviceData;
-  console.log(serviceData)
+  const [serviceData, setServiceData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchService = async () => {
+      try {
+        const res = await getallserviceData();
+        const data = res.data.data;
+        const services = Object.values(data).filter(
+          item => item && typeof item === "object" && item.slug
+        );
+        const selectedService = services.find(
+          item => item.slug === slug
+        );
+        setServiceData(selectedService);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchService();
+  }, [slug]);
+  
+  if (loading) return <Loader />;
+  if (!serviceData) return <p className={Style.notFound}>Data not found</p>;
+
   const responsive = {
         superLargeDesktop: {
           breakpoint: { max: 3000, min: 0 },
