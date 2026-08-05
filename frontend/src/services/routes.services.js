@@ -13,7 +13,10 @@ export const getFeaturesData = () => {
 export const getDiagnosticServicesData = () => {
   return axiosService.get("diagnostic-services");
 };
-
+// Home Services API
+export const getHomeServices = () => {
+  return axiosService.get("services/home");
+};
 // Home Doctors API
 export const getDoctorsData = () => {
   return axiosService.get("doctors");
