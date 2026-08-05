@@ -36,6 +36,7 @@ const ServiceDetail = () =>{
 
     fetchService();
   }, [slug]);
+  const testData = serviceData?.tests;
    console.log(serviceData)
   if (loading) return <Loader />;
   if (!serviceData) return <p className={Style.notFound}>Data not found</p>;
@@ -44,6 +45,20 @@ const ServiceDetail = () =>{
     superLargeDesktop: {
       breakpoint: { max: 3000, min: 0 },
       shouldResetAutoplay:true,
+      items: 1,
+    },
+  };
+  const testResponsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 768 },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: { max: 768, min: 0 },
       items: 1,
     },
   };
@@ -86,6 +101,45 @@ const ServiceDetail = () =>{
           </Row>
         </Container>
       </div>
+      {testData?.length > 0 && (
+      <div className={Style.testSec}>
+        <Container>
+          <Row>
+            <Col>
+              <div className={Style.head}>
+                <h2>Related Test</h2>
+              </div>
+              <div className={Style.testContainer}>
+                <Carousel 
+                    autoPlaySpeed={3000} 
+                    transitionDuration={500} 
+                    responsive={testResponsive} 
+                    autoPlay={true} 
+                    infinite={false} 
+                    arrows={false} 
+                    showDots={false}>
+                      {testData?.map((item, index) => (
+                        <div className={Style.item} key={item._id}>
+                          <div className={Style.box}>
+                            <img
+                              src={`${constants.Image_BASE_URL}/service-tests/${item?.image}`}
+                              alt={item?.testName}
+                            />
+                            <div className={Style.content}>
+                              <h3>{item?.testName}</h3>
+                              {parse(item?.description || "")}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                </Carousel>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+      ) 
+      }
     </div>
   )
 }

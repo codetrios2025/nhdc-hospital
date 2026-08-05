@@ -341,6 +341,13 @@ background: #fff;
 .successMsg{background: #8bd5bc;border-radius: 5px;padding: 5px 10px;display: flex;align-items: center;justify-content: center;color: #06704c;border-left: 4px solid #06704c;font-weight: 600;margin: 15px 0 0;}
 .successMsg svg{width: 30px;height: 30px;margin-right: 10px;}
 .overViewCOntainer br{display: none;}
+.testSec{background: #fff;padding: 0 0 60px;}
+.testSec h2{    text-align: center;margin: 0 0 26px;}
+.testContainer .box{padding: 0 0;border-radius: 10px;overflow: hidden;background: #f2f6fc;}
+.testContainer .box img{width: 100%;height: 250px;object-fit: cover;}
+.testContainer .box h3{font-size: 20px;margin:10px 0 10px;}
+.testContainer .item{padding: 0 15px;}
+.testContainer .content{padding:15px;min-height: 140px;}
 
 @media only screen and (max-width: 1400px) {
     .specialItem .content{padding-right: 150px;}
@@ -454,6 +461,9 @@ background: #fff;
 
 
 @media only screen and (max-width: 767px) {
+    .testContainer .item {
+    padding: 0;
+}
 .bannerContent ul li .icon{margin-right: 5px;top: 0;}    
 .mainContainer{grid-template-columns: repeat(1, 1fr);}    
 .whyChooseElem{grid-template-columns: repeat(2, 1fr);}    
