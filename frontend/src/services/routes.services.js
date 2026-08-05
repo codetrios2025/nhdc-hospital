@@ -30,6 +30,10 @@ export const getallserviceData = () => {
   return axiosService.get("services");
 };
 
+export const getServiceBySlug = (slug) => {
+  return axiosService.get(`services/${slug}`);
+};
+
 export const postBooking = (data) => {
   return axiosService.post("appointments", data);
 };

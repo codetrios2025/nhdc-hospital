@@ -94,7 +94,7 @@ const Services = ({data, serviceData}) =>{
                             ))}
                           </ul>
                           <Link 
-                            to={`/service-detail/${item?.slug}`} 
+                            to={`/service/${item?.slug}`} 
                             className={Style.primeryBtn}
                             title={item?.title}>
                             {item?.buttonText}
