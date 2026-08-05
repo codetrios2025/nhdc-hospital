@@ -24,7 +24,7 @@ const Header = () => {
     setBooking(false);
   };
   const { contact } = useWebsite();
-  console.log(contact);
+  console.log(contact,"contact detail redux");
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -54,30 +54,35 @@ const Header = () => {
                     <li>
                       <a
                         data-tooltip-id="tooltip"
-                        data-tooltip-content="nhdcdeoli@gmail.com"
-                        href="mailto:nhdcdeoli@gmail.com"
+                        data-tooltip-content={contact?.email}
+                        href={`mailto:${contact?.email}`}
                         aria-label="Email Namokar Hospital"
                       >
                         <div className={Style.icon}>
                           <IoIosMail />
                         </div>
-                        <p className={Style.mobNone}>nhdcdeoli@gmail.com</p>
+                        <p className={Style.mobNone}>{contact?.email}</p>
                       </a>
                     </li>
                     <li
                       data-tooltip-id="tooltip"
-                      data-tooltip-content="9057288286, 9829143239"
+                      data-tooltip-content={contact?.phoneNumbers?.join(", ")}
                     >
                       <div className={Style.icon}>
                         <FaHeadset />
                       </div>
                       <div className={Style.numberFlex}>
-                        <a href="tel:9057288286">
+                        {contact?.phoneNumbers?.map((number, index) => (
+                          <a key={index} href={`tel:${number}`}>
+                            <p className={Style.mobNone}>+91 {number}</p>
+                          </a>
+                        ))}
+                        {/* <a href="tel:9057288286">
                           <p className={Style.mobNone}>+91 90572 88286</p>
                         </a>
                         <a href="tel:9829143239">
                           <p className={Style.mobNone}>+91 98291 43239</p>
-                        </a>
+                        </a> */}
                       </div>
                     </li>
                     <li
@@ -88,6 +93,7 @@ const Header = () => {
                         <FiClock />
                       </div>
                       <div>
+                        {/* {contact?.workingHours?.map((hours, index) => (} */}
                         <p className={Style.mobNone}>
                           Mon to Sat: 9 AM – 2 PM , 5 PM – 7 PM{" "}
                         </p>
