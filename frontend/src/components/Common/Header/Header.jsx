@@ -11,6 +11,7 @@ import { IoClose } from "react-icons/io5";
 import { CiMenuBurger } from "react-icons/ci";
 import BookingForm from "../../Booking/BookingForm";
 import { FiClock } from "react-icons/fi";
+import useWebsite from "../../../hooks/useWebsite";
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = () => setMenuOpen(false);
@@ -22,7 +23,8 @@ const Header = () => {
   const closeBooking = () => {
     setBooking(false);
   };
-
+  const { contact } = useWebsite();
+  console.log(contact);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {

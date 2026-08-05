@@ -31,6 +31,6 @@ export const postBooking = (data) => {
   return axiosService.post("appointments", data);
 };
 
-
-
-
+export const getContactData = () => {
+  return axiosService.get("contact");
+};

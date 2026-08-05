@@ -41,6 +41,8 @@ import ViewDiagnostic from "../features/diagnostic/pages/ViewDiagnostic";
 import BannerList from "../features/banner/pages/BannerList";
 import BannerForm from "../features/banner/components/BannerForm";
 
+import ContactPage from "../features/contact/pages/ContactPage";
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -108,6 +110,8 @@ const AppRoutes = () => {
         <Route path="banner/create" element={<BannerForm />} />
 
         <Route path="banner/:id/edit" element={<BannerForm />} />
+
+        <Route path="/contact" element={<ContactPage />} />
       </Route>
     </Routes>
   );

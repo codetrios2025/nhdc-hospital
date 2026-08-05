@@ -126,7 +126,11 @@ const sidebarMenu = [
     icon: FaCalendarCheck,
     path: "/admin/appointments",
   },
-
+  {
+    title: "Contact Us",
+    icon: FaEnvelope,
+    path: "/admin/contact",
+  },
   // {
   //   title: "Contact Inquiry",
   //   icon: FaEnvelope,
