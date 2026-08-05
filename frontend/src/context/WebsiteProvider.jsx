@@ -10,6 +10,7 @@ const WebsiteProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const loadContact = async () => {
+ 
     try {
       setLoading(true);
 
