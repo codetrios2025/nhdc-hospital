@@ -1,5 +1,6 @@
 const serviceInitialValues = {
   title: "",
+  subtitle: "",
   department: "",
 
   themeColor: "#0d6efd",

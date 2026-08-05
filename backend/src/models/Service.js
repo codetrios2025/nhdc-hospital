@@ -7,7 +7,12 @@ const serviceSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-
+    subtitle: {
+      type: String,
+      trim: true,
+      default: "",
+      maxlength: 150,
+    },
     slug: {
       type: String,
       required: true,

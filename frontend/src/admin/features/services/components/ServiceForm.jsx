@@ -14,6 +14,8 @@ import ServiceSeo from "./ServiceSeo";
 import ServiceSettings from "./ServiceSettings";
 import ServiceGallery from "./ServiceGallery";
 
+import ServiceTests from "../components/ServiceTests";
+
 import {
   createService,
   updateService,
@@ -129,9 +131,17 @@ const ServiceForm = ({ serviceId = null }) => {
         });
       }
 
-      console.log(response);
+      //navigate("/admin/services");
+      if (serviceId) {
+        // Stay on edit page
+        navigate(`/admin/services/${serviceId}/edit`);
+      } else {
+        // Redirect to edit page after create
+        const createdId =
+          response?.payload?.data?._id || response?.payload?._id;
 
-      navigate("/admin/services");
+        navigate(`/admin/services/${createdId}/edit`);
+      }
     } catch (error) {
       console.error(error);
 
@@ -189,6 +199,12 @@ const ServiceForm = ({ serviceId = null }) => {
           <ServiceFeatures control={control} register={register} />
 
           <ServiceSeo register={register} />
+
+          {/* ==============================
+            Related Tests
+        ============================== */}
+
+          {serviceId && <ServiceTests serviceId={serviceId} />}
         </div>
 
         <div className="col-lg-4">

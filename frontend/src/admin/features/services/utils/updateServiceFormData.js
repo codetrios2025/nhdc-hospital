@@ -8,6 +8,7 @@ const updateServiceFormData = (data, gallery = []) => {
   */
 
   formData.append("title", data.title || "");
+  formData.append("subtitle", data.subtitle || "");
   formData.append("department", data.department || "");
   formData.append("themeColor", data.themeColor || "");
   formData.append("displayOrder", data.displayOrder || 1);

@@ -173,13 +173,14 @@ const BannerSlides = ({ control, register, watch, setValue, errors }) => {
                   />
 
                   {(slide?.mobilePreview ||
-                    (typeof slide?.mobileImage === "string" &&
-                      slide.mobileImage)) && (
+                    slide?.mobileImageUrl ||
+                    slide?.mobileImage) && (
                     <div className="mt-3">
                       <img
                         src={
                           slide.mobilePreview ||
-                          `${import.meta.env.VITE_UPLOAD_URL}/banners/${slide.mobileImage}`
+                          slide.mobileImageUrl ||
+                          `${import.meta.env.VITE_API_URL}/uploads/banners/${slide.mobileImage}`
                         }
                         alt="Mobile Preview"
                         className="img-fluid rounded border"
