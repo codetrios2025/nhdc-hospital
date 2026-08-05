@@ -35,7 +35,7 @@ useEffect(() => {
   const fetchServices = async () => {
     try {
       const res = await getallserviceData();
-      console.log("API Response:", res);
+      //console.log("API Response:", res);
       // Convert object to array
       const services = Object.values(res.data.data).filter(
         (item) => item && item._id
@@ -94,7 +94,7 @@ if (loading) { return <Loader />;}
                             ))}
                           </ul>
                           <Link 
-                            to={`/service-detail/${item?.slug}`} 
+                            to={`/service/${item?.slug}`} 
                             state={{ serviceData: item }}
                             title="">
                             {item?.buttonText}

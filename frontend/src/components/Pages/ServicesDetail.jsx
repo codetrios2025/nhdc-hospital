@@ -10,7 +10,7 @@ import constants from "../../services/constants";
 import Loader from "../Common/Loader";
 
 //API
-import { getallserviceData } from "../../services/routes.services";
+import { getServiceBySlug  } from "../../services/routes.services";
 
 const Carousel =
   CarouselImport.default ??
@@ -24,17 +24,11 @@ const ServiceDetail = () =>{
   useEffect(() => {
     const fetchService = async () => {
       try {
-        const res = await getallserviceData();
-        const data = res.data.data;
-        const services = Object.values(data).filter(
-          item => item && typeof item === "object" && item.slug
-        );
-        const selectedService = services.find(
-          item => item.slug === slug
-        );
-        setServiceData(selectedService);
+        const res = await getServiceBySlug(slug);
+        
+        setServiceData(res?.data?.data || null);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching service:", error);
       } finally {
         setLoading(false);
       }
@@ -42,17 +36,17 @@ const ServiceDetail = () =>{
 
     fetchService();
   }, [slug]);
-  
+   console.log(serviceData)
   if (loading) return <Loader />;
   if (!serviceData) return <p className={Style.notFound}>Data not found</p>;
-
+ 
   const responsive = {
-        superLargeDesktop: {
-          breakpoint: { max: 3000, min: 0 },
-          shouldResetAutoplay:true,
-          items: 1,
-        },
-      };
+    superLargeDesktop: {
+      breakpoint: { max: 3000, min: 0 },
+      shouldResetAutoplay:true,
+      items: 1,
+    },
+  };
   return(
     <div className={Style.ServiceDetailPage}>
       <div className={Style.innerBanner}>
