@@ -62,11 +62,11 @@ export default function Footer (){
                     <p>Opp. Government College, Ward No. 15, National Highway, Deoli, District Tonk, Rajasthan - 304804</p>
                   </div>
                   <div className={Style.address}>
-                    <div className={Style.icon}><BsFillTelephoneFill /></div>
+                    <div className={Style.icon}><IoIosMail size="20"/></div>
                     <a href="mailto:nhdcdeoli@gmail.com">nhdcdeoli@gmail.com</a>
                   </div>
                   <div className={Style.address}>
-                    <div className={Style.icon}><IoIosMail size="20" /></div>
+                    <div className={Style.icon}><BsFillTelephoneFill  /></div>
                     <p>
                       <a href="tel:9057288286">+91 90572 88286 </a>, <a href="tel:9829143239">+91 98291 43239</a>
                     </p>                  
