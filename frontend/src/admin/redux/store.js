@@ -11,6 +11,7 @@ import homeFeatureReducer from "./slices/homeFeatureSlice";
 import diagnosticReducer from "./slices/diagnosticSlice";
 import bannerReducer from "./slices/bannerSlice";
 import serviceTests from "./slices/serviceTestSlice";
+import contactReducer from "./slices/contactSlice";
 
 const store = configureStore({
   reducer: {
@@ -25,6 +26,7 @@ const store = configureStore({
     diagnostic: diagnosticReducer,
     banner: bannerReducer,
     serviceTests: serviceTests,
+    contact: contactReducer,
   },
 });
 
