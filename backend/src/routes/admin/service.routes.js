@@ -29,6 +29,14 @@ router.post(
       maxCount: 1,
     },
     {
+      name: "bannerImage",
+      maxCount: 1,
+    },
+    {
+      name: "bannerMobileImage",
+      maxCount: 1,
+    },
+    {
       name: "gallery",
       maxCount: 20,
     },
@@ -53,6 +61,14 @@ router.put(
   upload.fields([
     {
       name: "image",
+      maxCount: 1,
+    },
+    {
+      name: "bannerImage",
+      maxCount: 1,
+    },
+    {
+      name: "bannerMobileImage",
       maxCount: 1,
     },
     {

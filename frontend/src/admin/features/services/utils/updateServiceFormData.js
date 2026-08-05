@@ -25,6 +25,26 @@ const updateServiceFormData = (data, gallery = []) => {
   formData.append("showOnHome", String(data.showOnHome));
   formData.append("isFeatured", String(data.isFeatured));
 
+  if (data.bannerImage instanceof File) {
+    formData.append("bannerImage", data.bannerImage);
+  }
+
+  if (data.bannerMobileImage instanceof File) {
+    formData.append("bannerMobileImage", data.bannerMobileImage);
+  }
+
+  formData.append("bannerTitle", data.bannerTitle || "");
+
+  formData.append("bannerSubtitle", data.bannerSubtitle || "");
+
+  formData.append("bannerDescription", data.bannerDescription || "");
+
+  formData.append("bannerButtonText", data.bannerButtonText || "");
+
+  formData.append("bannerButtonLink", data.bannerButtonLink || "");
+
+  formData.append("bannerOpenInNewTab", data.bannerOpenInNewTab);
+
   /*
   ------------------------------------
   SEO Keywords

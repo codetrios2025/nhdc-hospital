@@ -130,6 +130,40 @@ const serviceSchema = new mongoose.Schema(
       },
     ],
 
+    /* |-------------------------------------------------------------------------- | Service Banner |--------------------------------------------------------------------------*/
+    bannerImage: {
+      type: String,
+      default: "",
+    },
+    bannerMobileImage: {
+      type: String,
+      default: "",
+    },
+    bannerTitle: {
+      type: String,
+      trim: true,
+    },
+    bannerSubtitle: {
+      type: String,
+      trim: true,
+    },
+    bannerDescription: {
+      type: String,
+      trim: true,
+    },
+    bannerButtonText: {
+      type: String,
+      trim: true,
+    },
+    bannerButtonLink: {
+      type: String,
+      trim: true,
+    },
+    bannerOpenInNewTab: {
+      type: Boolean,
+      default: false,
+    },
+
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Admin",

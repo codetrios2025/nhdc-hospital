@@ -15,6 +15,7 @@ import ServiceSettings from "./ServiceSettings";
 import ServiceGallery from "./ServiceGallery";
 
 import ServiceTests from "../components/ServiceTests";
+import ServiceBanner from "./ServiceBanner";
 
 import {
   createService,
@@ -92,6 +93,15 @@ const ServiceForm = ({ serviceId = null }) => {
       showOnHome: service.showOnHome ?? true,
 
       isFeatured: service.isFeatured ?? false,
+
+      bannerTitle: service.bannerTitle || "",
+      bannerSubtitle: service.bannerSubtitle || "",
+      bannerDescription: service.bannerDescription || "",
+
+      bannerButtonText: service.bannerButtonText || "",
+      bannerButtonLink: service.bannerButtonLink || "",
+
+      bannerOpenInNewTab: service.bannerOpenInNewTab ?? false,
     });
 
     setExistingGallery(service.gallery || []);
@@ -218,6 +228,13 @@ const ServiceForm = ({ serviceId = null }) => {
           />
 
           <ServiceSettings register={register} />
+
+          <ServiceBanner
+            register={register}
+            watch={watch}
+            setValue={setValue}
+            service={service}
+          />
         </div>
       </div>
 

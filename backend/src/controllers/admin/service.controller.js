@@ -79,6 +79,14 @@ class ServiceController {
         payload.galleryFiles = req.files.gallery;
       }
 
+      if (req.files?.bannerImage?.length) {
+        payload.bannerImage = req.files.bannerImage[0].filename;
+      }
+
+      if (req.files?.bannerMobileImage?.length) {
+        payload.bannerMobileImage = req.files.bannerMobileImage[0].filename;
+      }
+
       const result = await ServiceService.create(payload);
 
       return res.status(201).json({
@@ -212,6 +220,14 @@ class ServiceController {
 
       if (req.files && req.files.gallery && req.files.gallery.length) {
         payload.galleryFiles = req.files.gallery;
+      }
+
+      if (req.files?.bannerImage?.length) {
+        payload.bannerImage = req.files.bannerImage[0].filename;
+      }
+
+      if (req.files?.bannerMobileImage?.length) {
+        payload.bannerMobileImage = req.files.bannerMobileImage[0].filename;
       }
 
       const result = await ServiceService.update(req.params.id, payload);

@@ -29,6 +29,18 @@ const serviceInitialValues = {
   showOnHome: true,
 
   isFeatured: false,
+
+  bannerImage: null,
+  bannerMobileImage: null,
+
+  bannerTitle: "",
+  bannerSubtitle: "",
+  bannerDescription: "",
+
+  bannerButtonText: "",
+  bannerButtonLink: "",
+
+  bannerOpenInNewTab: false,
 };
 
 export default serviceInitialValues;
