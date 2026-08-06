@@ -144,10 +144,10 @@ export default function Footer() {
           <Row>
             <Col>
               <div className={Style.content}>
-                <p>{}</p>
+                <p> &copy; {new Date().getFullYear()} Namokar Hospital. All rights reserved.</p>
                 <p>
                   <a href="https://www.codetrios.com/" target="_blank">
-                    Design Develop By :{" "}
+                    Design Develop By : {" "} 
                     <img src={CodeTrios} alt="powered by codetrios" />
                   </a>
                 </p>
