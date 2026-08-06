@@ -339,7 +339,22 @@ background: #fff;
 .NHDCVideoSec .videoElem{margin: 0;}
 
 .notFound{    height: 500px;display: flex;align-items: center;justify-content: center;font-size: 20px;text-transform: capitalize;font-weight: 600;color: #000;}
-.successMsg{background: #8bd5bc;border-radius: 5px;padding: 5px 10px;display: flex;align-items: center;justify-content: center;color: #06704c;border-left: 4px solid #06704c;font-weight: 600;margin: 15px 0 0;}
+.successMsg{
+        background: #8bd5bc;
+    border-radius: 5px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #06704c;
+    border-left: 4px solid #06704c;
+    font-weight: 600;
+    margin: 15px 0 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9999;
+}
 .successMsg svg{width: 30px;height: 30px;margin-right: 10px;}
 .overViewCOntainer br{display: none;}
 .testSec{background: #fff;padding: 0 0 60px;}

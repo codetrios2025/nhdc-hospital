@@ -27,9 +27,7 @@ export default function Footer() {
         setServiceData(services);
       } catch (err) {
         console.error(err);
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
     fetchServices();
   }, []);

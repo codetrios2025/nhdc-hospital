@@ -61,10 +61,7 @@ const BookingForm = ({close})=>{
     else if (!/^[6-9]\d{9}$/.test(formData.mobile))
       error.mobile = "Enter valid mobile number.";
 
-    if (
-      formData.email &&
-      !/^\S+@\S+\.\S+$/.test(formData.email)
-    )
+    if (!formData.email && !/^\S+@\S+\.\S+$/.test(formData.email))
       error.email = "Enter valid email.";
 
     if (!formData.appointmentDate)
@@ -95,7 +92,7 @@ const BookingForm = ({close})=>{
       };
 
       const res = await postBooking(payload);
-
+      setSuccessMsg(res.data.message);
       setFormData({
         patientName: "",
         age: "",
@@ -109,7 +106,7 @@ const BookingForm = ({close})=>{
         reason: "",
       });
       //console.log(res.data.message)
-      setSuccessMsg(res.data.message)
+      
     } catch (err) {
       console.log(err);
       alert("Something went wrong.");
@@ -132,14 +129,14 @@ const BookingForm = ({close})=>{
     });
     setErrors({});
   };
-  // useEffect(() => {
-  //   if (successMsg) {
-  //     const timer = setTimeout(() => {
-  //       setSuccessMsg("");
-  //     }, 3000);
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [successMsg]);
+  useEffect(() => {
+    if (successMsg) {
+      const timer = setTimeout(() => {
+        setSuccessMsg("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [successMsg]);
   return(
     <div className={Style.bookingForm}>
       <div className={Style.formHead}>
@@ -150,6 +147,7 @@ const BookingForm = ({close})=>{
         </div>
         <button type="button" className={'closeForm ' + Style.closeBtn} onClick={close}><IoCloseOutline /></button>
       </div>
+      
       <form onSubmit={handleSubmit}>
         <div className={Style.formGroup}>
           <div className={Style.groupElem}>
@@ -202,7 +200,7 @@ const BookingForm = ({close})=>{
             <label>Preferred Date <sub>*</sub></label>
             <span className={Style.icon}><HiCalendarDateRange /></span>
             <input type="date" name="appointmentDate" value={formData.appointmentDate} onChange={handleChange} placeholder="Select preferred date"  />
-            {errors.date && (<small className={Style.error}>{errors.date}</small>)}
+            {errors.appointmentDate && (<small className={Style.error}>{errors.appointmentDate}</small>)}
           </div>
         </div>
         <div className={Style.formGroup}>
@@ -235,6 +233,7 @@ const BookingForm = ({close})=>{
           </button>
         </div>
       </form>
+      {/* {successMsg && <p className={Style.successMsg}><IoCheckmarkCircle />{successMsg}</p>} */}
       {successMsg && <p className={Style.successMsg}><IoCheckmarkCircle />{successMsg}</p>}
     </div>
   )
