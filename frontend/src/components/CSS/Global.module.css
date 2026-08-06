@@ -110,7 +110,7 @@ display: flex;flex-direction: column;align-items: flex-start;}
 .supportContainer .call a{display: block;font-weight: 600;color: #fff;font-size: 16px;}
 
 /* ABout Page CSS  */
-.innerBanner{position: relative;margin-top: 130px;}
+.innerBanner{position: relative;}
 .innerBanner img{width: 100%;height: 400px;object-fit: cover;display: block;}
 .innerBanner.servicesBanner img{height: auto;}
 .innerBanner .content{position: absolute;top: 0;left: 0;width: 100%;height: 100%;display: flex;align-items: center;color: #16366a;background: linear-gradient(272deg, rgb(243 247 252 / 0%) 20%, rgb(243 247 252 / 100%) 94%, rgba(243 247 252) 100%);}
@@ -359,13 +359,15 @@ background: #fff;
 .overViewCOntainer br{display: none;}
 .testSec{background: #fff;padding: 0 0 60px;}
 .testSec h2{    text-align: center;margin: 0 0 26px;}
+.testContainer{display: flex;flex-wrap: wrap;gap: 0;justify-content: center;}
+.testContainer .item{width: 33.33333%;padding: 0 10px;margin-bottom: 15px;}
 .testContainer .box{padding: 0 0;border-radius: 10px;overflow: hidden;background: #f2f6fc;}
 .testContainer .box img{width: 100%;height: 250px;object-fit: cover;}
 .testContainer .box h3{font-size: 20px;margin:10px 0 10px;}
-.testContainer .item{padding: 0 15px;}
 .testContainer .content{padding:15px;min-height: 140px;}
 
 @media only screen and (max-width: 1400px) {
+.testContainer .box h3{font-size: 18px;}    
     .specialItem .content{padding-right: 150px;}
     .diagnosticsElem .leftArea{width: 45%;}
     .diagnosticsElem .rightArea {width: 55%;}
@@ -418,9 +420,14 @@ background: #fff;
     .specialItem .content {
         padding-right: 90px;
     }
+    .testContainer .box h3{font-size: 16px;}   
 }
 
 @media only screen and (max-width: 991px) {
+.testContainer .item{width: 50%;margin-bottom: 20px;}
+    .testContainer .box h3 {
+        font-size: 14px;
+    }   
 .bannerContent {padding-left: 50px;background: linear-gradient(272deg, rgb(243 247 252 / 0%) 18%, rgb(243 247 252 / 100%) 64%, rgba(243 247 252) 100%);}
 .bannerContent h1{font-size: 32px;line-height: normal;}
 .bannerContent .box{width: 500px;max-width: 100%;}
@@ -473,13 +480,15 @@ background: #fff;
 .diagnoServices.whyChoose .whyChooseElem{grid-template-columns: repeat(2, 1fr);}
 .NHDCVideoSec .videoElem{    grid-template-columns: repeat(2, 1fr);}
 .specialContainer{grid-template-columns: repeat(1, 1fr);}
+.heroBanner, .innerBanner{margin-top: 110px;}
 }
 
 
 @media only screen and (max-width: 767px) {
-    .testContainer .item {
-    padding: 0;
-}
+.servicesContent{padding: 30px 0;}    
+.servicesOwl .slideItem{height: 300px;}
+.heroBanner, .innerBanner{margin-top: 104px;}    
+    .testContainer .item {padding: 0;width: 100%;}
 .bannerContent ul li .icon{margin-right: 5px;top: 0;}    
 .mainContainer{grid-template-columns: repeat(1, 1fr);}    
 .whyChooseElem{grid-template-columns: repeat(2, 1fr);}    
