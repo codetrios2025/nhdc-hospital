@@ -45,7 +45,7 @@ const HomeRoute = ()=>{
  if (loading) {
     return <Loader />;
   }
-  console.log(serviceData)
+  //console.log(serviceData)
   return(
     <>
       <HeroBanner data={bannerData} />

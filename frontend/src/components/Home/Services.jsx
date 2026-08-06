@@ -14,7 +14,7 @@ const Services = ({data, serviceData}) =>{
   const services = Object.keys(serviceData || {})
   .filter(key => !isNaN(key))
   .map(key => serviceData[key]);
-  console.log(serviceData)
+  //console.log(serviceData)
   return(
     <section className={`${Style.serviceSec} ${Style.commonSpace}`} aria-labelledby="services-heading">
       <Container>
