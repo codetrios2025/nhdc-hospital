@@ -62,7 +62,7 @@ const ServiceDetail = () => {
   };
   return (
     <div className={Style.ServiceDetailPage}>
-      <div className={Style.innerBanner}>
+      <div className={`${Style.innerBanner} ${Style.servicesBanner}`}>
         <img
           src={
             constants.Image_BASE_URL + "/services/" + serviceData?.bannerImage

@@ -105,6 +105,19 @@ header.headerFix .topHead{padding: 5px 0;}
 header.headerFix .normalView address li a, header.headerFix .normalView address li p{font-size: 11px;}
 .bookBtn{font-size: 13px;padding: 4px 15px;}
 .mobileView{display: none;}
+.chatOnApp{    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgb(37, 211, 102);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 9999;}
+.chatOnApp img {
+    width: 30px;
+}    
 @media only screen and (max-width: 1199px) {
 .bookBtn{    padding: 5px 15px;font-size: 13px;}
 address li {
@@ -185,7 +198,11 @@ address li a, address li p{font-size: 11px;}
     margin: 0;
     padding: 8px 15px;
     border-radius: 10px;}
-    .mobileView li p{font-size: 11px;color: #fff;}
+    .mobileView li p, .mobileView address li a{font-size: 11px;color: #fff;}
     .mobileView ul{justify-content: center;}
     .mobileView .bookBtn .icon{font-size: 24px;}
+.chatOnApp{bottom: 90px;right: 7px;padding: 8px;}    
+.chatOnApp img {
+    width: 20px;
+}    
 }

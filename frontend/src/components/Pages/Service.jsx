@@ -95,8 +95,7 @@ if (loading) { return <Loader />;}
                           </ul>
                           <Link 
                             to={`/service/${item?.slug}`} 
-                            state={{ serviceData: item }}
-                            title="">
+                            title={item?.title}>
                             {item?.buttonText}
                           </Link>
                         </div>

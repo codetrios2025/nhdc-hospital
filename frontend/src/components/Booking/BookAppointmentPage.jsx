@@ -10,8 +10,9 @@ import { IoPeople } from "react-icons/io5";
 import { MdEmergency , MdMedicalServices, MdOutlineChildCare} from "react-icons/md";
 import { FaChild } from "react-icons/fa";
 import { MdOutlineAccessTime } from "react-icons/md";
-
+import useWebsite from "../../hooks/useWebsite";
 const BookAppointment = () => {
+  const { contact } = useWebsite();
   return (
     <div className={Style.bookAppointment}>
       <div className={Style.innerBanner}>
@@ -83,12 +84,12 @@ const BookAppointment = () => {
                         <h3><div className={Style.icon}><MdOutlineAccessTime /></div> Working Hours</h3>
                         <div className={Style.areTime}>
                           <strong>Monday - Saturday</strong> 
-                          <span>Morning: 9:00 AM – 2:00 PM</span>
-                          <span>Evening: 5:00 PM – 7:00 PM</span>
+                          <span>Morning: {contact?.workingHours?.mondaySaturday?.morning}</span>
+                          <span>Evening: {contact?.workingHours?.mondaySaturday?.evening}</span>
                         </div>
                         <div className={Style.areTime}>
                           <strong>Sunday</strong>
-                          <span>Morning: 9:00 AM – 2:00 PM</span>
+                          <span>Morning: {contact?.workingHours?.sunday?.morning}</span>
                         </div>
                         {/* <h5>24×7 Emergency Services</h5> */}
                       </div>
