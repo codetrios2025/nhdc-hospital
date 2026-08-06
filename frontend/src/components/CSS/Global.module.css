@@ -110,7 +110,7 @@ display: flex;flex-direction: column;align-items: flex-start;}
 .supportContainer .call a{display: block;font-weight: 600;color: #fff;font-size: 16px;}
 
 /* ABout Page CSS  */
-.innerBanner{position: relative;}
+.innerBanner{position: relative;margin-top: 130px;}
 .innerBanner img{width: 100%;height: 400px;object-fit: cover;display: block;}
 .innerBanner.servicesBanner img{height: auto;}
 .innerBanner .content{position: absolute;top: 0;left: 0;width: 100%;height: 100%;display: flex;align-items: center;color: #16366a;background: linear-gradient(272deg, rgb(243 247 252 / 0%) 20%, rgb(243 247 252 / 100%) 94%, rgba(243 247 252) 100%);}
@@ -485,7 +485,7 @@ background: #fff;
 
 
 @media only screen and (max-width: 767px) {
-.servicesContent{padding: 30px 0;}    
+.servicesContent{padding: 30px 0;}      
 .servicesOwl .slideItem{height: 300px;}
 .heroBanner, .innerBanner{margin-top: 104px;}    
     .testContainer .item {padding: 0;width: 100%;}
