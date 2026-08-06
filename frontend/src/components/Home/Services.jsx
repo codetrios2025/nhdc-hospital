@@ -30,36 +30,6 @@ const Services = ({data, serviceData}) =>{
                   </div>
                 );
               })}
-              {/* <div className={Style.listBox}>
-                <span className={Style.icon}><TbBulbFilled /></span>
-                <h6>Emergency</h6>
-                <p>24×7 Support</p>
-              </div>
-              <div className={Style.listBox}>
-                <span className={Style.icon}><MdOutlineChildCare /></span>
-                <h6>Child Care</h6>
-                <p>Pediatric Specialist</p>
-              </div>
-              <div className={Style.listBox}>
-                <span className={Style.icon}><GiLungs /></span>
-                <h6>Asthma Care</h6>
-                <p>Allergy & Respiratory</p>
-              </div>
-               <div className={Style.listBox}>
-                <span className={Style.icon}><FaShieldVirus  /></span>
-                <h6>Allergy Treatment</h6>
-                <p>Skin & Allergy Care  </p>
-              </div>
-              <div className={Style.listBox}>
-                <span className={Style.icon}><FaHeartbeat /></span>
-                <h6>OPD Consultation</h6>
-                <p>Expert Medical Advice</p>
-              </div>
-              <div className={Style.listBox}>
-                <span className={Style.icon}><MdMedicalServices /></span>
-                <h6>Diagnostics</h6>
-                <p>Accurate Testing</p>
-              </div> */}
             </div>
           </Col>
         </Row>
@@ -69,9 +39,7 @@ const Services = ({data, serviceData}) =>{
           <Row>
             <Col>
               <div className={Style.specialContainer}>
-                {services &&
-                    services?.filter((item) => item.showOnHome === true)
-                      .map((item, index) => (
+                {services.map((item, index) => (
                       <article  className={Style.specialItem} key={index}>
                         <figure>
                           <img 
