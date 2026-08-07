@@ -1,46 +1,142 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const AppointmentStatusModal = ({ show, onClose, onSubmit }) => {
-  const [status, setStatus] = useState("Confirmed");
+const STATUS_OPTIONS = [
+  {
+    label: "New",
+    value: "New",
+  },
+  {
+    label: "Confirmed",
+    value: "Confirmed",
+  },
+  {
+    label: "Visited",
+    value: "Visited",
+  },
+  {
+    label: "Cancelled",
+    value: "Cancelled",
+  },
+];
+
+const AppointmentStatusModal = ({
+  show,
+  appointment,
+  loading = false,
+  onClose,
+  onSubmit,
+}) => {
+  const [status, setStatus] = useState("New");
+
+  useEffect(() => {
+    if (appointment?.status) {
+      setStatus(appointment.status);
+    }
+  }, [appointment]);
 
   if (!show) return null;
+
+  const handleSubmit = () => {
+    if (!status) return;
+
+    onSubmit(status);
+  };
 
   return (
     <div
       className="modal fade show d-block"
-      style={{ background: "rgba(0,0,0,.5)" }}
+      style={{
+        background: "rgba(0,0,0,.5)",
+      }}
     >
-      <div className="modal-dialog">
+      <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
-            <h5>Update Status</h5>
+            <h5 className="modal-title">Update Appointment Status</h5>
 
-            <button className="btn-close" onClick={onClose} />
+            <button
+              type="button"
+              className="btn-close"
+              onClick={onClose}
+              disabled={loading}
+            />
           </div>
 
           <div className="modal-body">
-            <select
-              className="form-select"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-            >
-              <option>New</option>
-              <option>Confirmed</option>
-              <option>Visited</option>
-              <option>Cancelled</option>
-            </select>
+            <div className="mb-3">
+              <label className="form-label fw-semibold">Patient</label>
+
+              <input
+                type="text"
+                className="form-control"
+                value={appointment?.patientName || ""}
+                disabled
+              />
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label fw-semibold">Appointment Date</label>
+
+              <input
+                type="text"
+                className="form-control"
+                value={
+                  appointment?.appointmentDate
+                    ? new Date(appointment.appointmentDate).toLocaleDateString(
+                        "en-GB",
+                      )
+                    : "-"
+                }
+                disabled
+              />
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label fw-semibold">Status</label>
+
+              <select
+                className="form-select"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                disabled={loading}
+              >
+                {STATUS_OPTIONS.map((item) => (
+                  <option key={item.value} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
           <div className="modal-footer">
-            <button className="btn btn-secondary" onClick={onClose}>
+            <button
+              className="btn btn-secondary"
+              onClick={onClose}
+              disabled={loading}
+            >
               Cancel
             </button>
 
             <button
               className="btn btn-primary"
-              onClick={() => onSubmit(status)}
+              onClick={handleSubmit}
+              disabled={loading}
             >
-              Update
+              {loading ? (
+                <>
+                  <span
+                    className="spinner-border spinner-border-sm me-2"
+                    role="status"
+                  ></span>
+                  Updating...
+                </>
+              ) : (
+                <>
+                  <i className="pi pi-check me-2"></i>
+                  Update Status
+                </>
+              )}
             </button>
           </div>
         </div>

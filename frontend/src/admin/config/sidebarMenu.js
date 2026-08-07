@@ -120,7 +120,11 @@ const sidebarMenu = [
   //   icon: FaQuestionCircle,
   //   path: "/admin/faqs",
   // },
-
+  {
+    title: "Hospital Highlights",
+    icon: FaHospital,
+    path: "/admin/hospital-highlights",
+  },
   {
     title: "Appointments",
     icon: FaCalendarCheck,

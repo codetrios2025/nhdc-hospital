@@ -1,69 +1,94 @@
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 
-import { setFilters } from "../../../redux/slices/appointmentSlice";
-import { fetchAppointments } from "../../../redux/thunks/appointmentThunk";
-
-const AppointmentFilters = () => {
-  const dispatch = useDispatch();
-
-  const { filters, pagination } = useSelector((state) => state.appointments);
-
-  const handleChange = (e) => {
-    const newFilters = {
-      ...filters,
-      [e.target.name]: e.target.value,
-    };
-
-    dispatch(setFilters(newFilters));
-
-    dispatch(
-      fetchAppointments({
-        page: pagination.page,
-        limit: pagination.limit,
-        ...newFilters,
-      }),
-    );
-  };
-
+const AppointmentFilters = ({
+  search,
+  setSearch,
+  status,
+  setStatus,
+  appointmentDate,
+  setAppointmentDate,
+  limit,
+  setLimit,
+}) => {
   return (
-    <div className="row mb-3">
-      <div className="col-md-4">
-        <input
-          className="form-control"
-          placeholder="Search patient..."
-          name="search"
-          value={filters.search}
-          onChange={handleChange}
-        />
-      </div>
+    <div className="card mb-3 shadow-sm">
+      <div className="card-body">
+        <div className="row g-3 align-items-end">
+          {/* Search */}
+          <div className="col-lg-4 col-md-6">
+            <label className="form-label fw-semibold">Search</label>
 
-      <div className="col-md-3">
-        <select
-          className="form-select"
-          name="status"
-          value={filters.status}
-          onChange={handleChange}
-        >
-          <option value="">All Status</option>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Patient Name / Mobile / Email"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
 
-          <option value="New">New</option>
+          {/* Status */}
+          <div className="col-lg-2 col-md-6">
+            <label className="form-label fw-semibold">Status</label>
 
-          <option value="Confirmed">Confirmed</option>
+            <select
+              className="form-select"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="">All Status</option>
+              <option value="New">New</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Visited">Visited</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
 
-          <option value="Visited">Visited</option>
+          {/* Appointment Date */}
+          <div className="col-lg-3 col-md-6">
+            <label className="form-label fw-semibold">Appointment Date</label>
 
-          <option value="Cancelled">Cancelled</option>
-        </select>
-      </div>
+            <input
+              type="date"
+              className="form-control"
+              value={appointmentDate}
+              onChange={(e) => setAppointmentDate(e.target.value)}
+            />
+          </div>
 
-      <div className="col-md-3">
-        <input
-          type="date"
-          className="form-control"
-          name="appointmentDate"
-          value={filters.appointmentDate}
-          onChange={handleChange}
-        />
+          {/* Records Per Page */}
+          <div className="col-lg-2 col-md-4">
+            <label className="form-label fw-semibold">Show</label>
+
+            <select
+              className="form-select"
+              value={limit}
+              onChange={(e) => setLimit(Number(e.target.value))}
+            >
+              <option value={10}>10</option>
+              <option value={25}>25</option>
+              <option value={50}>50</option>
+              <option value={100}>100</option>
+            </select>
+          </div>
+
+          {/* Reset */}
+          <div className="col-lg-1 col-md-2">
+            <button
+              type="button"
+              className="btn btn-outline-secondary w-100"
+              title="Reset Filters"
+              onClick={() => {
+                setSearch("");
+                setStatus("");
+                setAppointmentDate("");
+                setLimit(10);
+              }}
+            >
+              <i className="bi bi-arrow-clockwise"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -4,7 +4,13 @@ const initialState = {
   appointments: [],
   appointment: null,
 
-  statistics: null,
+  statistics: {
+    total: 0,
+    newAppointments: 0,
+    confirmed: 0,
+    visited: 0,
+    cancelled: 0,
+  },
   todayAppointments: [],
 
   pagination: {
@@ -15,7 +21,7 @@ const initialState = {
   },
 
   filters: {
-    search: "",
+    keyword: "",
     status: "",
     department: "",
     doctor: "",
@@ -53,39 +59,18 @@ const appointmentSlice = createSlice({
       state.error = null;
     },
 
-    setAppointmentsold(state, action) {
-      const payload = action.payload;
-
-      state.appointments = payload.data || [];
-
-      state.pagination = {
-        page: payload.page || 1,
-        limit: payload.limit || 10,
-        total: payload.total || 0,
-        totalPages: payload.totalPages || 0,
-      };
-    },
-
     setAppointments(state, action) {
       const payload = action.payload;
 
       console.log("Reducer Payload:", payload);
 
-      // If API returns an array directly
+      // API returned array directly
       if (Array.isArray(payload)) {
         state.appointments = payload;
-
-        state.pagination = {
-          page: 1,
-          limit: payload.length,
-          total: payload.length,
-          totalPages: 1,
-        };
-
         return;
       }
 
-      // If API returns { data: [] }
+      // API returned { data: [] }
       if (Array.isArray(payload.data)) {
         state.appointments = payload.data;
 
@@ -99,7 +84,7 @@ const appointmentSlice = createSlice({
         return;
       }
 
-      // If API returns { data: { data: [] } }
+      // API returned nested object
       state.appointments = payload.data?.data || [];
 
       state.pagination = {
@@ -130,7 +115,9 @@ const appointmentSlice = createSlice({
     },
 
     resetFilters(state) {
-      state.filters = initialState.filters;
+      state.filters = {
+        ...initialState.filters,
+      };
     },
   },
 });

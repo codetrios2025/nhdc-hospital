@@ -43,6 +43,9 @@ import BannerForm from "../features/banner/components/BannerForm";
 
 import ContactPage from "../features/contact/pages/ContactPage";
 
+import HospitalHighlightList from "../features/hospitalHighlights/pages/HospitalHighlightList";
+import HospitalHighlight from "../features/hospitalHighlights/pages/HospitalHighlight";
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -112,6 +115,15 @@ const AppRoutes = () => {
         <Route path="banner/:id/edit" element={<BannerForm />} />
 
         <Route path="/contact" element={<ContactPage />} />
+
+        <Route path="hospital-highlights" element={<HospitalHighlightList />} />
+
+        <Route path="hospital-highlights/add" element={<HospitalHighlight />} />
+
+        <Route
+          path="hospital-highlights/:id/edit"
+          element={<HospitalHighlight />}
+        />
       </Route>
     </Routes>
   );

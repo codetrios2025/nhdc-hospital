@@ -12,6 +12,7 @@ import diagnosticReducer from "./slices/diagnosticSlice";
 import bannerReducer from "./slices/bannerSlice";
 import serviceTests from "./slices/serviceTestSlice";
 import contactReducer from "./slices/contactSlice";
+import hospitalHighlightReducer from "./slices/hospitalHighlightSlice";
 
 const store = configureStore({
   reducer: {
@@ -27,6 +28,7 @@ const store = configureStore({
     banner: bannerReducer,
     serviceTests: serviceTests,
     contact: contactReducer,
+    hospitalHighlights: hospitalHighlightReducer,
   },
 });
 
