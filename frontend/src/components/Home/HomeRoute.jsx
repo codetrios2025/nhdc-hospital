@@ -8,7 +8,7 @@ import Support from "./Support";
 import Loader from "../Common/Loader";
 
 //APIs
-import { getBannerData, getDoctorsData, getVideos, getFeaturesData, getDiagnosticServicesData, getallserviceData } from "../../services/routes.services";
+import { getBannerData, getDoctorsData, getVideos, getFeaturesData, getDiagnosticServicesData, getHomeServices } from "../../services/routes.services";
 const HomeRoute = ()=>{
   const [bannerData, setBannerData] = useState([]);
   const [serviceData, setServiceData] = useState([]);
@@ -22,7 +22,7 @@ const HomeRoute = ()=>{
       try{  
         const [bannerRes, serviceRes, doctorRes, videoRes, featuresRes, diagnosticServicesRes] = await Promise.all([
           getBannerData(),
-          getallserviceData(),
+          getHomeServices(),
           getDoctorsData(),
           getVideos(),
           getFeaturesData(),
@@ -45,7 +45,7 @@ const HomeRoute = ()=>{
  if (loading) {
     return <Loader />;
   }
-  
+  //console.log(serviceData)
   return(
     <>
       <HeroBanner data={bannerData} />

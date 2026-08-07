@@ -105,6 +105,19 @@ header.headerFix .topHead{padding: 5px 0;}
 header.headerFix .normalView address li a, header.headerFix .normalView address li p{font-size: 11px;}
 .bookBtn{font-size: 13px;padding: 4px 15px;}
 .mobileView{display: none;}
+.chatOnApp{    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgb(37, 211, 102);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 9999;}
+.chatOnApp img {
+    width: 30px;
+}    
 @media only screen and (max-width: 1199px) {
 .bookBtn{    padding: 5px 15px;font-size: 13px;}
 address li {
@@ -119,73 +132,39 @@ nav ul li {
 address li a .icon{width: 22px;height: auto;font-size: 20px;margin-right: 5px;}
 nav ul li {margin-left: 22px;}
 address li a, address li p{font-size: 11px;}
-    address li {
-        margin-left: 10px;
-    }
-/* header.headerFix .topHead {margin-top: -60px;} */
+address li {margin-left: 10px;}
+}
+
+@media only screen and (max-width: 991px) {
+
+header.headerFix nav ul li a{padding: 15px 20px;}
+address li {margin-left: 10px;}
+.mobNone{display: none;}
+.bookBtn{padding: 0;margin: 0;background: transparent;}
+.bookBtn:hover{background: transparent;color: #22335c;}
+.menuBtn {display: block;z-index: 1001;}  
+.navMenu {position: fixed;top: 0;right: -100%;width: 280px;height: 100vh;background: #fff;transition: .4s;box-shadow: -5px 0 20px rgba(0,0,0,.15);padding-top: 90px;z-index: 1000;}  
+.navMenu.showMenu {right: 0;}    
+.navMenu ul {flex-direction: column;gap: 0;}      
+nav ul li{margin: 0;width: 100%;}
+nav ul li a{padding: 15px 20px;border-bottom: 1px solid #e7e7e7;}
+.normalView li{display: none;}
+.normalView li.timeList{display: block;}
+.normalView ul{justify-content: center;}
+.normalView li.timeList .icon{display: none;}
+.normalView li.timeList p{font-size: 12px;
+text-align: center;
+justify-content: center;}
+.mobileView{display: block;    position: fixed;bottom: 0;left: 0;width: 100%;padding: 15px 0!important;}
+.mobileView .callList, .mobileView button{    background: #16366a;color: #fff;margin: 0;padding: 8px 15px;border-radius: 10px;}
+.mobileView li p, .mobileView address li a{font-size: 11px;color: #fff;}
+.mobileView ul{justify-content: center;}
+.mobileView .bookBtn .icon{font-size: 24px;}
+.chatOnApp{bottom: 90px;right: 7px;padding: 8px;}    
+.chatOnApp img {width: 20px;}    
+.logo img {width: 45px;}
 }
 
 @media only screen and (max-width: 767px) {
-  
-  header.headerFix nav ul li a{padding: 15px 20px;}
-/* header.headerFix .topHead {margin-top: -60px;}   */
-    address li {
-        margin-left: 10px;
-    }
-  .mobNone{display: none;}
-      /* address li .icon, address li a .icon {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-        margin-right: 5px;
-        border-radius: 50%;
-        color: #22335c;
-        border: 1px solid #22335c;
-        margin: 0;
-    } */
-    .bookBtn{padding: 0;margin: 0;background: transparent;}
-    .bookBtn:hover{background: transparent;color: #22335c;}
-  /* .bookBtn {padding: 5px 8px;font-size: 11px;}
-  .bookBtn .icon{font-size: 14px} */
-.menuBtn {
-        display: block;
-        z-index: 1001;
-    }  
-.navMenu {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 280px;
-        height: 100vh;
-        background: #fff;
-        transition: .4s;
-        box-shadow: -5px 0 20px rgba(0,0,0,.15);
-        padding-top: 90px;
-        z-index: 1000;
-    }  
-.navMenu.showMenu {
-        right: 0;
-    }    
-.navMenu ul {
-        flex-direction: column;
-        gap: 0;
-    }      
-    nav ul li{margin: 0;width: 100%;}
-    nav ul li a{padding: 15px 20px;border-bottom: 1px solid #e7e7e7;}
-    .normalView li{display: none;}
-    .normalView li.timeList{display: block;}
-    .normalView ul{justify-content: center;}
-    .normalView li.timeList .icon{display: none;}
-    .normalView li.timeList p{font-size: 12px;
-        text-align: center;
-        justify-content: center;}
-    .mobileView{display: block;    position: fixed;bottom: 0;left: 0;width: 100%;padding: 15px 0!important;}
-    .mobileView .callList, .mobileView button{    background: #16366a;
-    color: #fff;
-    margin: 0;
-    padding: 8px 15px;
-    border-radius: 10px;}
-    .mobileView li p{font-size: 11px;color: #fff;}
-    .mobileView ul{justify-content: center;}
-    .mobileView .bookBtn .icon{font-size: 24px;}
+.logo img {width: 40px;}
 }

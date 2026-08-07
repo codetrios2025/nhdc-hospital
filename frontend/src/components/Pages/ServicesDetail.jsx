@@ -62,7 +62,7 @@ const ServiceDetail = () => {
   };
   return (
     <div className={Style.ServiceDetailPage}>
-      <div className={Style.innerBanner}>
+      <div className={`${Style.innerBanner} ${Style.servicesBanner}`}>
         <img
           src={
             constants.Image_BASE_URL + "/services/" + serviceData?.bannerImage
@@ -122,7 +122,22 @@ const ServiceDetail = () => {
                   <h2>Related Test</h2>
                 </div>
                 <div className={Style.testContainer}>
-                  <Carousel
+                  {testData?.map((item, index) => (
+                      <div className={Style.item} key={item._id}>
+                        <div className={Style.box}>
+                          <img
+                            src={`${constants.Image_BASE_URL}/service-tests/${item?.image}`}
+                            alt={item?.testName}
+                          />
+                          <div className={Style.content}>
+                            <h3>{item?.testName}</h3>
+                            {parse(item?.description || "")}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    
+                  {/* <Carousel
                     autoPlaySpeed={3000}
                     transitionDuration={500}
                     responsive={testResponsive}
@@ -145,7 +160,7 @@ const ServiceDetail = () => {
                         </div>
                       </div>
                     ))}
-                  </Carousel>
+                  </Carousel> */}
                 </div>
               </Col>
             </Row>

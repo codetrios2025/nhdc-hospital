@@ -6,6 +6,7 @@ import { BiSolidPhoneCall } from "react-icons/bi";
 import { IoIosMail } from "react-icons/io";
 import { IoCalendarOutline } from "react-icons/io5";
 import Logo from "../../../assets/images/nhdc-logo.png";
+import whatsapp from '../../../assets/images/whatsap_icon.webp'
 import { FaHeadset, FaBars, FaTimes } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { CiMenuBurger } from "react-icons/ci";
@@ -24,7 +25,7 @@ const Header = () => {
     setBooking(false);
   };
   const { contact } = useWebsite();
-  console.log(contact,"contact detail redux");
+  //console.log(contact,"contact detail redux");
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -45,74 +46,47 @@ const Header = () => {
         role="banner"
         className={`header ${isScrolled ? Style.headerFix : ""}`}
       >
-        <div className={Style.topHead}>
+        <div className={`${Style.topHead} ${Style.normalView}`}>
           <Container>
             <Row>
               <Col>
                 <address>
                   <ul>
                     <li>
-                      <a
-                        data-tooltip-id="tooltip"
-                        data-tooltip-content={contact?.email}
-                        href={`mailto:${contact?.email}`}
-                        aria-label="Email Namokar Hospital"
-                      >
+                      <a href={`mailto:${contact?.email}`} aria-label="Email Namokar Hospital">
                         <div className={Style.icon}>
                           <IoIosMail />
                         </div>
-                        <p className={Style.mobNone}>{contact?.email}</p>
+                        <p>{contact?.email}</p>
                       </a>
                     </li>
-                    <li
-                      data-tooltip-id="tooltip"
-                      data-tooltip-content={contact?.phoneNumbers?.join(", ")}
-                    >
+                    <li>
                       <div className={Style.icon}>
                         <FaHeadset />
                       </div>
                       <div className={Style.numberFlex}>
                         {contact?.phoneNumbers?.map((number, index) => (
                           <a key={index} href={`tel:${number}`}>
-                            <p className={Style.mobNone}>+91 {number}</p>
+                            <p>+91 {number}</p>
                           </a>
                         ))}
-                        {/* <a href="tel:9057288286">
-                          <p className={Style.mobNone}>+91 90572 88286</p>
-                        </a>
-                        <a href="tel:9829143239">
-                          <p className={Style.mobNone}>+91 98291 43239</p>
-                        </a> */}
                       </div>
                     </li>
-                    <li
-                      data-tooltip-id="tooltip"
-                      data-tooltip-content="Mon to Sat: 9:00 AM – 2:00 PM , 5:00 PM – 7:00 PM, Sun: 9 AM – 2 PM"
-                    >
+                    <li className={Style.timeList}>
                       <div className={Style.icon}>
                         <FiClock />
                       </div>
                       <div>
-                        {/* {contact?.workingHours?.map((hours, index) => (} */}
-                        <p className={Style.mobNone}>
-                          Mon to Sat: 9 AM – 2 PM , 5 PM – 7 PM{" "}
-                        </p>
-                        <p className={Style.mobNone}> Sun: 9 AM – 2 PM</p>
+                        <p>Mon to Sat: {contact?.workingHours?.mondaySaturday?.morning} , {contact?.workingHours?.mondaySaturday?.evening}{" "}</p>
+                        <p> Sun: {contact?.workingHours?.sunday?.morning}</p>
                       </div>
                     </li>
                     <li>
-                      <button
-                        data-tooltip-id="tooltip"
-                        data-tooltip-content="Book Appointment"
-                        onClick={bookingHandler}
-                        type="button"
-                        className={Style.bookBtn}
-                        aria-label="Book Appointment"
-                      >
+                      <button onClick={bookingHandler} type="button" className={Style.bookBtn} aria-label="Book Appointment">
                         <span className={Style.icon}>
                           <IoCalendarOutline />
                         </span>{" "}
-                        <p className={Style.mobNone}>Book Appointment</p>
+                        <p>Book Appointment</p>
                       </button>
                     </li>
                   </ul>
@@ -121,6 +95,33 @@ const Header = () => {
             </Row>
           </Container>
         </div>
+        <div className={`${Style.topHead} ${Style.mobileView}`}>
+        <Container>
+          <Row>
+            <Col>
+              <address>
+                <ul>
+                  <li className={Style.callList}>
+                    <div className={Style.icon}><FaHeadset /></div>
+                    <div className={Style.numberFlex}>
+                      {contact?.phoneNumbers?.map((number, index) => (
+                        <a key={index} href={`tel:${number}`}>+91 {number}</a>
+                      ))}
+                      {/* <a href="tel:9829143239" ><p>+91 98291 43239</p></a> */}
+                    </div>
+                  </li>
+                  <li>
+                    <button onClick={bookingHandler} type="button" className={Style.bookBtn} aria-label="Book Appointment">
+                      <span className={Style.icon}><IoCalendarOutline /></span> <p>Book Appointment</p></button>
+                  </li>
+                 
+                </ul>
+              </address>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+
         <div className={Style.mainHeader}>
           <Container>
             <Row>
@@ -200,6 +201,9 @@ const Header = () => {
           </div>
         </div>
       )}
+      <a href={`https://wa.me/${contact?.whatsappNumber}`} title="Chat on WhatsApp" className={Style.chatOnApp}>
+        <img src={whatsapp} alt="Chat on WhatsApp" />
+      </a>
     </>
   );
 };
