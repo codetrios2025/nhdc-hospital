@@ -7,6 +7,6 @@ const HospitalHighlightController = require("../../controllers/admin/hospitalHig
 /**
  * Website Listing
  */
-router.get("/hospital-highlights", HospitalHighlightController.getWebsiteData);
+router.get("/", HospitalHighlightController.getWebsiteData);
 
 module.exports = router;
