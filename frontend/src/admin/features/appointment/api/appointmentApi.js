@@ -10,9 +10,7 @@ const appointmentApi = {
   */
 
   getAppointments(params = {}) {
-    return apiClient.get(BASE_URL, {
-      params,
-    });
+    return apiClient.get(BASE_URL, params);
   },
 
   /*
