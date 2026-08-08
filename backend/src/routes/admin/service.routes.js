@@ -90,7 +90,7 @@ router.delete(
 router.delete(
   "/:id/gallery/:imageId",
   verifyToken,
-  checkRole("Admin"),
+  checkRole("SUPER_ADMIN"),
   ServiceController.deleteGalleryImage,
 );
 
