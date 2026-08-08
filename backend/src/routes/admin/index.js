@@ -14,6 +14,7 @@ const diagnosticRoutes = require("./diagnostic.routes");
 const serviceTestRoutes = require("./serviceTest.routes");
 const contactRoutes = require("./contact.routes");
 const hospitalHighlightRoutes = require("./hospitalHighlight.routes");
+const notificationRoutes = require("./notification.routes");
 
 /*
 |--------------------------------------------------------------------------
@@ -46,5 +47,7 @@ router.use("/service-tests", serviceTestRoutes);
 router.use("/contact", contactRoutes);
 
 router.use("/hospital-highlights", hospitalHighlightRoutes);
+
+router.use("/notifications", notificationRoutes);
 
 module.exports = router;

@@ -28,11 +28,11 @@ export const fetchAppointments =
       //const { data } = await appointmentApi.getAppointments(params);
       const response = await appointmentApi.getAppointments(params);
 
-      console.log("API Response", response);
+      // console.log("API Response", response);
 
-      console.log("Response.data", response.data);
+      // console.log("Response.data", response.data);
 
-      dispatch(setAppointments(response.data));
+      dispatch(setAppointments(response));
       //dispatch(setAppointments(data));
     } catch (error) {
       dispatch(

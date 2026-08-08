@@ -93,6 +93,8 @@ const appointmentSlice = createSlice({
         total: payload.data?.total || 0,
         totalPages: payload.data?.totalPages || 0,
       };
+
+      console.log("Pagination Stored :", state.pagination);
     },
 
     setAppointment(state, action) {

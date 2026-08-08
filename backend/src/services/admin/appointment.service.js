@@ -1,7 +1,5 @@
 const repository = require("../../repositories/admin/appointment.repository");
-// const EmailService = require("../notification/email.service");
-// const AppointmentTemplate = require("../../templates/emails/appointment.template");
-const NotificationService = require("../notification/notification.service");
+const AppointmentNotification = require("../../notifications/events/appointment.notification");
 
 class AppointmentService {
   /*
@@ -11,7 +9,6 @@ class AppointmentService {
   */
 
   async create(data) {
-    // Convert empty values to null
     if (!data.department) {
       data.department = null;
     }
@@ -22,21 +19,26 @@ class AppointmentService {
 
     const appointment = await repository.create(data);
 
-    await NotificationService.appointmentCreated(appointment);
+    // Send notifications (don't block API if notification fails)
+    try {
+      await AppointmentNotification.booked(appointment);
+    } catch (error) {
+      console.error("Appointment booked notification failed:", error);
+    }
 
     return appointment;
   }
 
   /*
   |--------------------------------------------------------------------------
-  | Admin Listing
+  | Appointment Listing
   |--------------------------------------------------------------------------
   */
 
   async getAll(query) {
     const filters = repository.buildFilters(query);
 
-    return await repository.findAll(filters, {
+    return repository.findAll(filters, {
       page: Number(query.page) || 1,
       limit: Number(query.limit) || 10,
       sortBy: query.sortBy || "createdAt",
@@ -46,7 +48,7 @@ class AppointmentService {
 
   /*
   |--------------------------------------------------------------------------
-  | Details
+  | Appointment Details
   |--------------------------------------------------------------------------
   */
 
@@ -73,7 +75,6 @@ class AppointmentService {
       throw new Error("Appointment not found.");
     }
 
-    // Convert empty values to null
     if (!data.department) {
       data.department = null;
     }
@@ -82,7 +83,7 @@ class AppointmentService {
       data.doctor = null;
     }
 
-    return await repository.update(id, data);
+    return repository.update(id, data);
   }
 
   /*
@@ -98,28 +99,33 @@ class AppointmentService {
       throw new Error("Appointment not found.");
     }
 
-    return await repository.delete(id);
+    return repository.delete(id);
   }
 
   /*
   |--------------------------------------------------------------------------
-  | Update Status
+  | Update Appointment Status
   |--------------------------------------------------------------------------
   */
 
   async updateStatus(id, status) {
     const appointment = await repository.updateStatus(id, status);
 
-    switch (status) {
-      case "Confirmed":
-        await NotificationService.appointmentConfirmed(appointment);
+    try {
+      switch (status) {
+        case "Confirmed":
+          await AppointmentNotification.confirmed(appointment);
+          break;
 
-        break;
+        case "Cancelled":
+          await AppointmentNotification.cancelled(appointment);
+          break;
 
-      case "Cancelled":
-        await NotificationService.appointmentCancelled(appointment);
-
-        break;
+        default:
+          break;
+      }
+    } catch (error) {
+      console.error("Status notification failed:", error);
     }
 
     return appointment;
@@ -127,7 +133,7 @@ class AppointmentService {
 
   /*
   |--------------------------------------------------------------------------
-  | Save Admin Reply
+  | Save Admin Remark
   |--------------------------------------------------------------------------
   */
 
@@ -138,7 +144,15 @@ class AppointmentService {
       throw new Error("Appointment not found.");
     }
 
-    return await repository.saveReply(id, remarks);
+    const updatedAppointment = await repository.saveReply(id, remarks);
+
+    try {
+      await AppointmentNotification.remark(updatedAppointment, remarks);
+    } catch (error) {
+      console.error("Remark notification failed:", error);
+    }
+
+    return updatedAppointment;
   }
 
   /*
@@ -148,7 +162,7 @@ class AppointmentService {
   */
 
   async getStatistics() {
-    return await repository.getStatistics();
+    return repository.getStatistics();
   }
 
   /*
@@ -158,7 +172,7 @@ class AppointmentService {
   */
 
   async getTodayAppointments() {
-    return await repository.getTodayAppointments();
+    return repository.getTodayAppointments();
   }
 }
 

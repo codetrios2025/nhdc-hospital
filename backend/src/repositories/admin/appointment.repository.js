@@ -103,13 +103,16 @@ class AppointmentRepository {
   async updateStatus(id, status) {
     return await Appointment.findByIdAndUpdate(
       id,
-      {
-        status,
-      },
+      { status },
       {
         new: true,
+        runValidators: true,
       },
-    );
+    )
+      .populate("department", "name slug")
+      .populate("doctor", "name slug qualification")
+      .populate("createdBy", "name email")
+      .populate("updatedBy", "name email");
   }
 
   /*
@@ -127,8 +130,13 @@ class AppointmentRepository {
       },
       {
         new: true,
+        runValidators: true,
       },
-    );
+    )
+      .populate("department", "name slug")
+      .populate("doctor", "name slug qualification")
+      .populate("createdBy", "name email")
+      .populate("updatedBy", "name email");
   }
 
   /*
