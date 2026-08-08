@@ -27,6 +27,7 @@ import { BsClockHistory } from "react-icons/bs";
 
 //API
 import { getallserviceData } from "../../services/routes.services";
+import { Helmet } from "react-helmet-async";
 const Services = () =>{
   const [serviceData, setServiceData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -53,6 +54,16 @@ if (loading) { return <Loader />;}
 
 //console.log("Service Data:", serviceData);
   return(
+    <>
+    {/* <Helmet>
+      <title>{serviceData?.seoTitle || serviceData.seoTitle || "Namokar Hospital"}</title>
+      <meta name="description" content={serviceData?.seoDescription || "" }  />
+      <meta name="keywords" content={
+          Array.isArray(serviceData?.seoKeyword)
+          ? serviceData.seoKeyword.join(", ") : serviceData?.seoKeywords || ""
+        } 
+      />
+    </Helmet> */}
     <div className={Style.servicesPage}>
       <div className={Style.innerBanner}>
           <img src={BannerImg} alt="Namokar Hospital & Diagnostic Centre" />
@@ -186,6 +197,7 @@ if (loading) { return <Loader />;}
       </div>
       <Support />
     </div>
+    </>
   )
 }
 

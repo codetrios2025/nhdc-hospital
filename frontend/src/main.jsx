@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
+import { HelmetProvider } from "react-helmet-async";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
@@ -18,11 +19,13 @@ import "./index.css";
 import App from "./App";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    <WebsiteProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </WebsiteProvider>
-  </Provider>,
+  <HelmetProvider>
+    <Provider store={store}>
+      <WebsiteProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </WebsiteProvider>
+    </Provider>
+  </HelmetProvider>,
 );
