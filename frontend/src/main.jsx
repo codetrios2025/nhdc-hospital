@@ -16,7 +16,7 @@ import "./admin/assets/styles/main.scss";
 import store from "./admin/redux/store";
 import WebsiteProvider from "./context/WebsiteProvider";
 import "./index.css";
-import App from "./App";
+import App from "./app";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <HelmetProvider>
