@@ -49,9 +49,10 @@ const appointmentApi = {
   ------------------------------------
   */
 
-  updateStatus(id, status) {
+  updateStatus(id, status, appointmentTime) {
     return apiClient.patch(`${BASE_URL}/status/${id}`, {
       status,
+      appointmentTime,
     });
   },
 

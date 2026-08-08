@@ -98,10 +98,12 @@ const AppointmentListPage = () => {
     setShowStatusModal(true);
   };
 
-  const handleStatusSubmit = async (status) => {
+  const handleStatusSubmit = async (status, appointmentTime) => {
     if (!selectedAppointment) return;
 
-    await dispatch(updateAppointmentStatus(selectedAppointment._id, status));
+    await dispatch(
+      updateAppointmentStatus(selectedAppointment._id, status, appointmentTime),
+    );
 
     setShowStatusModal(false);
     setSelectedAppointment(null);

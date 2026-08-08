@@ -149,6 +149,7 @@ class AppointmentController {
       const result = await AppointmentService.updateStatus(
         req.params.id,
         req.body.status,
+        req.body.appointmentTime,
       );
 
       return res.status(200).json({

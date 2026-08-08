@@ -74,6 +74,16 @@ ${appointment.appointmentDate || "-"}
 
 <tr>
 <td style="background:#f8f9fa;font-weight:bold;">
+Appointment Time
+</td>
+
+<td>
+${appointment.appointmentTime || "-"}
+</td>
+</tr>
+
+<tr>
+<td style="background:#f8f9fa;font-weight:bold;">
 Message
 </td>
 

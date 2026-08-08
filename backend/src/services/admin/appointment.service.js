@@ -108,8 +108,12 @@ class AppointmentService {
   |--------------------------------------------------------------------------
   */
 
-  async updateStatus(id, status) {
-    const appointment = await repository.updateStatus(id, status);
+  async updateStatus(id, status, appointmentTime) {
+    const appointment = await repository.updateStatus(
+      id,
+      status,
+      appointmentTime,
+    );
 
     try {
       switch (status) {

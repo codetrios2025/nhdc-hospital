@@ -51,6 +51,8 @@ const AppointmentTable = ({
 
             <th width="130">Appointment Date</th>
 
+            <th>Time</th>
+
             <th width="120">Status</th>
 
             <th width="130">Created</th>
@@ -94,7 +96,7 @@ const AppointmentTable = ({
                   ? new Date(item.appointmentDate).toLocaleDateString("en-GB")
                   : "-"}
               </td>
-
+              <td>{item.appointmentTime || "-"}</td>
               <td>
                 <AppointmentStatusBadge status={item.status} />
               </td>

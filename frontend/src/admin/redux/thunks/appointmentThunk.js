@@ -109,7 +109,7 @@ export const fetchTodayAppointments = () => async (dispatch) => {
 */
 
 export const updateAppointmentStatus =
-  (id, status) => async (dispatch, getState) => {
+  (id, status, appointmentTime) => async (dispatch, getState) => {
     try {
       const result = await Swal.fire({
         title: "Update Appointment?",
@@ -124,7 +124,7 @@ export const updateAppointmentStatus =
 
       dispatch(setLoading(true));
 
-      await appointmentApi.updateStatus(id, status);
+      await appointmentApi.updateStatus(id, status, appointmentTime);
 
       Swal.fire({
         icon: "success",

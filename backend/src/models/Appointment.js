@@ -67,7 +67,10 @@ const AppointmentSchema = new mongoose.Schema(
       required: true,
       index: true,
     },
-
+    appointmentTime: {
+      type: String,
+      default: "",
+    },
     department: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Department",

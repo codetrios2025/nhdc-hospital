@@ -27,6 +27,9 @@ const AppointmentStatusModal = ({
   onSubmit,
 }) => {
   const [status, setStatus] = useState("New");
+  const [appointmentTime, setAppointmentTime] = useState(
+    appointment?.appointmentTime || "",
+  );
 
   useEffect(() => {
     if (appointment?.status) {
@@ -34,12 +37,25 @@ const AppointmentStatusModal = ({
     }
   }, [appointment]);
 
+  useEffect(() => {
+    if (appointment) {
+      setStatus(appointment.status || "New");
+      setAppointmentTime(appointment.appointmentTime || "");
+    }
+  }, [appointment]);
+
   if (!show) return null;
 
   const handleSubmit = () => {
-    if (!status) return;
+    if (status === "Confirmed" && !appointmentTime) {
+      return Swal.fire({
+        icon: "warning",
+        title: "Validation",
+        text: "Please select appointment time.",
+      });
+    }
 
-    onSubmit(status);
+    onSubmit(status, appointmentTime);
   };
 
   return (
@@ -106,6 +122,16 @@ const AppointmentStatusModal = ({
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="mb-3">
+              <label className="form-label fw-semibold">Appointment Time</label>
+
+              <input
+                type="time"
+                className="form-control"
+                value={appointmentTime}
+                onChange={(e) => setAppointmentTime(e.target.value)}
+              />
             </div>
           </div>
 

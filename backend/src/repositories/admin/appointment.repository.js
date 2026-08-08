@@ -100,10 +100,10 @@ class AppointmentRepository {
   |--------------------------------------------------------------------------
   */
 
-  async updateStatus(id, status) {
+  async updateStatus(id, status, appointmentTime) {
     return await Appointment.findByIdAndUpdate(
       id,
-      { status },
+      { status, appointmentTime },
       {
         new: true,
         runValidators: true,
