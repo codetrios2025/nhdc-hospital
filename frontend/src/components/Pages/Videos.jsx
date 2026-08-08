@@ -10,6 +10,7 @@ import { FaPlay } from "react-icons/fa";
 import Support from "../Home/Support";
 //API
 import { getVideos } from "../../services/routes.services";
+import { Helmet } from "react-helmet-async";
 
 const NHDCVideos = () =>{
   const [activeVideo, setActiveVideo] = useState(null);
@@ -99,101 +100,112 @@ const NHDCVideos = () =>{
   };
  
   return(
-    <div className={`${Style.videoPage}`}>
-      <div className={Style.innerBanner}>
-        <img src={BannerImg} alt="Namokar Hospital & Diagnostic Centre" />
-      </div>
-      <Container>
-        <Row>
-          <Col>
-            <div className={Style.NHDCVideoSec}>
-              <h2>Our Videos</h2>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-      <div className={`${Style.videoSec} ${Style.commonSpace}`}>
+    <>
+      {/* <Helmet>
+        <title>{serviceData?.seoTitle || serviceData.seoTitle || "Namokar Hospital"}</title>
+        <meta name="description" content={serviceData?.seoDescription || "" }  />
+        <meta name="keywords" content={
+            Array.isArray(serviceData?.seoKeyword)
+            ? serviceData.seoKeyword.join(", ") : serviceData?.seoKeywords || ""
+          } 
+        />
+      </Helmet> */}
+      <div className={`${Style.videoPage}`}>
+        <div className={Style.innerBanner}>
+          <img src={BannerImg} alt="Namokar Hospital & Diagnostic Centre" />
+        </div>
         <Container>
           <Row>
             <Col>
-              <div className={Style.videoContainer}>
-                <div className={"watchVideo " + Style.videoElem}>
-                  {videoData?.map((item, index) => {
-                    const type = getVideoType(item);
-                    const youtubeLink = item.youtubeUrl || item.externalUrl || item.url;
-                    const videoId = getYoutubeId(youtubeLink);
-                    return (
-                      <div className={Style.videoItem} key={index}>
-                        {/* Instagram */}
-                        {type === "instagram" && (
-                          <InstaVideo data={item.externalUrl} />
-                        )}
-
-                        {/* YouTube */}
-                        {type === "youtube" && videoId && (
-                          <div className={Style.videoFrame}>
-                            {activeVideo === videoId ? (
-                              <iframe
-                                width="100%"
-                                height="100%"
-                                src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
-                                title={item.title}
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                              />
-                            ) : (
-                              <>
-                                <img
-                                  src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
-                                  alt={item.title}
-                                  onError={(e) => {
-                                    e.target.src = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
-                                  }}
-                                />
-
-                                <button
-                                  className={Style.playBtn}
-                                  onClick={() =>
-                                    setActiveVideo(videoId)
-                                  }
-                                >
-                                  <FaPlay />
-                                </button>
-                              </>
-                            )}
-                          </div>
-                        )}
-
-                        {/* MP4 */}
-                        {type === "mp4" && (
-                          <div className={Style.videoFrame}>
-                            <video
-                              ref={(el) =>
-                                (videoRefs.current[index] = el)
-                              }
-                              controls
-                              preload="metadata"
-                              width="100%"
-                            >
-                              <source
-                                src={item.url}
-                                type="video/mp4"
-                              />
-                            </video>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
+              <div className={Style.NHDCVideoSec}>
+                <h2>Our Videos</h2>
               </div>
             </Col>
           </Row>
         </Container>
+        <div className={`${Style.videoSec} ${Style.commonSpace}`}>
+          <Container>
+            <Row>
+              <Col>
+                <div className={Style.videoContainer}>
+                  <div className={"watchVideo " + Style.videoElem}>
+                    {videoData?.map((item, index) => {
+                      const type = getVideoType(item);
+                      const youtubeLink = item.youtubeUrl || item.externalUrl || item.url;
+                      const videoId = getYoutubeId(youtubeLink);
+                      return (
+                        <div className={Style.videoItem} key={index}>
+                          {/* Instagram */}
+                          {type === "instagram" && (
+                            <InstaVideo data={item.externalUrl} />
+                          )}
+
+                          {/* YouTube */}
+                          {type === "youtube" && videoId && (
+                            <div className={Style.videoFrame}>
+                              {activeVideo === videoId ? (
+                                <iframe
+                                  width="100%"
+                                  height="100%"
+                                  src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+                                  title={item.title}
+                                  frameBorder="0"
+                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                  allowFullScreen
+                                />
+                              ) : (
+                                <>
+                                  <img
+                                    src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
+                                    alt={item.title}
+                                    onError={(e) => {
+                                      e.target.src = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
+                                    }}
+                                  />
+
+                                  <button
+                                    className={Style.playBtn}
+                                    onClick={() =>
+                                      setActiveVideo(videoId)
+                                    }
+                                  >
+                                    <FaPlay />
+                                  </button>
+                                </>
+                              )}
+                            </div>
+                          )}
+
+                          {/* MP4 */}
+                          {type === "mp4" && (
+                            <div className={Style.videoFrame}>
+                              <video
+                                ref={(el) =>
+                                  (videoRefs.current[index] = el)
+                                }
+                                controls
+                                preload="metadata"
+                                width="100%"
+                              >
+                                <source
+                                  src={item.url}
+                                  type="video/mp4"
+                                />
+                              </video>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </div>
+        <Support />
       </div>
-      <Support />
-    </div>
+    </>
   )
 }
 

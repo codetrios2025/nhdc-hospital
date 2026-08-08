@@ -6,7 +6,7 @@ import OurVideos from "./OurVideos";
 import OurDoctor from "./OurDoctor";
 import Support from "./Support";
 import Loader from "../Common/Loader";
-
+import { Helmet } from "react-helmet-async";
 //APIs
 import { getBannerData, getDoctorsData, getVideos, getFeaturesData, getDiagnosticServicesData, getHomeServices } from "../../services/routes.services";
 const HomeRoute = ()=>{
@@ -48,6 +48,15 @@ const HomeRoute = ()=>{
   //console.log(serviceData)
   return(
     <>
+      {/* <Helmet>
+        <title>{serviceData?.seoTitle || serviceData.seoTitle || "Namokar Hospital"}</title>
+        <meta name="description" content={serviceData?.seoDescription || "" }  />
+        <meta name="keywords" content={
+            Array.isArray(serviceData?.seoKeyword)
+            ? serviceData.seoKeyword.join(", ") : serviceData?.seoKeywords || ""
+          } 
+        />
+      </Helmet> */}
       <HeroBanner data={bannerData} />
       <Services data={featuresData} serviceData={serviceData} />
       <Diagnostics data={diagnosticServicesData} />

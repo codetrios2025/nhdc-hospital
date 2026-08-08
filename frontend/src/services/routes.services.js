@@ -41,3 +41,7 @@ export const postBooking = (data) => {
 export const getContactData = () => {
   return axiosService.get("contact");
 };
+
+export const getHighlightsData = () => {
+  return axiosService.get("hospital-highlights");
+};
