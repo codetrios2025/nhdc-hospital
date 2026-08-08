@@ -74,7 +74,10 @@ const videoSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-
+    showOnHome: {
+      type: Boolean,
+      default: true,
+    },
     isActive: {
       type: Boolean,
       default: true,
@@ -101,11 +104,22 @@ const videoSchema = new mongoose.Schema(
       default: 0,
     },
 
-    metaTitle: String,
+    seoTitle: {
+      type: String,
+      trim: true,
+    },
 
-    metaDescription: String,
+    seoDescription: {
+      type: String,
+      trim: true,
+    },
 
-    metaKeywords: String,
+    seoKeywords: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
 
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,

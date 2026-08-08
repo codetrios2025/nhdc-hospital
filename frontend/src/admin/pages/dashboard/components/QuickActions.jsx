@@ -29,12 +29,12 @@ const QuickActions = () => {
       path: "/services/create",
     },
 
-    {
-      title: "Add Gallery",
-      icon: FaImages,
-      color: "#8B5CF6",
-      path: "/gallery/create",
-    },
+    // {
+    //   title: "Add Gallery",
+    //   icon: FaImages,
+    //   color: "#8B5CF6",
+    //   path: "/gallery/create",
+    // },
 
     {
       title: "Add Video",
@@ -43,19 +43,19 @@ const QuickActions = () => {
       path: "/videos/create",
     },
 
-    {
-      title: "Add FAQ",
-      icon: FaQuestionCircle,
-      color: "#F59E0B",
-      path: "/faqs/create",
-    },
+    // {
+    //   title: "Add FAQ",
+    //   icon: FaQuestionCircle,
+    //   color: "#F59E0B",
+    //   path: "/faqs/create",
+    // },
 
-    {
-      title: "Add Testimonial",
-      icon: FaQuoteLeft,
-      color: "#EF4444",
-      path: "/testimonials/create",
-    },
+    // {
+    //   title: "Add Testimonial",
+    //   icon: FaQuoteLeft,
+    //   color: "#EF4444",
+    //   path: "/testimonials/create",
+    // },
   ];
 
   return (

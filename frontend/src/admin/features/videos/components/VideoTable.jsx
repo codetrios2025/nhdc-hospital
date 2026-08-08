@@ -28,9 +28,14 @@ const VideoTable = ({
       label: "Category",
     },
     {
+      key: "displayOrder",
+      label: "Order",
+    },
+    {
       key: "featured",
       label: "Featured",
     },
+
     {
       key: "status",
       label: "Status",
@@ -75,6 +80,8 @@ const VideoTable = ({
           </td>
 
           <td>{video.category}</td>
+
+          <td>{video.displayOrder}</td>
 
           <td>
             <VideoFeaturedSwitch video={video} onUpdated={reloadVideos} />

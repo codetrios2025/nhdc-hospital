@@ -20,7 +20,13 @@ class VideoService {
     }
 
     data.slug = slug;
-
+    if (data.seoKeywords && typeof data.seoKeywords === "string") {
+      data.seoKeywords = data.seoKeywords
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
+    }
+    data.displayOrder = Number(data.displayOrder);
     return await VideoRepository.create(data);
   }
 
@@ -56,7 +62,9 @@ class VideoService {
     if (item.videoFile) {
       item.videoFileUrl = getFileUrl("videos/files", item.videoFile);
     }
-
+    item.seoKeywords = Array.isArray(item.seoKeywords)
+      ? item.seoKeywords.join(", ")
+      : "";
     return item;
   }
 
@@ -74,7 +82,14 @@ class VideoService {
     if (data.videoFile && old.videoFile) {
       deleteFile(`src/uploads/videos/files/${old.videoFile}`);
     }
-
+    if (data.seoKeywords && typeof data.seoKeywords === "string") {
+      data.seoKeywords = data.seoKeywords
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
+    }
+    console.log(data);
+    data.displayOrder = Number(data.displayOrder);
     const updated = await VideoRepository.update(id, data);
 
     const item = updated.toObject();
@@ -128,7 +143,7 @@ class VideoService {
     if (item.videoFile) {
       item.videoFileUrl = getFileUrl("videos/files", item.videoFile);
     }
-
+    item.seoKeywords = Array.isArray(item.seoKeywords) ? item.seoKeywords : [];
     return item;
   }
 

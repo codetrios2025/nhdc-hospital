@@ -13,10 +13,11 @@ const updateVideoFormData = (data) => {
     "description",
     "featured",
     "isActive",
+    "showOnHome",
     "displayOrder",
-    "metaTitle",
-    "metaDescription",
-    "metaKeywords",
+    "seoTitle",
+    "seoDescription",
+    "seoKeywords",
   ];
 
   allowedFields.forEach((field) => {

@@ -10,6 +10,8 @@ import VideoBasicInfo from "./VideoBasicInfo";
 import VideoSourceInfo from "./VideoSourceInfo";
 import VideoThumbnail from "./VideoThumbnail";
 import VideoUpload from "./VideoUpload";
+import VideoSettings from "./VideoSettings";
+import VideoSeo from "./VideoSeo";
 
 import createVideoFormData from "../utils/createVideoFormData";
 import updateVideoFormData from "../utils/updateVideoFormData";
@@ -83,8 +85,6 @@ const VideoForm = ({ videoId = null }) => {
         });
       }
 
-      console.log(response);
-
       navigate("/admin/videos");
     } catch (error) {
       Swal.fire({
@@ -109,10 +109,14 @@ const VideoForm = ({ videoId = null }) => {
           <VideoSourceInfo register={register} watch={watch} errors={errors} />
 
           <VideoUpload watch={watch} setValue={setValue} />
+
+          <VideoSeo register={register} watch={watch} errors={errors} />
         </div>
 
         <div className="col-lg-4">
           <VideoThumbnail watch={watch} setValue={setValue} />
+
+          <VideoSettings register={register} watch={watch} errors={errors} />
         </div>
       </div>
 

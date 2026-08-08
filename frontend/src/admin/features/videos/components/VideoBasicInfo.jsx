@@ -44,6 +44,16 @@ const VideoBasicInfo = ({ register, errors }) => {
             {...register("description")}
           />
         </div>
+
+        <div>
+          <label className="form-label">Display Order</label>
+
+          <input
+            type="number"
+            className="form-control"
+            {...register("displayOrder")}
+          />
+        </div>
       </div>
     </div>
   );

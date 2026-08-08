@@ -68,6 +68,7 @@ class VideoRepository {
       category,
       status,
       featured,
+      showOnHome,
       sort = "displayOrder",
       order = "asc",
     } = filters;
@@ -105,6 +106,10 @@ class VideoRepository {
       query.featured = featured === "true";
     }
 
+    if (showOnHome !== undefined && showOnHome !== "") {
+      query.showOnHome = showOnHome === "true";
+    }
+
     const total = await Video.countDocuments(query);
 
     const videos = await Video.find(query)
@@ -132,11 +137,23 @@ class VideoRepository {
     });
   }
 
-  async getHomeVideos(limit = 6) {
+  async getHomeVideosold(limit = 6) {
     return await Video.find({
       isDeleted: false,
       isActive: true,
       featured: true,
+    })
+      .sort({
+        displayOrder: 1,
+      })
+      .limit(limit);
+  }
+
+  async getHomeVideos(limit = 6) {
+    return await Video.find({
+      isDeleted: false,
+      isActive: true,
+      showOnHome: true,
     })
       .sort({
         displayOrder: 1,

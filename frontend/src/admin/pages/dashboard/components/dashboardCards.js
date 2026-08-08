@@ -29,19 +29,19 @@ const dashboardCards = [
     icon: FaCalendarCheck,
   },
 
-  {
-    key: "contacts",
-    title: "Contact Inquiry",
-    color: "#EF4444",
-    icon: FaEnvelope,
-  },
+  // {
+  //   key: "contacts",
+  //   title: "Contact Inquiry",
+  //   color: "#EF4444",
+  //   icon: FaEnvelope,
+  // },
 
-  {
-    key: "gallery",
-    title: "Gallery",
-    color: "#8B5CF6",
-    icon: FaImages,
-  },
+  // {
+  //   key: "gallery",
+  //   title: "Gallery",
+  //   color: "#8B5CF6",
+  //   icon: FaImages,
+  // },
 
   {
     key: "videos",

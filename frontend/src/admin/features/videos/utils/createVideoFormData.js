@@ -13,11 +13,12 @@ const createVideoFormData = (data) => {
     "description",
     "featured",
     "isActive",
+    "showOnHome",
     "displayOrder",
     "duration",
-    "metaTitle",
-    "metaDescription",
-    "metaKeywords",
+    "seoTitle",
+    "seoDescription",
+    "seoKeywords",
   ];
 
   allowedFields.forEach((key) => {

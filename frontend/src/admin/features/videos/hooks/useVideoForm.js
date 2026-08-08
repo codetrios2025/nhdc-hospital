@@ -21,6 +21,16 @@ const useVideoForm = () => {
 
       isActive: true,
 
+      showOnHome: false,
+
+      displayOrder: 0,
+
+      seoTitle: "",
+
+      seoDescription: "",
+
+      seoKeywords: "",
+
       thumbnail: null,
 
       videoFile: null,

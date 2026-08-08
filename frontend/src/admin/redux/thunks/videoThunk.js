@@ -18,15 +18,7 @@ export const fetchVideos =
 
       const response = await videoApi.getVideos(params);
 
-      console.log("=========== RESPONSE ===========");
-      console.log(response);
-      console.log("===============================");
-
       const result = response.data || {};
-
-      console.log("=========== RESULT ===========");
-      console.log(result);
-      console.log("===============================");
 
       dispatch(
         setVideos({

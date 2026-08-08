@@ -1,5 +1,5 @@
 const Doctor = require("../../models/Doctor");
-const HospitalService = require("../../models/HospitalService");
+const Service = require("../../models/Service");
 const Appointment = require("../../models/Appointment");
 const ContactInquiry = require("../../models/ContactInquiry");
 const Gallery = require("../../models/Gallery");
@@ -11,9 +11,9 @@ class DashboardRepository {
       await Promise.all([
         Doctor.countDocuments({ isDeleted: false }),
 
-        HospitalService.countDocuments({ isDeleted: false }),
+        Service.countDocuments({}),
 
-        Appointment.countDocuments({ isDeleted: false }),
+        Appointment.countDocuments({}),
 
         ContactInquiry.countDocuments({ isDeleted: false }),
 

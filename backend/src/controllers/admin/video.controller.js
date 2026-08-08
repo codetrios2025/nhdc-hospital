@@ -10,12 +10,8 @@ const createThumbnail = require("../../helpers/videoThumbnail.helper");
 
 class VideoController {
   create = asyncHandler(async (req, res) => {
-    console.log("========== VIDEO CREATE ==========");
-    console.log("BODY:", req.body);
-    console.log("FILES:", req.files);
-
-    console.log("Headers");
-    console.log(req.headers["content-type"]);
+    console.log(req.body.displayOrder);
+    console.log(typeof req.body.displayOrder);
 
     if (req.files?.thumbnail) {
       console.log("Thumbnail:", req.files.thumbnail[0]);
@@ -81,7 +77,8 @@ class VideoController {
     const body = {
       ...req.body,
     };
-
+    console.log(req.body.displayOrder);
+    console.log(typeof req.body.displayOrder);
     body.updatedBy = req.user._id;
 
     if (req.files?.thumbnail?.length) {
