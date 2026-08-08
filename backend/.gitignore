@@ -2,7 +2,7 @@ node_modules
 
 #uploads
 
-#.env
+.env
 
 #src/uploads/*
 !src/uploads/.gitkeep
