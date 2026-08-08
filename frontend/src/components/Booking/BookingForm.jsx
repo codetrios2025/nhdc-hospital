@@ -16,7 +16,7 @@ import { IoCloseOutline,IoCheckmarkCircle } from "react-icons/io5";
 //API
 import { postBooking } from "../../services/routes.services";
 
-const BookingForm = ({close})=>{
+const BookingForm = ({close, popup})=>{
   const [formData, setFormData] = useState({
     patientName: "",
     age: "",
@@ -105,6 +105,12 @@ const BookingForm = ({close})=>{
         appointmentDate: "",
         reason: "",
       });
+      setTimeout(() => {
+        if(popup === true){
+          close();
+        }
+      }, 3000);
+      
       //console.log(res.data.message)
       
     } catch (err) {
@@ -234,7 +240,14 @@ const BookingForm = ({close})=>{
         </div>
       </form>
       {/* {successMsg && <p className={Style.successMsg}><IoCheckmarkCircle />{successMsg}</p>} */}
-      {successMsg && <p className={Style.successMsg}><IoCheckmarkCircle />{successMsg}</p>}
+      {successMsg && 
+        <div className={Style.successfix}>
+          <div className={Style.successMsg}>
+          <IoCheckmarkCircle />
+          <p>{successMsg} <br/>We will connect you soon</p>
+          </div>
+        </div>
+      }
     </div>
   )
 }

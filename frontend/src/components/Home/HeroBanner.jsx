@@ -18,6 +18,7 @@ const Carousel =
 
 const HeroBanner = ({ data }) =>{
   const [booking, setBooking] = useState(false);
+  const popup = true;
   const slides = data?.[0]?.slides || [];
   const features = data?.[0]?.features || [];
   if (!slides.length || !features.length) {
@@ -85,7 +86,7 @@ const HeroBanner = ({ data }) =>{
       {booking &&
         <div className={Style.bookingOverLay}>
           <div className={Style.bookingPop}>
-            <BookingForm close={closeBooking} />
+            <BookingForm close={closeBooking} popup={popup} />
           </div>
         </div>
       }

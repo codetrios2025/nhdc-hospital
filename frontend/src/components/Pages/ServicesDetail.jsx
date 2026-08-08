@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Style from "../CSS/Global.module.css";
 import { useParams } from "react-router-dom";
-import innerBanner from "../../assets/images/asthma.webp";
+import BannerImg from '../../assets/images/hospital-slide.webp';
 import CarouselImport from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import parse from "html-react-parser";
 import constants from "../../services/constants";
 import Loader from "../Common/Loader";
 import { Helmet } from "react-helmet-async";
+import BookingForm from "../Booking/BookingForm";
+import { IoCalendarOutline } from "react-icons/io5";
 //API
 import { getServiceBySlug } from "../../services/routes.services";
 
@@ -18,6 +20,10 @@ const ServiceDetail = () => {
   const { slug } = useParams();
   const [serviceData, setServiceData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [booking, setBooking] = useState(false);
+  const popup = true;
+  const bookingHandler = ()=>{setBooking(true)}
+  const closeBooking = ()=>{setBooking(false)}
 
   useEffect(() => {
     const fetchService = async () => {
@@ -73,12 +79,27 @@ const ServiceDetail = () => {
     </Helmet>
       <div className={Style.ServiceDetailPage}>
         <div className={`${Style.innerBanner} ${Style.servicesBanner}`}>
-          <img
-            src={
-              constants.Image_BASE_URL + "/services/" + serviceData?.bannerImage
-            }
-            alt={serviceData?.title}
-          />
+          <img src={
+            serviceData?.bannerImage 
+            ? constants.Image_BASE_URL + "/services/" + serviceData?.bannerImage 
+            : BannerImg
+            } alt={serviceData?.title}/>
+          <div className={Style.content}>
+            <Container>
+              <Row>
+                <Col>
+                <div className={Style.box}>
+                    <h1>{serviceData?.bannerTitle || null}</h1>
+                    {parse(String(serviceData?.bannerSubtitle || ""))}
+                    {parse(String(serviceData?.bannerDescription || ""))}
+                    {serviceData?.bannerButtonText &&<button onClick={bookingHandler} type="button" className={'flexCenter ' + Style.primeryBtn} aria-label="Book an Appointment">
+                      <div className={Style.icon}><IoCalendarOutline /></div>{serviceData?.bannerButtonText}
+                    </button>}
+                </div>
+                </Col>
+              </Row>
+            </Container>
+          </div>
         </div>
         <div className={Style.servicesContent}>
           <Container>
@@ -153,6 +174,13 @@ const ServiceDetail = () => {
           </div>
         )}
       </div>
+      {booking &&
+        <div className={Style.bookingOverLay}>
+          <div className={Style.bookingPop}>
+            <BookingForm close={closeBooking} popup={popup} />
+          </div>
+        </div>
+      }
     </>
   );
 };

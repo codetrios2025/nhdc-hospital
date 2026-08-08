@@ -12,12 +12,14 @@ import BookingForm from "../Booking/BookingForm";
 
 const Diagnostics = ({ data }) =>{
   const [booking, setBooking] = useState(false);
+  const popup = true;
   const bookingHandler = ()=>{
     setBooking(true)
   }
   const closeBooking = ()=>{
     setBooking(false)
   }
+  
   //console.log(data)
   return(
     <>
@@ -74,11 +76,11 @@ const Diagnostics = ({ data }) =>{
                   <p>Imaging test to view bones and internal organs.</p>
                 </div> */}
               </div>
-              {/* <div className={'flexCenter ' + Style.bookText}>
+              <div className={'flexCenter ' + Style.bookText}>
                 <button onClick={bookingHandler} type="button" className={'flexCenter ' + Style.primeryBtn} aria-label="Book an Appointment">
                   <div className={Style.icon}><IoCalendarOutline /></div> Book Diagnostic Test
                 </button>
-              </div> */}
+              </div>
             </div>
           </Col>
         </Row>
@@ -87,7 +89,7 @@ const Diagnostics = ({ data }) =>{
     {booking &&
       <div className={Style.bookingOverLay}>
         <div className={Style.bookingPop}>
-          <BookingForm close={closeBooking} />
+          <BookingForm close={closeBooking} popup={popup} />
         </div>
       </div>
     }

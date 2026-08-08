@@ -18,6 +18,7 @@ const Header = () => {
   const closeMenu = () => setMenuOpen(false);
   const [booking, setBooking] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const popup = true;
   const bookingHandler = () => {
     setBooking(true);
   };
@@ -197,7 +198,7 @@ const Header = () => {
       {booking && (
         <div className={Style.bookingOverLay}>
           <div className={Style.bookingPop}>
-            <BookingForm close={closeBooking} />
+            <BookingForm close={closeBooking} popup={popup} />
           </div>
         </div>
       )}

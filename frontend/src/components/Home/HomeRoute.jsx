@@ -48,15 +48,12 @@ const HomeRoute = ()=>{
   //console.log(serviceData)
   return(
     <>
-      {/* <Helmet>
-        <title>{serviceData?.seoTitle || serviceData.seoTitle || "Namokar Hospital"}</title>
-        <meta name="description" content={serviceData?.seoDescription || "" }  />
-        <meta name="keywords" content={
-            Array.isArray(serviceData?.seoKeyword)
-            ? serviceData.seoKeyword.join(", ") : serviceData?.seoKeywords || ""
-          } 
+      <Helmet>
+        <title>Namokar Hospital</title>
+        <meta name="description" content="Namokar Hospital"  />
+        <meta name="keywords" content="Namokar Hospital"
         />
-      </Helmet> */}
+      </Helmet>
       <HeroBanner data={bannerData} />
       <Services data={featuresData} serviceData={serviceData} />
       <Diagnostics data={diagnosticServicesData} />
