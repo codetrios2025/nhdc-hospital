@@ -24,7 +24,8 @@ const loggerMiddleware = require("./middlewares/logger.middleware");
 const requestIdMiddleware = require("./middlewares/requestId.middleware");
 
 const app = express();
-
+// Hostinger reverse proxy
+app.set("trust proxy", 1);
 app.use(
   helmet({
     crossOriginResourcePolicy: false,
