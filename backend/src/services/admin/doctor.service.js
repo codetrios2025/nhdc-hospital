@@ -4,13 +4,14 @@ const ApiError = require("../../utils/ApiError");
 
 const DoctorRepository = require("../../repositories/admin/doctor.repository");
 
-const {
-  getFileUrl,
-
-  deleteFile,
-} = require("../../helpers/file.helper");
+const { getFileUrl, deleteFile } = require("../../helpers/file.helper");
 
 class DoctorService {
+  /**
+   * =====================================================
+   * Create Doctor
+   * =====================================================
+   */
   async create(data) {
     const slug = slugify(`${data.firstName}-${data.lastName}`, {
       lower: true,
@@ -18,12 +19,12 @@ class DoctorService {
     });
 
     if (data.registrationNumber) {
-      const existsresigtraionno =
+      const existsRegistrationNo =
         await DoctorRepository.findByRegistrationNumber(
           data.registrationNumber,
         );
 
-      if (existsresigtraionno) {
+      if (existsRegistrationNo) {
         throw new ApiError(409, "Registration number already exists.");
       }
     }
@@ -39,15 +40,13 @@ class DoctorService {
     return await DoctorRepository.create(data);
   }
 
-  // async update(id, data) {
-  //   const oldDoctor = await DoctorRepository.findById(id);
-  //   if (data.profileImage && oldDoctor.profileImage) {
-  //     deleteFile(`src/uploads/doctors/profile/${oldDoctor.profileImage}`);
-  //   }
-  //   return await DoctorRepository.update(id, data);
-  // }
-
+  /**
+   * =====================================================
+   * Update Doctor
+   * =====================================================
+   */
   async update(id, data) {
+    // Remove fields that should not be changed manually
     delete data.deletedBy;
     delete data.deletedAt;
     delete data.createdBy;
@@ -59,21 +58,39 @@ class DoctorService {
 
     const oldDoctor = await DoctorRepository.findById(id);
 
-    if (data.profileImage && oldDoctor?.profileImage) {
-      deleteFile(`src/uploads/doctors/profile/${oldDoctor.profileImage}`);
+    if (!oldDoctor) {
+      throw new Error("Doctor not found");
+    }
+
+    // -------------------------------------------------
+    // Delete old profile image when a new one is uploaded
+    // -------------------------------------------------
+
+    if (
+      data.profileImage &&
+      oldDoctor.profileImage &&
+      data.profileImage !== oldDoctor.profileImage
+    ) {
+      await deleteFile(`doctors/profile/${oldDoctor.profileImage}`);
     }
 
     return await DoctorRepository.update(id, data);
   }
 
+  /**
+   * =====================================================
+   * Delete Doctor
+   * =====================================================
+   */
   async delete(id, adminId) {
-    return await DoctorRepository.softDelete(
-      id,
-
-      adminId,
-    );
+    return await DoctorRepository.softDelete(id, adminId);
   }
 
+  /**
+   * =====================================================
+   * Doctor Details
+   * =====================================================
+   */
   async details(id) {
     const doctor = await DoctorRepository.findById(id);
 
@@ -81,86 +98,97 @@ class DoctorService {
       throw new Error("Doctor not found");
     }
 
-    const doctorObject = doctor.toObject();
-
-    doctorObject.profileImageUrl = getFileUrl(
-      "doctors/profile",
-      doctor.profileImage,
-    );
-
-    doctorObject.galleryUrls = doctor.gallery.map((image) =>
-      getFileUrl("doctors/gallery", image),
-    );
-
-    return doctorObject;
+    return this.formatDoctor(doctor);
   }
 
+  /**
+   * =====================================================
+   * Doctor Listing
+   * =====================================================
+   */
   async list(query) {
     const result = await DoctorRepository.getList(query);
 
-    result.doctors = result.doctors.map((doctor) => {
-      const item = doctor.toObject();
-
-      item.profileImageUrl = getFileUrl("doctors/profile", item.profileImage);
-
-      return item;
-    });
+    result.doctors = result.doctors.map((doctor) => this.formatDoctor(doctor));
 
     return result;
   }
 
+  /**
+   * =====================================================
+   * Status
+   * =====================================================
+   */
   async status(id, status) {
     const doctor = await DoctorRepository.changeStatus(id, status);
 
-    const item = doctor.toObject();
+    if (!doctor) {
+      throw new Error("Doctor not found");
+    }
 
-    item.profileImageUrl = getFileUrl("doctors/profile", item.profileImage);
-
-    item.galleryUrls = item.gallery.map((image) =>
-      getFileUrl("doctors/gallery", image),
-    );
-
-    return item;
+    return this.formatDoctor(doctor);
   }
 
+  /**
+   * =====================================================
+   * Featured
+   * =====================================================
+   */
   async featured(id, featured) {
     const doctor = await DoctorRepository.toggleFeatured(id, featured);
 
-    const item = doctor.toObject();
+    if (!doctor) {
+      throw new Error("Doctor not found");
+    }
 
-    item.profileImageUrl = getFileUrl("doctors/profile", item.profileImage);
-
-    item.galleryUrls = item.gallery.map((image) =>
-      getFileUrl("doctors/gallery", image),
-    );
-
-    return item;
+    return this.formatDoctor(doctor);
   }
 
+  /**
+   * =====================================================
+   * Format Doctor Response
+   * =====================================================
+   */
   formatDoctor(doctor) {
-    const item = doctor.toObject();
+    const item =
+      typeof doctor.toObject === "function" ? doctor.toObject() : { ...doctor };
 
     item.profileImageUrl = getFileUrl("doctors/profile", item.profileImage);
 
-    item.galleryUrls = item.gallery.map((image) =>
+    item.galleryUrls = (item.gallery || []).map((image) =>
       getFileUrl("doctors/gallery", image),
     );
 
     return item;
   }
 
+  /**
+   * =====================================================
+   * Public Doctors
+   * =====================================================
+   */
   async getPublicDoctors() {
     const doctors = await DoctorRepository.getPublicDoctors();
 
     return doctors.map((doctor) => this.formatDoctor(doctor));
   }
 
+  /**
+   * =====================================================
+   * Home Doctors
+   * =====================================================
+   */
   async getHomeDoctors() {
     const doctors = await DoctorRepository.getHomeDoctors();
 
     return doctors.map((doctor) => this.formatDoctor(doctor));
   }
 
+  /**
+   * =====================================================
+   * Doctor By Slug
+   * =====================================================
+   */
   async getBySlug(slug) {
     const doctor = await DoctorRepository.findPublicBySlug(slug);
 

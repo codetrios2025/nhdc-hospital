@@ -2,10 +2,15 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-const servicePath = path.join(__dirname, "../uploads/services");
+// Persistent upload root on Hostinger
+const uploadRoot =
+  process.env.UPLOAD_ROOT || path.join(__dirname, "../uploads");
 
-const galleryPath = path.join(__dirname, "../uploads/services/gallery");
+// Upload directories
+const servicePath = path.join(uploadRoot, "services");
+const galleryPath = path.join(uploadRoot, "services", "gallery");
 
+// Create directories if they don't exist
 if (!fs.existsSync(servicePath)) {
   fs.mkdirSync(servicePath, { recursive: true });
 }
@@ -24,13 +29,16 @@ const storage = multer.diskStorage({
       return cb(null, galleryPath);
     }
 
-    cb(null, servicePath);
+    // bannerImage / bannerMobileImage
+    return cb(null, servicePath);
   },
 
   filename(req, file, cb) {
     const ext = path.extname(file.originalname);
 
-    cb(null, Date.now() + "-" + Math.round(Math.random() * 1e9) + ext);
+    const filename = Date.now() + "-" + Math.round(Math.random() * 1e9) + ext;
+
+    cb(null, filename);
   },
 });
 

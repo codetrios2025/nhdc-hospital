@@ -1,45 +1,78 @@
 const multer = require("multer");
-
 const path = require("path");
-
 const fs = require("fs");
 
-const profilePath = "src/uploads/doctors/profile";
+// =====================================================
+// Persistent Upload Root
+// =====================================================
 
-const galleryPath = "src/uploads/doctors/gallery";
+const uploadRoot = process.env.UPLOAD_ROOT
+  ? path.resolve(process.env.UPLOAD_ROOT)
+  : path.resolve(__dirname, "../uploads");
 
-fs.mkdirSync(profilePath, { recursive: true });
+// =====================================================
+// Doctor Upload Directories
+// =====================================================
 
-fs.mkdirSync(galleryPath, { recursive: true });
+const profilePath = path.join(uploadRoot, "doctors", "profile");
+
+const galleryPath = path.join(uploadRoot, "doctors", "gallery");
+
+// =====================================================
+// Create Directories
+// =====================================================
+
+fs.mkdirSync(profilePath, {
+  recursive: true,
+});
+
+fs.mkdirSync(galleryPath, {
+  recursive: true,
+});
+
+// =====================================================
+// Storage
+// =====================================================
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
     if (file.fieldname === "profileImage") {
-      cb(null, profilePath);
-    } else {
-      cb(null, galleryPath);
+      return cb(null, profilePath);
     }
+
+    if (file.fieldname === "gallery") {
+      return cb(null, galleryPath);
+    }
+
+    cb(new Error("Invalid upload field."));
   },
 
   filename(req, file, cb) {
-    cb(
-      null,
-
+    const filename =
       Date.now() +
-        "-" +
-        Math.round(Math.random() * 1e9) +
-        path.extname(file.originalname),
-    );
+      "-" +
+      Math.round(Math.random() * 1e9) +
+      path.extname(file.originalname);
+
+    cb(null, filename);
   },
 });
 
+// =====================================================
+// File Filter
+// =====================================================
+
 const fileFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image")) {
-    cb(null, true);
-  } else {
-    cb(new Error("Only image files allowed"));
+    return cb(null, true);
   }
+
+  cb(new Error("Only image files allowed"), false);
 };
+
+// =====================================================
+// Upload
+// =====================================================
 
 module.exports = multer({
   storage,

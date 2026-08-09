@@ -8,6 +8,25 @@ const optimizeImage = require("../../utils/imageOptimizer");
 class BannerService {
   /*
   |--------------------------------------------------------------------------
+  | Upload Root
+  |--------------------------------------------------------------------------
+  |
+  | Production:
+  | /home/u394996505/public_html/uploads
+  |
+  | Local:
+  | backend/src/uploads
+  |
+  */
+
+  getUploadRoot() {
+    return process.env.UPLOAD_ROOT
+      ? path.resolve(process.env.UPLOAD_ROOT)
+      : path.resolve(__dirname, "../../uploads");
+  }
+
+  /*
+  |--------------------------------------------------------------------------
   | Delete Image
   |--------------------------------------------------------------------------
   */
@@ -15,16 +34,16 @@ class BannerService {
   async deleteImage(imageName) {
     if (!imageName) return;
 
-    const imagePath = path.join(
-      process.cwd(),
-      "src",
-      "uploads",
-      "banners",
-      imageName,
-    );
+    const imagePath = path.join(this.getUploadRoot(), "banners", imageName);
 
-    if (fs.existsSync(imagePath)) {
-      fs.unlinkSync(imagePath);
+    try {
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+
+        console.log("Banner image deleted:", imagePath);
+      }
+    } catch (error) {
+      console.error("Failed to delete banner image:", error.message);
     }
   }
 
@@ -93,6 +112,7 @@ class BannerService {
       status: slide.status === false || slide.status === "false" ? false : true,
     }));
   }
+
   /*
   |--------------------------------------------------------------------------
   | Optimize Slides
@@ -106,8 +126,36 @@ class BannerService {
 
     const optimizedSlides = [];
 
+    /*
+    |--------------------------------------------------------------------------
+    | Persistent Banner Upload Directory
+    |--------------------------------------------------------------------------
+    */
+
+    const bannerUploadPath = path.join(this.getUploadRoot(), "banners");
+
+    /*
+    |--------------------------------------------------------------------------
+    | Make Sure Directory Exists
+    |--------------------------------------------------------------------------
+    */
+
+    if (!fs.existsSync(bannerUploadPath)) {
+      fs.mkdirSync(bannerUploadPath, {
+        recursive: true,
+      });
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Process Slides
+    |--------------------------------------------------------------------------
+    */
+
     for (let index = 0; index < slides.length; index++) {
-      const slide = { ...slides[index] };
+      const slide = {
+        ...slides[index],
+      };
 
       /*
       |--------------------------------------------------------------------------
@@ -123,7 +171,7 @@ class BannerService {
         slide.desktopImage = await optimizeImage({
           inputPath: desktopFile.path,
 
-          outputDir: path.join(process.cwd(), "src", "uploads", "banners"),
+          outputDir: bannerUploadPath,
 
           width: 1920,
 
@@ -145,13 +193,19 @@ class BannerService {
         slide.mobileImage = await optimizeImage({
           inputPath: mobileFile.path,
 
-          outputDir: path.join(process.cwd(), "src", "uploads", "banners"),
+          outputDir: bannerUploadPath,
 
           width: 768,
 
           quality: 80,
         });
       }
+
+      /*
+      |--------------------------------------------------------------------------
+      | Add Optimized Slide
+      |--------------------------------------------------------------------------
+      */
 
       optimizedSlides.push({
         desktopImage: slide.desktopImage || "",
@@ -188,6 +242,7 @@ class BannerService {
 
     return banner;
   }
+
   /*
   |--------------------------------------------------------------------------
   | Build Create Data
@@ -307,6 +362,12 @@ class BannerService {
     }
   }
 
+  /*
+  |--------------------------------------------------------------------------
+  | Remove Unused Images
+  |--------------------------------------------------------------------------
+  */
+
   async removeUnusedImages(oldSlides = [], newSlides = []) {
     for (const oldSlide of oldSlides) {
       const newSlide = newSlides.find(
@@ -317,10 +378,10 @@ class BannerService {
       );
 
       /*
-    |--------------------------------------------------------------------------
-    | Slide Deleted
-    |--------------------------------------------------------------------------
-    */
+      |--------------------------------------------------------------------------
+      | Slide Deleted
+      |--------------------------------------------------------------------------
+      */
 
       if (!newSlide) {
         if (oldSlide.desktopImage) {
@@ -335,10 +396,10 @@ class BannerService {
       }
 
       /*
-    |--------------------------------------------------------------------------
-    | Desktop Image Replaced
-    |--------------------------------------------------------------------------
-    */
+      |--------------------------------------------------------------------------
+      | Desktop Image Replaced
+      |--------------------------------------------------------------------------
+      */
 
       if (
         oldSlide.desktopImage &&
@@ -348,10 +409,10 @@ class BannerService {
       }
 
       /*
-    |--------------------------------------------------------------------------
-    | Mobile Image Replaced
-    |--------------------------------------------------------------------------
-    */
+      |--------------------------------------------------------------------------
+      | Mobile Image Replaced
+      |--------------------------------------------------------------------------
+      */
 
       if (
         oldSlide.mobileImage &&
@@ -361,6 +422,7 @@ class BannerService {
       }
     }
   }
+
   /*
   |--------------------------------------------------------------------------
   | Create Banner
@@ -401,9 +463,13 @@ class BannerService {
 
     return {
       rows: result.rows,
+
       total: result.total,
+
       page,
+
       limit,
+
       totalPages: Math.ceil(result.total / limit),
     };
   }
@@ -427,6 +493,7 @@ class BannerService {
 
     return banner;
   }
+
   /*
   |--------------------------------------------------------------------------
   | Update Banner
