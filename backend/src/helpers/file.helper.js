@@ -21,6 +21,6 @@ exports.deleteFile = (filePath) => {
  */
 exports.getFileUrl = (folder, fileName) => {
   if (!fileName) return "";
-
-  return `${process.env.APP_URL}/uploads/${folder}/${fileName}`;
+  const appUrl = process.env.APP_URL?.replace(/\/+$/, "");
+  return `${appUrl}/uploads/${folder}/${fileName}`;
 };
