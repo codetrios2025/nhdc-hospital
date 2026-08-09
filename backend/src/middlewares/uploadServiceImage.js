@@ -2,11 +2,33 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-const uploadPath = "uploads/services";
+// =====================================================
+// Persistent Upload Root
+// =====================================================
+
+const uploadRoot = process.env.UPLOAD_ROOT
+  ? path.resolve(process.env.UPLOAD_ROOT)
+  : path.resolve(__dirname, "../uploads");
+
+// =====================================================
+// Service Upload Directory
+// =====================================================
+
+const uploadPath = path.join(uploadRoot, "services");
+
+// =====================================================
+// Create Directory
+// =====================================================
 
 if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath, { recursive: true });
+  fs.mkdirSync(uploadPath, {
+    recursive: true,
+  });
 }
+
+// =====================================================
+// Storage
+// =====================================================
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
@@ -24,6 +46,10 @@ const storage = multer.diskStorage({
   },
 });
 
+// =====================================================
+// File Filter
+// =====================================================
+
 const fileFilter = (req, file, cb) => {
   const allowed = /jpg|jpeg|png|webp/;
 
@@ -33,10 +59,14 @@ const fileFilter = (req, file, cb) => {
 
   if (ext && mime) {
     return cb(null, true);
-  } else {
-    cb(new Error("Only jpg, jpeg, png, webp allowed"));
   }
+
+  cb(new Error("Only jpg, jpeg, png, webp allowed"));
 };
+
+// =====================================================
+// Upload
+// =====================================================
 
 module.exports = multer({
   storage,

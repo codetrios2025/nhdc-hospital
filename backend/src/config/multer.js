@@ -2,15 +2,39 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-const uploadPath = path.join(__dirname, "../uploads");
+// =====================================================
+// Persistent Upload Root
+// =====================================================
+//
+// Production:
+// UPLOAD_ROOT=/home/u394996505/public_html/uploads
+//
+// Local:
+// backend/src/uploads
+//
+// =====================================================
 
-if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath, { recursive: true });
+const uploadRoot = process.env.UPLOAD_ROOT
+  ? path.resolve(process.env.UPLOAD_ROOT)
+  : path.resolve(__dirname, "../uploads");
+
+// =====================================================
+// Create Upload Directory
+// =====================================================
+
+if (!fs.existsSync(uploadRoot)) {
+  fs.mkdirSync(uploadRoot, {
+    recursive: true,
+  });
 }
+
+// =====================================================
+// Multer Storage
+// =====================================================
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, uploadPath);
+    cb(null, uploadRoot);
   },
 
   filename(req, file, cb) {
@@ -24,6 +48,10 @@ const storage = multer.diskStorage({
   },
 });
 
+// =====================================================
+// File Filter
+// =====================================================
+
 const fileFilter = (req, file, cb) => {
   const allowed = [
     "image/jpeg",
@@ -34,11 +62,15 @@ const fileFilter = (req, file, cb) => {
   ];
 
   if (allowed.includes(file.mimetype)) {
-    cb(null, true);
-  } else {
-    cb(new Error("Unsupported file type"));
+    return cb(null, true);
   }
+
+  cb(new Error("Unsupported file type"), false);
 };
+
+// =====================================================
+// Multer
+// =====================================================
 
 module.exports = multer({
   storage,

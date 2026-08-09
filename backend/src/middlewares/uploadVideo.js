@@ -2,31 +2,65 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-const thumbnailPath = "src/uploads/videos/thumbnails";
-const videoPath = "src/uploads/videos/files";
+// =====================================================
+// Persistent Upload Root
+// =====================================================
 
-fs.mkdirSync(thumbnailPath, { recursive: true });
-fs.mkdirSync(videoPath, { recursive: true });
+const uploadRoot = process.env.UPLOAD_ROOT
+  ? path.resolve(process.env.UPLOAD_ROOT)
+  : path.resolve(__dirname, "../uploads");
+
+// =====================================================
+// Video Upload Directories
+// =====================================================
+
+const thumbnailPath = path.join(uploadRoot, "videos", "thumbnails");
+
+const videoPath = path.join(uploadRoot, "videos", "files");
+
+// =====================================================
+// Create Directories
+// =====================================================
+
+fs.mkdirSync(thumbnailPath, {
+  recursive: true,
+});
+
+fs.mkdirSync(videoPath, {
+  recursive: true,
+});
+
+// =====================================================
+// Storage
+// =====================================================
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
     if (file.fieldname === "thumbnail") {
-      cb(null, thumbnailPath);
-    } else {
-      cb(null, videoPath);
+      return cb(null, thumbnailPath);
     }
+
+    if (file.fieldname === "videoFile") {
+      return cb(null, videoPath);
+    }
+
+    cb(new Error("Invalid upload field."));
   },
 
   filename(req, file, cb) {
-    cb(
-      null,
+    const filename =
       Date.now() +
-        "-" +
-        Math.round(Math.random() * 1000000000) +
-        path.extname(file.originalname),
-    );
+      "-" +
+      Math.round(Math.random() * 1000000000) +
+      path.extname(file.originalname);
+
+    cb(null, filename);
   },
 });
+
+// =====================================================
+// File Filter
+// =====================================================
 
 const fileFilter = (req, file, cb) => {
   if (file.fieldname === "thumbnail") {
@@ -47,6 +81,10 @@ const fileFilter = (req, file, cb) => {
 
   cb(null, false);
 };
+
+// =====================================================
+// Upload
+// =====================================================
 
 module.exports = multer({
   storage,
