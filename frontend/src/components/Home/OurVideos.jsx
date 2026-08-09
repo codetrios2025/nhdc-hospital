@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import Style from "../CSS/Global.module.css";
 import InstaVideo from "./InstaVideo";
 import { FaPlay } from "react-icons/fa";
-
+import constants from "../../services/constants";
 const OurVideos = ({data}) => {
   const [activeVideo, setActiveVideo] = useState(null);
   const videoRefs = useRef({});
@@ -82,7 +82,7 @@ const OurVideos = ({data}) => {
       video.pause();
     }
   };
-
+  console.log(allVideo)
   return (
     <div className={`${Style.videoSec} ${Style.commonSpace}`}>
       <Container>
@@ -157,7 +157,7 @@ const OurVideos = ({data}) => {
                             width="100%"
                           >
                             <source
-                              src={item.videoFileUrl}
+                              src={constants.File_BASE_URL + "/videos/files/" + item?.videoFile}
                               type="video/mp4"
                             />
                           </video>

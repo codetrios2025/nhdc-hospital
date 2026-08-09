@@ -13,6 +13,7 @@
 .bannerContent h1{font-size: var(--fs-3xl);color: #16366a;margin-bottom: 20px;}
 .bannerContent h1 span{display: block;color:#df1123;}
 .bannerContent p{line-height: 26px;padding-right: 350px;}
+.bannerContent p span{background: transparent!important;}
 .bannerContent p br{display: none;}
 .bannerContent ul, .bannerContent ol{margin-top: 10px;}
 .bannerContent ul li{font-weight: 600;line-height: 40px;position: relative;}
