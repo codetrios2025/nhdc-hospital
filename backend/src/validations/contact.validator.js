@@ -23,16 +23,14 @@ const validateContact = [
     .notEmpty()
     .withMessage("Email is required.")
     .isEmail()
-    .withMessage("Please enter a valid email address.")
-    .normalizeEmail(),
+    .withMessage("Please enter a valid email address."),
 
   body("contactFormRecipient")
     .trim()
     .notEmpty()
     .withMessage("Contact Form Recipient email is required.")
     .isEmail()
-    .withMessage("Please enter a valid Contact Form Recipient email.")
-    .normalizeEmail(),
+    .withMessage("Please enter a valid Contact Form Recipient email."),
 
   body("phoneNumbers")
     .isArray({ min: 1 })
