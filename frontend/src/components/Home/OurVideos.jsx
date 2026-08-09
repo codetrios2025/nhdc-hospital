@@ -157,7 +157,7 @@ const OurVideos = ({data}) => {
                             width="100%"
                           >
                             <source
-                              src={item.url}
+                              src={item.videoFileUrl}
                               type="video/mp4"
                             />
                           </video>
