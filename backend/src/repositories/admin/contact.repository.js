@@ -14,6 +14,8 @@ class ContactRepository {
   async getActiveContact() {
     return await Contact.findOne({
       isActive: true,
+    }).sort({
+      updatedAt: -1,
     });
   }
 
