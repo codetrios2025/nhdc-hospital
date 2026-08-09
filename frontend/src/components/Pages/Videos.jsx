@@ -11,7 +11,7 @@ import Support from "../Home/Support";
 //API
 import { getVideos } from "../../services/routes.services";
 import { Helmet } from "react-helmet-async";
-
+import constants from "../../services/constants";
 const NHDCVideos = () =>{
   const [activeVideo, setActiveVideo] = useState(null);
   const [videoData, setVideoData] = useState(null);
@@ -188,7 +188,7 @@ const NHDCVideos = () =>{
                                 width="100%"
                               >
                                 <source
-                                  src={item.url}
+                                  src={constants.File_BASE_URL + "/videos/files/" + item?.videoFile}
                                   type="video/mp4"
                                 />
                               </video>

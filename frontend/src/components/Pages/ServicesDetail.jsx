@@ -86,7 +86,7 @@ const ServiceDetail = () => {
             } alt={serviceData?.title}/>
           <div className={Style.content}>
             <Container>
-              <Row>
+              <Row> 
                 <Col>
                 <div className={Style.box}>
                     <h1>{serviceData?.bannerTitle || null}</h1>

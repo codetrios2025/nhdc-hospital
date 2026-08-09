@@ -25,7 +25,7 @@ import { BsUmbrellaFill } from "react-icons/bs";
 
 //API
 import { getHighlightsData } from "../../services/routes.services";
-import { Helmet } from "react-helmet-async";
+import SEO from "../Common/SEO";
 
 const AboutUs = () => {
   const [highlightData, setHighlightData] = useState([]);
@@ -43,15 +43,12 @@ const AboutUs = () => {
   console.log(highlightData);
   return (
     <>
-      {/* <Helmet>
-        <title>{serviceData?.seoTitle || serviceData.seoTitle || "Namokar Hospital"}</title>
-        <meta name="description" content={serviceData?.seoDescription || "" }  />
-        <meta name="keywords" content={
-            Array.isArray(serviceData?.seoKeyword)
-            ? serviceData.seoKeyword.join(", ") : serviceData?.seoKeywords || ""
-          } 
-        />
-      </Helmet> */}
+      <SEO
+  title="About Namokar Hospital & Diagnostic Centre | Deoli"
+  description="Learn about Namokar Hospital & Diagnostic Centre in Deoli, providing trusted pediatric healthcare, diagnostics, allergy testing and patient-focused medical care."
+  keywords="Namokar Hospital Deoli, about Namokar Hospital, hospital Deoli Delhi, pediatric healthcare Deoli"
+  canonical="https://namokarhospitaldeoli.com/about"
+/>
       <div className={Style.aboutPage}>
         <div className={Style.innerBanner}>
           <img src={BannerImg} alt="Namokar Hospital & Diagnostic Centre" />
