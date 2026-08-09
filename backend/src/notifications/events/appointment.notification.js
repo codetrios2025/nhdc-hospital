@@ -7,6 +7,8 @@ const confirmedTemplate = require("../templates/appointment/confirmed");
 const cancelledTemplate = require("../templates/appointment/cancelled");
 const remarkTemplate = require("../templates/appointment/remark");
 
+const ContactRepository = require("../../repositories/admin/contact.repository");
+
 const { MODULES, EVENTS } = require("../constants");
 
 class AppointmentNotification {
@@ -49,25 +51,33 @@ class AppointmentNotification {
     |--------------------------------------------------------------------------
     */
 
-    const hospitalTemplate = hospitalBookedTemplate(appointment);
+    const contact = await ContactRepository.getActiveContact();
 
-    tasks.push(
-      NotificationManager.sendEmail({
-        module: "APPOINTMENT",
+    if (contact?.contactFormRecipient) {
+      const hospitalTemplate = hospitalBookedTemplate(appointment);
 
-        event: "NEW_APPOINTMENT",
+      tasks.push(
+        NotificationManager.sendEmail({
+          module: MODULES.APPOINTMENT,
 
-        to: process.env.HOSPITAL_EMAIL,
+          event: EVENTS.NEW_APPOINTMENT,
 
-        subject: hospitalTemplate.subject,
+          to: contact.contactFormRecipient,
 
-        html: hospitalTemplate.html,
+          subject: hospitalTemplate.subject,
 
-        message: "New appointment received.",
+          html: hospitalTemplate.html,
 
-        payload: appointment,
-      }),
-    );
+          message: "New appointment received.",
+
+          payload: appointment,
+        }),
+      );
+    } else {
+      console.warn(
+        "Hospital appointment notification skipped: Contact Form Recipient is not configured.",
+      );
+    }
 
     return Promise.all(tasks);
   }
