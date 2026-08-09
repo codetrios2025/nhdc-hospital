@@ -24,7 +24,25 @@ ${appointment.patientName}
 </td>
 
 </tr>
+<tr>
+<td style="background:#f8f9fa;font-weight:bold;">
+Gender
+</td>
 
+<td>
+${appointment.gender || "-"}
+</td>
+</tr>
+
+<tr>
+<td class="label">
+Age
+</td>
+
+<td>
+${appointment.age || "-"}
+</td>
+</tr>
 <tr>
 
 <td class="label">
@@ -56,34 +74,12 @@ Preferred Date
 </td>
 
 <td>
-${appointment.preferredDate}
+${appointment.appointmentDate || appointment.preferredDate || "-"}
 </td>
 
 </tr>
 
-<tr>
 
-<td class="label">
-Department
-</td>
-
-<td>
-${appointment.departmentName || "-"}
-</td>
-
-</tr>
-
-<tr>
-
-<td class="label">
-Doctor
-</td>
-
-<td>
-${appointment.doctorName || "-"}
-</td>
-
-</tr>
 
 <tr>
 
@@ -92,7 +88,7 @@ Message
 </td>
 
 <td>
-${appointment.message || "-"}
+${appointment.message || appointment.reason || "-"}
 </td>
 
 </tr>
