@@ -7,6 +7,7 @@ import OurDoctor from "./OurDoctor";
 import Support from "./Support";
 import Loader from "../Common/Loader";
 import { Helmet } from "react-helmet-async";
+import SEO from "../Common/SEO";
 //APIs
 import { getBannerData, getDoctorsData, getVideos, getFeaturesData, getDiagnosticServicesData, getHomeServices } from "../../services/routes.services";
 const HomeRoute = ()=>{
@@ -48,12 +49,12 @@ const HomeRoute = ()=>{
   //console.log(serviceData)
   return(
     <>
-      <Helmet>
-        <title>Namokar Hospital</title>
-        <meta name="description" content="Namokar Hospital"  />
-        <meta name="keywords" content="Namokar Hospital"
-        />
-      </Helmet>
+      <SEO
+        title="Namokar Hospital & Diagnostic Centre | Hospital in Deoli"
+        description="Namokar Hospital & Diagnostic Centre in Deoli offers pediatric healthcare, allergy testing, diagnostic services, EEG, spirometry, sonography and laboratory tests."
+        keywords="Namokar Hospital Deoli, hospital in Deoli, best hospital in Deoli, children hospital in Deoli, pediatric hospital Deoli, diagnostic centre Deoli, hospital near me"
+        canonical="https://namokarhospitaldeoli.com/"
+      />
       <HeroBanner data={bannerData} />
       <Services data={featuresData} serviceData={serviceData} />
       <Diagnostics data={diagnosticServicesData} />
