@@ -22,6 +22,10 @@ export const getDoctorsData = () => {
   return axiosService.get("doctors");
 };
 //Home Videos API
+export const getHomeVideos = () => {
+  return axiosService.get("videos/home");
+};
+// Videos API
 export const getVideos = () => {
   return axiosService.get("videos");
 };

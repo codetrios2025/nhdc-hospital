@@ -98,7 +98,7 @@ const OurVideos = ({data}) => {
               </div>
 
               <div className={"watchVideo " + Style.videoElem}>
-                {allVideo?.slice(0, 4).map((item, index) => {
+                {allVideo?.map((item, index) => {
                   const type = getVideoType(item);
                   const youtubeLink = item.youtubeUrl || item.externalUrl || item.url;
                   const videoId = getYoutubeId(youtubeLink);
