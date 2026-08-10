@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { IoCalendarOutline } from "react-icons/io5";
 import { FiUser } from "react-icons/fi";
 import { MdCalendarMonth, MdAlternateEmail, MdOutlineSpeakerNotes } from "react-icons/md";
@@ -15,6 +15,7 @@ import { IoCloseOutline,IoCheckmarkCircle } from "react-icons/io5";
 
 //API
 import { postBooking } from "../../services/routes.services";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const BookingForm = ({close, popup})=>{
   const [formData, setFormData] = useState({
@@ -29,9 +30,12 @@ const BookingForm = ({close, popup})=>{
     appointmentDate: "",
     reason: "",
   });
+  const captchaRef = useRef(null);
+  const [captchaToken, setCaptchaToken] = useState("");
   const [errors, setErrors] = useState({});
   const [successMsg, setSuccessMsg] = useState("");
   const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -44,36 +48,43 @@ const BookingForm = ({close, popup})=>{
     }));
   };
   const validate = () => {
-    let error = {};
-    if (!formData.patientName.trim())
+    const error = {};
+    if (!formData.patientName.trim()) {
       error.patientName = "Patient name is required.";
-
-    if (!formData.age)
+    }
+    if (!formData.age) {
       error.age = "Age is required.";
-    else if (formData.age < 1 || formData.age > 120)
+    } else if (formData.age < 1 || formData.age > 120) {
       error.age = "Enter valid age.";
-
-    if (!formData.gender)
+    }
+    if (!formData.gender) {
       error.gender = "Gender is required.";
-
-    if (!formData.mobile)
+    }
+    if (!formData.mobile) {
       error.mobile = "Mobile number is required.";
-    else if (!/^[6-9]\d{9}$/.test(formData.mobile))
+    } else if (!/^[6-9]\d{9}$/.test(formData.mobile)) {
       error.mobile = "Enter valid mobile number.";
-
-    if (!formData.email && !/^\S+@\S+\.\S+$/.test(formData.email))
+    }
+    // Email is optional
+    // But if user enters email, validate it
+    if (formData.email &&!/^\S+@\S+\.\S+$/.test(formData.email)) {
       error.email = "Enter valid email.";
-
-    if (!formData.appointmentDate)
+    }
+    if (!formData.appointmentDate) {
       error.appointmentDate = "Appointment date is required.";
+    }
 
     return error;
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
-    if (Object.keys(validationErrors).length) {
+    if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      return;
+    }
+    if (!captchaToken) {
+      alert("Please verify captcha that you are not a robot.");
       return;
     }
     try {
@@ -89,10 +100,11 @@ const BookingForm = ({close, popup})=>{
         doctor: formData.doctor,
         appointmentDate: formData.appointmentDate,
         reason: formData.reason,
+        captchaToken
       };
 
       const res = await postBooking(payload);
-      setSuccessMsg(res.data.message);
+      setSuccessMsg(res.data?.message || "Appointment booked successfully.");
       setFormData({
         patientName: "",
         age: "",
@@ -105,17 +117,23 @@ const BookingForm = ({close, popup})=>{
         appointmentDate: "",
         reason: "",
       });
+      setErrors({});
+      captchaRef.current?.reset();
+      setCaptchaToken("");
+
       setTimeout(() => {
-        if(popup === true){
+        setSuccessMsg("");
+        if (popup === true) {
           close();
         }
       }, 3000);
-      
+
       //console.log(res.data.message)
-      
     } catch (err) {
       console.log(err);
       alert("Something went wrong.");
+      captchaRef.current?.reset();
+      setCaptchaToken("");
     } finally {
       setLoading(false);
     }
@@ -206,7 +224,11 @@ const BookingForm = ({close, popup})=>{
             <label>Preferred Date <sub>*</sub></label>
             <span className={Style.icon}><HiCalendarDateRange /></span>
             <input type="date" name="appointmentDate" value={formData.appointmentDate} onChange={handleChange} placeholder="Select preferred date"  />
-            {errors.appointmentDate && (<small className={Style.error}>{errors.appointmentDate}</small>)}
+            {errors.appointmentDate && (
+              <small className={Style.error}>
+                {errors.appointmentDate}
+              </small>
+            )}
           </div>
         </div>
         <div className={Style.formGroup}>
@@ -223,6 +245,15 @@ const BookingForm = ({close, popup})=>{
             <textarea name="reason" value={formData.reason} onChange={handleChange} placeholder="Enter your reason for visit"></textarea>
           </div>
         </div>
+        <div className={`${Style.formGroup} ${Style.captcha}`}>
+          <ReCAPTCHA
+              ref={captchaRef}
+              sitekey="6LdYL38tAAAAAKUULGXawuYC8pJdKsGl61U9B0zj"
+              onChange={(token) => setCaptchaToken(token || "")}
+              onExpired={() => setCaptchaToken("")}
+              onErrored={() => setCaptchaToken("")}
+            />
+        </div>
         <div className={Style.nots}>
           <span className={Style.icon}><IoMdInformationCircleOutline /></span>
           <div className={Style.text}>
@@ -234,7 +265,7 @@ const BookingForm = ({close, popup})=>{
           <button type="button" className={'flexCenter  ' + Style.resetBtn} onClick={handleReset}>
             <div className={Style.icon}><GrPowerReset /></div>Reset
           </button>
-          <button type="submit" className={'flexCenter  ' + Style.primeryBtn} disabled={loading}>
+          <button type="submit" className={'flexCenter  ' + Style.primeryBtn}   disabled={loading}>
             <div className={Style.icon}><IoCalendarOutline /></div>{loading ? "Submitting..." : "Submit Booking"}
           </button>
         </div>

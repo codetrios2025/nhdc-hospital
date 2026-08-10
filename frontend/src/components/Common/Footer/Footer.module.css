@@ -24,7 +24,7 @@ footer{margin-top: 20px;}
 .companyRights{background: #16366a;position: relative;padding: 10px 0;border-top: 1px solid #16366a;margin-top: 30px;}
 .companyRights .content{display: flex;align-items: center;justify-content: space-between;}
 .companyRights .content p, .companyRights .content p a{margin: 0;color: #fff;display: flex;align-items: center;}
-.companyRights .content p img{width:100px}
+.companyRights .content p img{width:100px;margin-left: 5px;}
 .timeSlot p{display: flex;flex-direction: column;}
 .timeSlot p strong{font-weight: var(--fw-semibold);}
 @media only screen and (max-width: 1400px) {

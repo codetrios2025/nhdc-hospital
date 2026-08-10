@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import Style from "./Footer.module.css";
 import Logo from "../../../assets/images/nhdc-logo.png";
-import CodeTrios from "../../../assets/images/codetrios_logo.webp";
+import CodeTrios from "../../../assets/images/codetrios_white_logo.png";
 import { TiSocialFacebook } from "react-icons/ti";
 import { IoLogoInstagram } from "react-icons/io";
 import { BsYoutube } from "react-icons/bs";
@@ -85,41 +85,43 @@ export default function Footer() {
               </div>
               <div className={Style.link}>
                 <h4>Contact Us</h4>
-                <div className={Style.addresInfo}>
-                  <div className={Style.address}>
-                    <div className={Style.icon}>
-                      <FaMapMarkerAlt />
+                {contact &&
+                  <div className={Style.addresInfo}>
+                    <div className={Style.address}>
+                      <div className={Style.icon}>
+                        <FaMapMarkerAlt />
+                      </div>
+                      <p>{parse(String(contact?.address))}</p>
                     </div>
-                    <p>{parse(String(contact?.address))}</p>
+                    <div className={Style.address}>
+                      <div className={Style.icon}><IoIosMail size="20" /></div>
+                      <a href={`mailto:${contact?.email}`}>{contact?.email}</a>
+                    </div>
+                    <div className={Style.address}>
+                      <div className={Style.icon}><BsFillTelephoneFill /></div>
+                      <p>
+                        {contact?.phoneNumbers?.map((number, index) => (
+                          <React.Fragment key={index}>
+                            <a href={`tel:${number}`}>+91 {number}</a>
+                            {index < contact.phoneNumbers.length - 1 && ", "}
+                          </React.Fragment>
+                        ))}
+                      
+                      </p>
+                    </div>
+                    <div className={`${Style.address} ${Style.timeSlot}`}>
+                      <div className={Style.icon}><FiClock /></div>
+                      <p>
+                        <span>
+                          <strong>Monday - Saturday:</strong> {contact?.workingHours?.mondaySaturday?.morning} , {contact?.workingHours?.mondaySaturday?.evening}
+                        </span>
+                        <span>
+                          <strong>Sunday:</strong> {contact?.workingHours?.sunday?.morning}
+                        </span>
+                      </p>
+                    </div>
                   </div>
-                  <div className={Style.address}>
-                    <div className={Style.icon}><IoIosMail size="20" /></div>
-                    <a href={`mailto:${contact?.email}`}>{contact?.email}</a>
-                  </div>
-                  <div className={Style.address}>
-                    <div className={Style.icon}><BsFillTelephoneFill /></div>
-                    <p>
-                      {contact?.phoneNumbers?.map((number, index) => (
-                        <React.Fragment key={index}>
-                          <a href={`tel:${number}`}>+91 {number}</a>
-                          {index < contact.phoneNumbers.length - 1 && ", "}
-                        </React.Fragment>
-                      ))}
-                     
-                    </p>
-                  </div>
-                  <div className={`${Style.address} ${Style.timeSlot}`}>
-                    <div className={Style.icon}><FiClock /></div>
-                    <p>
-                      <span>
-                        <strong>Monday - Saturday:</strong> {contact?.workingHours?.mondaySaturday?.morning} , {contact?.workingHours?.mondaySaturday?.evening}
-                      </span>
-                      <span>
-                        <strong>Sunday:</strong> {contact?.workingHours?.sunday?.morning}
-                      </span>
-                    </p>
-                  </div>
-                </div>
+                }
               </div>
             </div>
           </Col>
@@ -147,7 +149,7 @@ export default function Footer() {
                 <p> &copy; {new Date().getFullYear()} Namokar Hospital. All rights reserved.</p>
                 <p>
                   <a href="https://www.codetrios.com/" target="_blank">
-                    Design Develop By : {" "} 
+                    Designed &amp; Developed by : {" "} 
                     <img src={CodeTrios} alt="powered by codetrios" />
                   </a>
                 </p>
