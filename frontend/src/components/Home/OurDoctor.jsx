@@ -1,7 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Style from '../CSS/Global.module.css';
-import Doctor from '../../assets/images/rajesh.webp';
 import parse from 'html-react-parser';
 import constants from "../../services/constants";
 //icon

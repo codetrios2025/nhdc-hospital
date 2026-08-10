@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Style from '../CSS/Global.module.css';
-import Doctor from '../../assets/images/drrajesh.webp';
 import { GoArrowRight } from "react-icons/go";
 import { FaStethoscope, FaUserMd, FaSyringe, FaChild, FaHeartbeat } from "react-icons/fa";
 import { GiLungs } from "react-icons/gi";

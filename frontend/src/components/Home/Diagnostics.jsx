@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Style from '../CSS/Global.module.css';
-import serviceImg01 from '../../assets/images/vaccination-img.webp';
 //icon
 import { FaCheckCircle, FaWind, FaLeaf } from "react-icons/fa";
 import { IoCalendarOutline } from "react-icons/io5";

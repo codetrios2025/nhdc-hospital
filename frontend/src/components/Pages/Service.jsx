@@ -6,12 +6,6 @@ import BannerImg from '../../assets/images/hospital-slide.webp';
 import Support from '../Home/Support';
 import Loader from "../Common/Loader";
 import constants from "../../services/constants";
-import childImg from "../../assets/images/child-care-img.webp";
-import asthmaImg from "../../assets/images/asthma.webp";
-import newbornImg from "../../assets/images/newbornImg.webp";
-import vaccineImg from "../../assets/images/services_img04.webp";
-import emergencyImg from "../../assets/images/namokar_img01.webp";
-import diagnosticImg from "../../assets/images/namokar_img02.webp";
 //icon
 import { FaCheckCircle, FaBullseye, FaEye, FaHandshake, FaAmbulance, FaHeartbeat, FaHeart } from "react-icons/fa";
 import { MdOutlineChildCare, MdMedicalServices, MdHealthAndSafety } from "react-icons/md";
