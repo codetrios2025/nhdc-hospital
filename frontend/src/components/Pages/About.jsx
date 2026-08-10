@@ -40,13 +40,13 @@ const AboutUs = () => {
     };
     fetchData();
   }, []);
-  console.log(highlightData);
+  // console.log(highlightData);
   return (
     <>
       <SEO
   title="About Namokar Hospital & Diagnostic Centre | Deoli"
   description="Learn about Namokar Hospital & Diagnostic Centre in Deoli, providing trusted pediatric healthcare, diagnostics, allergy testing and patient-focused medical care."
-  keywords="Namokar Hospital Deoli, about Namokar Hospital, hospital Deoli Delhi, pediatric healthcare Deoli"
+  keywords="Namokar Hospital Deoli, about Namokar Hospital, hospital Deoli, pediatric healthcare Deoli,Dr. Rajesh Jain, allergy testing Deoli, diagnostic services Deoli, child healthcare Deoli, pediatric care Deoli, hospital services Deoli,pediatrician in deoli, best doctor in deoli, child specialist in deoli"
   canonical="https://namokarhospitaldeoli.com/about"
 />
       <div className={Style.aboutPage}>
