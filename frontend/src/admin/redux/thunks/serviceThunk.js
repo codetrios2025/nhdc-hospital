@@ -160,7 +160,7 @@ export const deleteService = (id) => async (dispatch) => {
 |--------------------------------------------------------------------------
 */
 
-export const deleteServiceGalleryImage =
+export const deleteServiceGalleryImageold =
   (serviceId, imageId) => async (dispatch) => {
     try {
       dispatch(requestStart());
@@ -180,6 +180,24 @@ export const deleteServiceGalleryImage =
       throw error;
     }
   };
+
+export const deleteServiceGalleryImage = createAsyncThunk(
+  "services/deleteGalleryImage",
+
+  async ({ serviceId, imageId }, thunkAPI) => {
+    try {
+      const response = await serviceApi.deleteGalleryImage(serviceId, imageId);
+
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message ||
+          error.message ||
+          "Unable to delete image.",
+      );
+    }
+  },
+);
 
 /*
 |--------------------------------------------------------------------------

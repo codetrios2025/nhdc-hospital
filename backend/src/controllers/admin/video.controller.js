@@ -8,8 +8,6 @@ const VideoService = require("../../services/admin/video.service");
 const path = require("path");
 const createThumbnail = require("../../helpers/videoThumbnail.helper");
 
-const path = require("path");
-
 const uploadRoot = process.env.UPLOAD_ROOT
   ? path.resolve(process.env.UPLOAD_ROOT)
   : path.resolve(__dirname, "../../../uploads");
