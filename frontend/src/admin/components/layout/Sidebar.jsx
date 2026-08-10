@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import sidebarMenu from "../../config/sidebarMenu";
 import SidebarItem from "./SidebarItem";
-
+// import '../../assets/styles/main.scss'
 const Sidebar = ({ isOpen }) => {
   const [collapsed, setCollapsed] = useState(false);
 

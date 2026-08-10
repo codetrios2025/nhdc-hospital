@@ -9,7 +9,7 @@ import Loader from "../Common/Loader";
 import { Helmet } from "react-helmet-async";
 import SEO from "../Common/SEO";
 //APIs
-import { getBannerData, getDoctorsData, getVideos, getFeaturesData, getDiagnosticServicesData, getHomeServices } from "../../services/routes.services";
+import { getBannerData, getDoctorsData, getHomeVideos, getFeaturesData, getDiagnosticServicesData, getHomeServices } from "../../services/routes.services";
 const HomeRoute = ()=>{
   const [bannerData, setBannerData] = useState([]);
   const [serviceData, setServiceData] = useState([]);
@@ -25,7 +25,7 @@ const HomeRoute = ()=>{
           getBannerData(),
           getHomeServices(),
           getDoctorsData(),
-          getVideos(),
+          getHomeVideos(),
           getFeaturesData(),
           getDiagnosticServicesData()
         ])

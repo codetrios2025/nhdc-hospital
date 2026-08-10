@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import CarouselImport from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Style from '../CSS/Global.module.css';
-import BannerImg from '../../assets/images/hospital-slide.webp';
-import BannerImg01 from '../../assets/images/banner_image_1.webp';
 import parse from 'html-react-parser';
 //icon
 import { IoCalendarOutline } from "react-icons/io5";

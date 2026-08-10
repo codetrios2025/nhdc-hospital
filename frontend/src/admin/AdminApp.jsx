@@ -5,7 +5,7 @@ import useInitializeAuth from "./features/auth/hooks/useInitializeAuth";
 import { useSelector } from "react-redux";
 
 import LoadingScreen from "./components/common/LoadingScreen";
-
+import './assets/styles/main.scss';
 function AdminApp() {
   useInitializeAuth();
 
