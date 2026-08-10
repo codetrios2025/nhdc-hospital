@@ -53,6 +53,7 @@ const Header = () => {
               <Col>
                 <address>
                   <ul>
+                    {contact && 
                     <li>
                       <a href={`mailto:${contact?.email}`} aria-label="Email Namokar Hospital">
                         <div className={Style.icon}>
@@ -61,27 +62,32 @@ const Header = () => {
                         <p>{contact?.email}</p>
                       </a>
                     </li>
-                    <li>
-                      <div className={Style.icon}>
-                        <FaHeadset />
-                      </div>
-                      <div className={Style.numberFlex}>
-                        {contact?.phoneNumbers?.map((number, index) => (
-                          <a key={index} href={`tel:${number}`}>
-                            <p>+91 {number}</p>
-                          </a>
-                        ))}
-                      </div>
-                    </li>
-                    <li className={Style.timeList}>
-                      <div className={Style.icon}>
-                        <FiClock />
-                      </div>
-                      <div>
-                        <p>Mon to Sat: {contact?.workingHours?.mondaySaturday?.morning} , {contact?.workingHours?.mondaySaturday?.evening}{" "}</p>
-                        <p> Sun: {contact?.workingHours?.sunday?.morning}</p>
-                      </div>
-                    </li>
+                    }
+                    {contact &&
+                      <li>
+                        <div className={Style.icon}>
+                          <FaHeadset />
+                        </div>
+                        <div className={Style.numberFlex}>
+                          {contact?.phoneNumbers?.map((number, index) => (
+                            <a key={index} href={`tel:${number}`}>
+                              <p>+91 {number}</p>
+                            </a>
+                          ))}
+                        </div>
+                      </li>
+                    }
+                    {contact &&
+                      <li className={Style.timeList}>
+                        <div className={Style.icon}>
+                          <FiClock />
+                        </div>
+                        <div>
+                          <p>Mon to Sat: {contact?.workingHours?.mondaySaturday?.morning} , {contact?.workingHours?.mondaySaturday?.evening}{" "}</p>
+                          <p> Sun: {contact?.workingHours?.sunday?.morning}</p>
+                        </div>
+                      </li>
+                    }
                     <li>
                       <button onClick={bookingHandler} type="button" className={Style.bookBtn} aria-label="Book Appointment">
                         <span className={Style.icon}>
@@ -102,15 +108,17 @@ const Header = () => {
             <Col>
               <address>
                 <ul>
-                  <li className={Style.callList}>
-                    <div className={Style.icon}><FaHeadset /></div>
-                    <div className={Style.numberFlex}>
-                      {contact?.phoneNumbers?.map((number, index) => (
-                        <a key={index} href={`tel:${number}`}>+91 {number}</a>
-                      ))}
-                      {/* <a href="tel:9829143239" ><p>+91 98291 43239</p></a> */}
-                    </div>
-                  </li>
+                  {contact &&
+                    <li className={Style.callList}>
+                      <div className={Style.icon}><FaHeadset /></div>
+                      <div className={Style.numberFlex}>
+                        {contact?.phoneNumbers?.map((number, index) => (
+                          <a key={index} href={`tel:${number}`}>+91 {number}</a>
+                        ))}
+                        {/* <a href="tel:9829143239" ><p>+91 98291 43239</p></a> */}
+                      </div>
+                    </li>
+                  }
                   <li>
                     <button onClick={bookingHandler} type="button" className={Style.bookBtn} aria-label="Book Appointment">
                       <span className={Style.icon}><IoCalendarOutline /></span> <p>Book Appointment</p></button>

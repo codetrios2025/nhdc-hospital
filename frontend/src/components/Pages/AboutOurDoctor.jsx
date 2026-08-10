@@ -47,24 +47,6 @@ const OurDoctor = () =>{
                 <p><strong>{doctorData?.designation}</strong></p>
 
                 {doctorData?.description ? parse(String(doctorData.description)): null}
-                {/* <h4>Areas of Expertise</h4>
-                <ul>
-                  <li>✔ Child Specialist Consultation</li>
-                  <li>✔ Asthma & Respiratory Care</li>
-                  <li>✔ Newborn & Infant Care</li>
-                  <li>✔ Vaccination & Immunization</li>
-                  <li>✔ Growth & Development Monitoring</li>
-                  <li>✔ Allergy Diagnosis & Treatment</li>
-                </ul>
-                <p><strong>Advanced Diagnostic Services</strong></p>
-                <ul>
-                  <li>✔ Spirometry</li>
-                  <li>✔ Forced Oscillation Technique (FOT)</li>
-                  <li>✔ Skin Prick Test (SPT)</li>
-                  <li>✔ ImmunoCAP Allergy Blood Test</li>
-                  <li>✔ EEG</li>
-                  <li>✔ Sonography</li>
-                </ul> */}
               </div>
             </div>
           </Col>

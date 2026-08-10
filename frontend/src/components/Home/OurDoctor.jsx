@@ -13,7 +13,7 @@ import { LuBaby } from "react-icons/lu";
 const OurDoctor = ({ data }) =>{
   const doctorData = data?.data?.[0];
     // console.log(doctorData)
-    if (!doctorData) return <p>Loading...</p>;
+    if (!doctorData) return null;
     
   return(
     <div className={`${Style.doctorSec} ${Style.commonSpace}`}>

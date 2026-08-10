@@ -1,19 +1,27 @@
-import React, { useState, useRef } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Row, Col, Modal } from "react-bootstrap";
 import Style from "../CSS/Global.module.css";
 import InstaVideo from "./InstaVideo";
 import { FaPlay } from "react-icons/fa";
 import constants from "../../services/constants";
-const OurVideos = ({data}) => {
-  const [activeVideo, setActiveVideo] = useState(null);
-  const videoRefs = useRef({});
-  const allVideo = data;
+import videoThumb from '../../assets/images/video_thumb.webp';
+const OurVideos = ({ data }) => {
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
+  const allVideo = data || [];
+
+  // video type
   const getVideoType = (item) => {
     if (!item) return "unknown";
-    // Standardize URL check from multiple potential properties
-    const videoUrl = item.youtubeUrl || item.externalUrl || item.url || "";
+
+    const videoUrl =
+      item.youtubeUrl ||
+      item.externalUrl ||
+      item.url ||
+      "";
+
     const sourceType = item.sourceType?.toLowerCase();
+
     if (
       sourceType === "youtube" ||
       videoUrl.includes("youtube.com") ||
@@ -21,6 +29,7 @@ const OurVideos = ({data}) => {
     ) {
       return "youtube";
     }
+
     if (
       sourceType === "instagram" ||
       videoUrl.includes("instagram.com") ||
@@ -28,10 +37,12 @@ const OurVideos = ({data}) => {
     ) {
       return "instagram";
     }
+
     if (
       sourceType === "mp4" ||
       /\.(mp4|webm|ogg)(\?.*)?$/i.test(videoUrl) ||
-      item.videoPath
+      item.videoPath ||
+      item.videoFile
     ) {
       return "mp4";
     }
@@ -39,18 +50,20 @@ const OurVideos = ({data}) => {
     return "unknown";
   };
 
+  // Get YouTube ID
+
   const getYoutubeId = (url) => {
     if (!url) return null;
 
     try {
       const parsed = new URL(url);
 
-      // Shorts
+      // YouTube Shorts
       if (parsed.pathname.startsWith("/shorts/")) {
         return parsed.pathname.split("/")[2];
       }
 
-      // Watch
+      // YouTube Watch
       if (parsed.searchParams.get("v")) {
         return parsed.searchParams.get("v");
       }
@@ -60,7 +73,7 @@ const OurVideos = ({data}) => {
         return parsed.pathname.slice(1);
       }
 
-      // Embed
+      // YouTube Embed
       if (parsed.pathname.startsWith("/embed/")) {
         return parsed.pathname.split("/")[2];
       }
@@ -71,108 +84,171 @@ const OurVideos = ({data}) => {
     }
   };
 
-  const handleMp4PlayPause = (index) => {
-    const video = videoRefs.current[index];
+  // Get thumbnail
+  const getThumbnail = (item, type) => {
+  // YouTube thumbnail
+  if (type === "youtube") {
+    const youtubeUrl =
+      item?.youtubeUrl ||
+      item?.externalUrl ||
+      item?.url;
 
-    if (!video) return;
+    const videoId = getYoutubeId(youtubeUrl);
 
-    if (video.paused) {
-      video.play();
-    } else {
-      video.pause();
+    if (videoId) {
+      return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
     }
+  }
+
+  // Instagram thumbnail
+  if (type === "instagram" && item?.thumbnail) {
+    return `${constants.Image_BASE_URL}/videos/thumbnails/${item.thumbnail}`;
+  }
+
+  // MP4 thumbnail
+  if (type === "mp4" && item?.thumbnail) {
+    return `${constants.Image_BASE_URL}/videos/thumbnails/${item.thumbnail}`;
+  }
+
+  // Dummy image
+  return videoThumb;
+};
+
+  // Open popup
+
+  const handleVideoOpen = (item) => {
+    const type = getVideoType(item);
+
+    const youtubeUrl =
+      item.youtubeUrl ||
+      item.externalUrl ||
+      item.url;
+
+    const videoId =
+      type === "youtube"
+        ? getYoutubeId(youtubeUrl)
+        : null;
+
+    setSelectedVideo({
+      item,
+      type,
+      videoId,
+    });
   };
-  console.log(allVideo)
+
+  // Close popup
+  
+  const handleVideoClose = () => {
+    setSelectedVideo(null);
+  };
+
   return (
     <div className={`${Style.videoSec} ${Style.commonSpace}`}>
       <Container>
         <Row>
           <Col>
-            <div className={Style.videoContainer}>
-              <div className={Style.videoHead}>
-                <div>
-                  <h2>Watch Our Videos</h2>
-                  <p>Stay informed with expert medical guidance, child healthcare advice, and asthma awareness programs.</p>
-                </div>
+            <div className={Style.videoHead}>
+              <div>
+                <h2>Watch Our Videos</h2>
+                <p>Stay informed with expert medical guidance, child healthcare advice, and asthma awareness programs.</p>
+              </div>
+
+              <div>
                 <a href="/videos" className={Style.secondryBtn}>View All Videos</a>
               </div>
+            </div>
 
-              <div className={"watchVideo " + Style.videoElem}>
-                {allVideo?.slice(0, 4)?.map((item, index) => {
-                  const type = getVideoType(item);
-                  const youtubeLink = item.youtubeUrl || item.externalUrl || item.url;
-                  const videoId = getYoutubeId(youtubeLink);
-                  return (
-                    <div className={Style.videoItem} key={index}>
-                      {/* Instagram */}
-                      {type === "instagram" && (
-                        <InstaVideo data={item.externalUrl} />
-                      )}
+            <div className={"watchVideo " + Style.videoElem}>
+              {allVideo?.slice(0, 4)?.map((item, index) => {
+                const type = getVideoType(item);
+                const youtubeUrl = item.youtubeUrl || item.externalUrl || item.url;
+                const videoId = type === "youtube" ? getYoutubeId(youtubeUrl) : null;
+                const thumbnail = getThumbnail(item, type);
 
-                      {/* YouTube */}
-                      {type === "youtube" && videoId && (
-                        <div className={Style.videoFrame}>
-                          {activeVideo === videoId ? (
-                            <iframe
-                              width="100%"
-                              height="100%"
-                              src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
-                              title={item.title}
-                              frameBorder="0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                            />
-                          ) : (
-                            <>
-                              <img
-                                src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
-                                alt={item.title}
-                                onError={(e) => {
-                                  e.target.src = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
-                                }}
-                              />
-
-                              <button
-                                className={Style.playBtn}
-                                onClick={() =>
-                                  setActiveVideo(videoId)
-                                }
-                              >
-                                <FaPlay />
-                              </button>
-                            </>
-                          )}
-                        </div>
-                      )}
-
-                      {/* MP4 */}
-                      {type === "mp4" && (
-                        <div className={Style.videoFrame}>
-                          <video
-                            ref={(el) =>
-                              (videoRefs.current[index] = el)
-                            }
-                            controls
-                            preload="metadata"
-                            width="100%"
-                          >
-                            <source
-                              src={constants.File_BASE_URL + "/videos/files/" + item?.videoFile}
-                              type="video/mp4"
-                            />
-                          </video>
-                        </div>
-                      )}
+                return (
+                  <div className={Style.videoItem} key={item.id || index}>
+                    <div className={Style.videoFrame} onClick={() => handleVideoOpen(item)}>
+                      <img
+                        src={thumbnail}
+                        alt={item.title || "Namokar Hospital Video"}
+                        loading="lazy"
+                        decoding="async"
+                        width="640"
+                        height="360"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = videoThumb;
+                        }}
+                      />
+                      {/* Play button */}
+                      <div className={Style.playBtn}>
+                      <button type="button" aria-label={`Play ${item.title || "video"}`}>
+                        <FaPlay />
+                      </button>
+                      </div>
                     </div>
-                  );
-                })}
-              </div>
+
+                    {item.title && (
+                      <h3 className={Style.videoTitle}>
+                        {item.title}
+                      </h3>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </Col>
         </Row>
       </Container>
+
+      {/* Video Popup */}
+      <Modal show={!!selectedVideo} onHide={handleVideoClose} centered size="xs" className={Style.videoModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {selectedVideo?.item?.title || "Video"}
+          </Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body className="p-0">
+          {/* YOUTUBE */}
+          {selectedVideo?.type === "youtube" &&
+            selectedVideo?.videoId && (
+              <div className={Style.popupVideo}>
+                <iframe
+                  src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1&rel=0`}
+                  title={selectedVideo.item?.title || "YouTube video"}
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            )}
+
+          {/* INSTAGRAM */}
+          {selectedVideo?.type === "instagram" && (
+            <div className={Style.popupVideo}>
+              <InstaVideo
+                data={selectedVideo.item?.externalUrl}
+              />
+            </div>
+          )}
+
+          {/* MP4 Video */}
+          {selectedVideo?.type === "mp4" && (
+            <div className={Style.popupVideo}>
+              <video controls autoPlay playsInline preload="metadata" width="100%" height="100%">
+                <source src={constants.File_BASE_URL + "/videos/files/" + selectedVideo.item?.videoFile} type="video/mp4"/>
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          )}
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
 
 export default OurVideos;
+
