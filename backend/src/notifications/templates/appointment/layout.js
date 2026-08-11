@@ -2,7 +2,7 @@ const LOGO_URL =
   "https://namokarhospitaldeoli.com/assets/nhdc-logo-CJoxj7eN.png";
 
 const BANNER_URL =
-  "https://namokarhospitaldeoli.com/assets/hospital-slide-DrhfrtfT.webp";
+  "https://api.namokarhospitaldeoli.com/uploads/banners/1786339029100.webp";
 
 module.exports = (title, content) => {
   return `
@@ -81,6 +81,7 @@ module.exports = (title, content) => {
                   height:auto;
                   margin:0 auto;
                   border:0;
+                  width: 50px;
                 "
               >
 
@@ -102,8 +103,9 @@ module.exports = (title, content) => {
                 display:block;
                 width:100%;
                 max-width:700px;
-                height:auto;
+                height:300px;
                 border:0;
+                object-fit: cover;
               "
             >
 
