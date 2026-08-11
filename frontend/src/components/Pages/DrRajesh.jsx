@@ -46,7 +46,7 @@ const DrRajesh = () => {
       <SEO
   title="Dr. Rajesh Jain - Pediatrician in Deoli | Namokar Hospital"
   description="Meet Dr. Rajesh Jain, a renowned pediatrician at Namokar Hospital & Diagnostic Centre in Deoli, offering exceptional child healthcare services."
-  keywords="Dr. Rajesh Jain, pediatrician Deoli, child specialist Deoli, Namokar Hospital Deoli,Namokar Hospital Deoli Tonk, pediatric care Deoli"
+  keywords="Dr. Rajesh Jain, pediatrician Deoli, child specialist Deoli, doctor in deoli, Namokar Hospital Deoli,Namokar Hospital Deoli Tonk, pediatric care Deoli"
   canonical="https://namokarhospitaldeoli.com/doctor/rajesh-jain"
 />
       <div className={Style.aboutPage}>
