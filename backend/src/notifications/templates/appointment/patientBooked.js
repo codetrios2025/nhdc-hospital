@@ -6,7 +6,7 @@ module.exports = (appointment) => ({
 
   html: layout({
     title: "Appointment Request",
-
+    
     heading: `Dear ${appointment.patientName},`,
 
     content: `
