@@ -26,6 +26,7 @@ const BookAppointment = () => {
             ? contact?.seo?.metaKeywords.join(", ") : contact?.seo?.metaKeywords || ""
           } 
         />
+        <link rel="canonical" href="https://namokarhospitaldeoli.com/book-appointment" />
       </Helmet>
       <div className={Style.bookAppointment}>
         <div className={Style.innerBanner}>

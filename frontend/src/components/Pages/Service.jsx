@@ -49,15 +49,9 @@ if (loading) { return <Loader />;}
 //console.log("Service Data:", serviceData);
   return(
     <>
-    {/* <Helmet>
-      <title>{serviceData?.seoTitle || serviceData.seoTitle || "Namokar Hospital"}</title>
-      <meta name="description" content={serviceData?.seoDescription || "" }  />
-      <meta name="keywords" content={
-          Array.isArray(serviceData?.seoKeyword)
-          ? serviceData.seoKeyword.join(", ") : serviceData?.seoKeywords || ""
-        } 
-      />
-    </Helmet> */}
+    <Helmet>
+      <link rel="canonical" href="https://namokarhospitaldeoli.com/services" />
+    </Helmet>
     <div className={Style.servicesPage}>
       <div className={Style.innerBanner}>
           <img src={BannerImg} alt="Namokar Hospital & Diagnostic Centre" />

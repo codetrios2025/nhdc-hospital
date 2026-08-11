@@ -166,15 +166,9 @@ const NHDCVideos = () =>{
  
   return(
     <>
-      {/* <Helmet>
-        <title>{serviceData?.seoTitle || serviceData.seoTitle || "Namokar Hospital"}</title>
-        <meta name="description" content={serviceData?.seoDescription || "" }  />
-        <meta name="keywords" content={
-            Array.isArray(serviceData?.seoKeyword)
-            ? serviceData.seoKeyword.join(", ") : serviceData?.seoKeywords || ""
-          } 
-        />
-      </Helmet> */}
+      <Helmet>
+        <link rel="canonical" href="https://namokarhospitaldeoli.com/videos" />
+      </Helmet>
       <div className={`${Style.videoPage}`}>
         <div className={Style.innerBanner}>
           <img src={BannerImg} alt="Namokar Hospital & Diagnostic Centre" />
