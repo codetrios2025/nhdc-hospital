@@ -12,6 +12,7 @@ import ServiceDetail from "../Pages/ServicesDetail";
 import BookAppointment from "../Booking/BookAppointmentPage";
 import NHDCVideos from "../Pages/Videos";
 import DrRajesh from "../Pages/DrRajesh";
+import NotFound from "../Pages/404";
 const AppRoute = () =>{
   return(
     <>
@@ -26,6 +27,7 @@ const AppRoute = () =>{
           <Route path='/book-appointment' element={<BookAppointment />} />
           <Route path='/videos' element={<NHDCVideos />} />
           <Route path='/doctor/rajesh-jain' element={<DrRajesh />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </>
