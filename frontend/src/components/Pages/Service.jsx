@@ -22,6 +22,7 @@ import { BsClockHistory } from "react-icons/bs";
 //API
 import { getallserviceData } from "../../services/routes.services";
 import { Helmet } from "react-helmet-async";
+import SEO from "../Common/SEO";
 const Services = () =>{
   const [serviceData, setServiceData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -49,9 +50,13 @@ if (loading) { return <Loader />;}
 //console.log("Service Data:", serviceData);
   return(
     <>
-    <Helmet>
-      <link rel="canonical" href="https://namokarhospitaldeoli.com/services" />
-    </Helmet>
+     <SEO
+  title="Services at Namokar Hospital & Diagnostic Centre | Deoli"
+  description="Explore the comprehensive medical services offered at Namokar Hospital & Diagnostic Centre in Deoli, including pediatric care, diagnostics, and specialized treatments,deoli."
+  keywords="Namokar Hospital Deoli, medical services Deoli, pediatric services Deoli, diagnostic services Deoli, child healthcare Deoli, hospital services Deoli, best doctor in deoli, child specialist in deoli"
+  canonical="https://namokarhospitaldeoli.com/services"
+/>
+    
     <div className={Style.servicesPage}>
       <div className={Style.innerBanner}>
           <img src={BannerImg} alt="Namokar Hospital & Diagnostic Centre" />
