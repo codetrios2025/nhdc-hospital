@@ -147,6 +147,7 @@ const OurVideos = ({ data }) => {
       <Container>
         <Row>
           <Col>
+          <div className={Style.homeVideo}>
             <div className={Style.videoHead}>
               <div>
                 <h2>Watch Our Videos</h2>
@@ -157,7 +158,6 @@ const OurVideos = ({ data }) => {
                 <a href="/videos" className={Style.secondryBtn}>View All Videos</a>
               </div>
             </div>
-
             <div className={"watchVideo " + Style.videoElem}>
               {allVideo?.slice(0, 4)?.map((item, index) => {
                 const type = getVideoType(item);
@@ -197,6 +197,7 @@ const OurVideos = ({ data }) => {
                 );
               })}
             </div>
+          </div>  
           </Col>
         </Row>
       </Container>

@@ -68,7 +68,7 @@ display: flex;flex-direction: column;align-items: flex-start;}
 
 /* Videos CSS */
 .videoSec{position: relative;}
-.videoContainer{background: #fafbfe;padding: 30px;border-radius: 10px;box-shadow: 1px 1px 6px 0px #00000029;}
+.videoContainer{background: #f3f6fa;padding: 30px;border-radius: 10px;}
 .videoHead{display: flex;align-items: center;justify-content: space-between;}
 .videoHead h2 span{color: #e30f11;}
 .videoHead p{margin: 0;}
@@ -380,8 +380,16 @@ background: #fff;
 .testContainer .box h3{font-size: 20px;margin:10px 0 10px;}
 .testContainer .content{padding:15px;min-height: 140px;}
 .popupVideo{height: 500px;}
+.homeVideo{background: #f3f6fa;padding: 20px;border-radius: 10px;}
+
+.homeVideo .videoElem .videoItem .videoFrame{height: 250px;border-radius: 10px;overflow: hidden;;}
+.videoElem .videoItem{border: none;border-radius: 0;}
+.videoElem h3{padding: 10px 0;}
+.videoPage .videoElem{margin: 0;}
+.videoPage .videoElem .videoItem .videoFrame{height: 300px;border-radius: 10px;overflow: hidden;}
 
 @media only screen and (max-width: 1400px) {
+.videoPage .videoElem .videoItem .videoFrame{height: 270px;}    
 .testContainer .box h3{font-size: 18px;}    
     .specialItem .content{padding-right: 150px;}
     .diagnosticsElem .leftArea{width: 45%;}
@@ -436,6 +444,7 @@ background: #fff;
         padding-right: 90px;
     }
     .testContainer .box h3{font-size: 16px;}   
+.videoPage .videoElem{    grid-template-columns: repeat(3, 1fr);}    
 }
 
 @media only screen and (max-width: 991px) {
@@ -496,10 +505,14 @@ background: #fff;
 .NHDCVideoSec .videoElem{    grid-template-columns: repeat(2, 1fr);}
 .specialContainer{grid-template-columns: repeat(1, 1fr);}
 .heroBanner, .innerBanner, .noBanner{margin-top: 110px;}
+.videoPage .videoElem{    grid-template-columns: repeat(2, 1fr);}
 }
 
 
 @media only screen and (max-width: 767px) {
+.videoPage .videoElem{    grid-template-columns: repeat(1, 1fr);}    
+.videoPage .videoElem .videoItem .videoFrame {height: 250px;}
+.homeVideo .videoElem .videoItem .videoFrame{height: 200px;}
 .servicesContent{padding: 30px 0;}      
 .servicesOwl .slideItem{height: 300px;}
 .heroBanner, .innerBanner, .noBanner{margin-top: 104px;}    
