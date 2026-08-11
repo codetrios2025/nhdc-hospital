@@ -113,7 +113,7 @@ display: flex;flex-direction: column;align-items: flex-start;}
 .supportContainer .call a{display: block;font-weight: var(--fw-semibold);color: #fff;font-size: 16px;}
 
 /* ABout Page CSS  */
-.innerBanner{position: relative;margin-top: 130px;}
+.innerBanner{position: relative;margin-top: 146px;}
 .innerBanner img{width: 100%;height: 400px;object-fit: cover;display: block;}
 
 .innerBanner .content{position: absolute;top: 0;left: 0;width: 100%;height: 100%;display: flex;align-items: center;color: #16366a;background: linear-gradient(272deg, rgb(243 247 252 / 0%) 20%, rgb(243 247 252 / 100%) 94%, rgba(243 247 252) 100%);}
@@ -388,6 +388,18 @@ background: #fff;
 .videoPage .videoElem{margin: 0;}
 .videoPage .videoElem .videoItem .videoFrame{height: 300px;border-radius: 10px;overflow: hidden;}
 
+/* 404 not found */
+.noFound{margin-top: 146px;
+    padding: 60px 0;
+    background: #fff;
+    border-top: 1px solid #eef3fa;}
+.noFound .content{display: flex;flex-direction: column;justify-content: center;align-items: center;gap: 20px;}
+.noFound .content h5{font-size: 40px;margin: 0;}
+.noFound .content h1{font-size: 70px;margin: 0;}
+.noFound .noFoundBtn{display: flex;gap: 15px;}
+.noFound .noFoundBtn button, .noFound .noFoundBtn a{background: transparent;color: #16366a;}
+/* 404 not found */
+
 @media only screen and (max-width: 1400px) {
 .videoPage .videoElem .videoItem .videoFrame{height: 270px;}    
 .testContainer .box h3{font-size: 18px;}    
@@ -407,6 +419,8 @@ background: #fff;
 .mainContainer{gap: 20px;}
 .diagnoServices.whyChoose .whyChooseContainer{padding: 40px 20px;}
 .diagnoServices.whyChoose .whyChooseElem{gap:20px}
+.noFound .content h5{font-size: 35px;margin: 0;}
+.noFound .content h1{font-size: 50px;margin: 0;text-align: center;}
 }
 
 @media only screen and (max-width: 1199px) {
@@ -448,6 +462,7 @@ background: #fff;
 }
 
 @media only screen and (max-width: 991px) {
+.noFound .content h1{font-size: 40px;}    
 .testContainer .item{width: 50%;margin-bottom: 20px;}
     .testContainer .box h3 {
         font-size: 14px;
@@ -504,7 +519,7 @@ background: #fff;
 .diagnoServices.whyChoose .whyChooseElem{grid-template-columns: repeat(2, 1fr);}
 .NHDCVideoSec .videoElem{    grid-template-columns: repeat(2, 1fr);}
 .specialContainer{grid-template-columns: repeat(1, 1fr);}
-.heroBanner, .innerBanner, .noBanner{margin-top: 110px;}
+.heroBanner, .innerBanner, .noBanner, .noFound{margin-top: 110px;}
 .videoPage .videoElem{    grid-template-columns: repeat(2, 1fr);}
 }
 
@@ -515,7 +530,7 @@ background: #fff;
 .homeVideo .videoElem .videoItem .videoFrame{height: 200px;}
 .servicesContent{padding: 30px 0;}      
 .servicesOwl .slideItem{height: 300px;}
-.heroBanner, .innerBanner, .noBanner{margin-top: 104px;}    
+.heroBanner, .innerBanner, .noBanner, .noFound{margin-top: 104px;}    
     .testContainer .item {padding: 0;width: 100%;}
 .bannerContent ul li .icon{margin-right: 5px;top: 0;}    
 .mainContainer{grid-template-columns: repeat(1, 1fr);}    
