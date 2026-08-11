@@ -1,48 +1,96 @@
-const emailLayout = require("../common/emailLayout");
-const appointmentTable = require("../common/appointmentTable");
+const layout = require("./layout");
+const {
+  formatAppointmentDate,
+  formatAppointmentTime,
+} = require("./formatters");
 
-module.exports = (appointment, remarks = "") => {
+module.exports = (appointment = {}, remarks = "") => {
+  const appointmentDate = formatAppointmentDate(appointment.appointmentDate);
+
+  const appointmentTime = formatAppointmentTime(appointment.appointmentTime);
+  const content = `
+
+<p>
+  Dear <strong>${appointment.patientName || "Patient"}</strong>,
+</p>
+
+<p>
+  Our hospital team has added a remark regarding your appointment.
+</p>
+
+<table
+  cellpadding="8"
+  cellspacing="0"
+  width="100%"
+  style="
+    border-collapse:collapse;
+    margin-top:20px;
+    border:1px solid #dddddd;
+  "
+>
+
+<tr>
+  <td style="background:#f8f9fa;font-weight:bold;width:180px;">
+    Patient Name
+  </td>
+
+  <td>
+    ${appointment.patientName || "-"}
+  </td>
+</tr>
+
+<tr>
+  <td style="background:#f8f9fa;font-weight:bold;">
+    Appointment Date
+  </td>
+
+  <td>
+   ${appointmentDate || "-"}
+  </td>
+</tr>
+
+${
+  appointmentTime
+    ? `
+<tr>
+  <td style="background:#f8f9fa;font-weight:bold;">
+    Appointment Time
+  </td>
+
+  <td>
+    ${appointmentTime}
+  </td>
+</tr>
+`
+    : ""
+}
+
+<tr>
+  <td style="background:#f8f9fa;font-weight:bold;">
+    Hospital Remark
+  </td>
+
+  <td>
+    ${remarks || "-"}
+  </td>
+</tr>
+
+</table>
+
+<p style="margin-top:25px;">
+  If you have any questions, please contact
+  Namokar Hospital & Diagnostic Centre.
+</p>
+
+<p>
+  Regards,<br>
+  <strong>Namokar Hospital & Diagnostic Centre</strong>
+</p>
+
+`;
+
   return {
-    subject: "Important Update Regarding Your Appointment",
-
-    html: emailLayout({
-      title: "Hospital Message",
-
-      heading: `Dear ${appointment.patientName},`,
-
-      content: `
-        <p>
-          Our hospital team has shared an important message regarding your appointment.
-        </p>
-
-        <div
-          style="
-            margin:25px 0;
-            padding:18px;
-            background:#fff8e5;
-            border-left:5px solid #ffc107;
-            border-radius:4px;
-            color:#664d03;
-          "
-        >
-          <strong>Hospital Remark</strong>
-
-          <br><br>
-
-          ${remarks || "-"}
-        </div>
-
-        ${appointmentTable(appointment)}
-
-        <p style="margin-top:25px;">
-          If you have any questions, please contact us.
-        </p>
-
-        <p>
-          Regards,<br>
-          <strong>Namokar Hospital & Diagnostic Centre</strong>
-        </p>
-      `,
-    }),
+    subject: "Appointment Remark - Namokar Hospital",
+    html: layout("Appointment Remark", content),
   };
 };
