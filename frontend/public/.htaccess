@@ -1,11 +1,25 @@
 <IfModule mod_rewrite.c>
+
     RewriteEngine On
 
+    # ==========================================
+    # Redirect non-www to www
+    # ==========================================
+    RewriteCond %{HTTP_HOST} ^namokarhospitaldeoli\.com$ [NC]
+    RewriteRule ^(.*)$ https://www.namokarhospitaldeoli.com/$1 [R=301,L]
+
+
+    # ==========================================
     # Don't rewrite existing files or directories
+    # ==========================================
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
 
+
+    # ==========================================
     # React SPA fallback
+    # ==========================================
     RewriteRule ^ index.html [L]
+
 </IfModule>
