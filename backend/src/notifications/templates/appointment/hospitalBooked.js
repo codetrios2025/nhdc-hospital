@@ -1,107 +1,126 @@
-const emailLayout = require("../common/emailLayout");
+const layout = require("./layout");
+const {
+  formatAppointmentDate,
+  formatAppointmentTime,
+} = require("./formatters");
 
-module.exports = (appointment) => {
-  return {
-    subject: "New Appointment Booking",
+module.exports = (appointment = {}) => {
+  const appointmentDate = formatAppointmentDate(appointment.appointmentDate);
 
-    html: emailLayout({
-      title: "New Appointment",
+  const appointmentTime = formatAppointmentTime(appointment.appointmentTime);
+  const content = `
 
-      heading: "A new appointment has been received.",
+<p>
+  A new appointment has been received from the website.
+</p>
 
-      content: `
-
-<table>
-
-<tr>
-
-<td class="label">
-Patient
-</td>
-
-<td>
-${appointment.patientName}
-</td>
-
-</tr>
-<tr>
-<td style="background:#f8f9fa;font-weight:bold;">
-Gender
-</td>
-
-<td>
-${appointment.gender || "-"}
-</td>
-</tr>
+<table
+  cellpadding="8"
+  cellspacing="0"
+  width="100%"
+  style="
+    border-collapse:collapse;
+    margin-top:20px;
+    border:1px solid #dddddd;
+  "
+>
 
 <tr>
-<td class="label">
-Age
-</td>
+  <td style="background:#f8f9fa;font-weight:bold;width:180px;">
+    Patient Name
+  </td>
 
-<td>
-${appointment.age || "-"}
-</td>
-</tr>
-<tr>
-
-<td class="label">
-Mobile
-</td>
-
-<td>
-${appointment.mobile}
-</td>
-
+  <td>
+    ${appointment.patientName || "-"}
+  </td>
 </tr>
 
 <tr>
+  <td style="background:#f8f9fa;font-weight:bold;">
+    Gender
+  </td>
 
-<td class="label">
-Email
-</td>
-
-<td>
-${appointment.email}
-</td>
-
+  <td>
+    ${appointment.gender || "-"}
+  </td>
 </tr>
 
 <tr>
+  <td style="background:#f8f9fa;font-weight:bold;">
+    Age
+  </td>
 
-<td class="label">
-Preferred Date
-</td>
-
-<td>
-${appointment.appointmentDate || appointment.preferredDate || "-"}
-</td>
-
+  <td>
+    ${appointment.age || "-"}
+  </td>
 </tr>
 
+<tr>
+  <td style="background:#f8f9fa;font-weight:bold;">
+    Mobile
+  </td>
 
+  <td>
+    ${appointment.mobile || "-"}
+  </td>
+</tr>
 
 <tr>
+  <td style="background:#f8f9fa;font-weight:bold;">
+    Email
+  </td>
 
-<td class="label">
-Message
-</td>
+  <td>
+    ${appointment.email || "-"}
+  </td>
+</tr>
 
-<td>
-${appointment.message || appointment.reason || "-"}
-</td>
+<tr>
+  <td style="background:#f8f9fa;font-weight:bold;">
+    Preferred Date
+  </td>
 
+  <td>
+    ${appointmentDate || "-"}
+  </td>
+</tr>
+
+${
+  appointmentTime
+    ? `
+<tr>
+  <td style="background:#f8f9fa;font-weight:bold;">
+    Appointment Time
+  </td>
+
+  <td>
+    ${appointmentTime || "-"}
+  </td>
+</tr>
+`
+    : ""
+}
+
+<tr>
+  <td style="background:#f8f9fa;font-weight:bold;">
+    Message
+  </td>
+
+  <td>
+    ${appointment.message || appointment.reason || "-"}
+  </td>
 </tr>
 
 </table>
 
-<p>
-
-Please login to the Admin Panel.
-
+<p style="margin-top:25px;">
+  Please login to the admin panel to review and manage this appointment.
 </p>
 
-`,
-    }),
+`;
+
+  return {
+    subject: "New Appointment Received - NHDC",
+    html: layout("New Appointment Received", content),
   };
 };
