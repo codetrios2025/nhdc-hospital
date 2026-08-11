@@ -57,7 +57,9 @@ const DrRajesh = () => {
                         <Row>
                           <Col>
                           <div className={Style.box}>
-                              <h1>Dr. Rajesh Jain</h1>
+                              <h1>
+  Dr. Rajesh Jain – Pediatrician & Child Specialist in Deoli
+</h1>
                               <p>Dr. Rajesh Jain is a highly qualified and experienced pediatrician with over 25 years of expertise in providing comprehensive child healthcare services, asthma management, allergy care and preventive care.</p>
                           </div>
                           </Col>
