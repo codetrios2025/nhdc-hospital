@@ -43,6 +43,9 @@ import BannerForm from "../features/banner/components/BannerForm";
 
 import ContactPage from "../features/contact/pages/ContactPage";
 
+import ResetPassword from "../features/auth/pages/ResetPassword";
+import ForgotPassword from "../features/auth/pages/ForgotPassword";
+
 import HospitalHighlightList from "../features/hospitalHighlights/pages/HospitalHighlightList";
 import HospitalHighlight from "../features/hospitalHighlights/pages/HospitalHighlight";
 
@@ -54,6 +57,9 @@ const AppRoutes = () => {
 
       {/* Login */}
       <Route path="login" element={<Login />} />
+
+      <Route path="reset-password/:token" element={<ResetPassword />} />
+      <Route path="forgot-password" element={<ForgotPassword />} />
 
       {/* Protected Routes */}
       <Route

@@ -37,7 +37,7 @@ const adminSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      minlength: 6,
+      minlength: 8,
       select: false,
     },
 
@@ -62,9 +62,43 @@ const adminSchema = new mongoose.Schema(
       default: false,
     },
 
-    lastLogin: Date,
+    lastLogin: {
+      type: Date,
+      default: null,
+    },
 
-    passwordChangedAt: Date,
+    /*
+     * ============================================
+     * PASSWORD RESET
+     * ============================================
+     */
+
+    resetPasswordToken: {
+      type: String,
+      default: null,
+    },
+
+    resetPasswordExpires: {
+      type: Date,
+      default: null,
+    },
+
+    /*
+     * ============================================
+     * PASSWORD CHANGE TRACKING
+     * ============================================
+     */
+
+    passwordChangedAt: {
+      type: Date,
+      default: null,
+    },
+
+    /*
+     * ============================================
+     * AUDIT
+     * ============================================
+     */
 
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
@@ -83,16 +117,42 @@ const adminSchema = new mongoose.Schema(
   },
 );
 
+/**
+ * ============================================
+ * HASH PASSWORD BEFORE SAVE
+ * ============================================
+ *
+ * This is used when creating a new admin or
+ * changing password using admin.save().
+ */
 adminSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+  if (!this.isModified("password")) {
+    return next();
+  }
 
   this.password = await bcrypt.hash(this.password, 10);
+
+  this.passwordChangedAt = new Date();
+
+  next();
 });
 
+/**
+ * ============================================
+ * GENERATE FULL NAME
+ * ============================================
+ */
 adminSchema.pre("save", function (next) {
-  this.fullName = `${this.firstName} ${this.lastName}`.trim();
+  this.fullName = `${this.firstName || ""} ${this.lastName || ""}`.trim();
+
+  next();
 });
 
+/**
+ * ============================================
+ * COMPARE PASSWORD
+ * ============================================
+ */
 adminSchema.methods.comparePassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
