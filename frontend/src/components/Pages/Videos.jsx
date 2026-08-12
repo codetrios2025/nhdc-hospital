@@ -13,6 +13,7 @@ import { getVideos } from "../../services/routes.services";
 import { Helmet } from "react-helmet-async";
 import constants from "../../services/constants";
 import videoThumb from '../../assets/images/video_thumb.webp';
+import SEO from "../Common/SEO";
 const NHDCVideos = () =>{
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [videoData, setVideoData] = useState(null);
@@ -166,15 +167,13 @@ const NHDCVideos = () =>{
  
   return(
     <>
-      {/* <Helmet>
-        <title>{serviceData?.seoTitle || serviceData.seoTitle || "Namokar Hospital"}</title>
-        <meta name="description" content={serviceData?.seoDescription || "" }  />
-        <meta name="keywords" content={
-            Array.isArray(serviceData?.seoKeyword)
-            ? serviceData.seoKeyword.join(", ") : serviceData?.seoKeywords || ""
-          } 
-        />
-      </Helmet> */}
+     <SEO
+  title="Videos at Namokar Hospital & Diagnostic Centre | Hospital Deoli"
+  description="Watch our videos to learn more about the medical services offered at Namokar Hospital & Diagnostic Centre in Deoli, including pediatric care, diagnostics, and specialized treatments,deoli."
+  keywords="Namokar Hospital Deoli, medical services Deoli, pediatric services Deoli, diagnostic services Deoli, child healthcare Deoli, hospital services Deoli, best doctor in deoli, child specialist in deoli"
+  canonical="https://namokarhospitaldeoli.com/videos"
+/>
+      
       <div className={`${Style.videoPage}`}>
         <div className={Style.innerBanner}>
           <img src={BannerImg} alt="Namokar Hospital & Diagnostic Centre" />

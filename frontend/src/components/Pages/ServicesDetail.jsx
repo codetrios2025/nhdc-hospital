@@ -74,8 +74,10 @@ const ServiceDetail = () => {
       <meta name="keywords" content={
           Array.isArray(serviceData?.seoKeyword)
           ? serviceData.seoKeyword.join(", ") : serviceData?.seoKeywords || ""
-        } 
+        }
+         
       />
+      <link rel="canonical" href={`https://namokarhospitaldeoli.com/service/${slug}`} />
     </Helmet>
       <div className={Style.ServiceDetailPage}>
         <div className={`${Style.innerBanner} ${Style.servicesBanner}`}>
