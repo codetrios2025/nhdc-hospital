@@ -84,7 +84,7 @@ const LoginForm = () => {
           </label>
         </div>
 
-        <Link to="/forgot-password">Forgot Password?</Link>
+        <Link to="/admin/forgot-password">Forgot Password?</Link>
       </div>
 
       <button className="btn btn-primary w-100" disabled={loading}>
