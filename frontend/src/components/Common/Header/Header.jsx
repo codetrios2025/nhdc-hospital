@@ -189,6 +189,15 @@ const Header = () => {
                       <li>
                         <NavLink
                           onClick={closeMenu}
+                          to="/doctor/rajesh-jain"
+                          title="Doctor"
+                        >
+                          Doctor
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          onClick={closeMenu}
                           to="/book-appointment"
                           title="Contact Us"
                         >
